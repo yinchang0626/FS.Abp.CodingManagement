@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>FS.Abp.CodingManagement</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="2.2.1" />
+    <ProjectReference Include="..\..\..\FS.Abp.SettingManagement\src\FS.Abp.SettingManagement.HttpApi\FS.Abp.SettingManagement.HttpApi.csproj" />
+    <ProjectReference Include="..\FS.Abp.CodingManagement.Application.Contracts\FS.Abp.CodingManagement.Application.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\FS.Abp.CodingManagement.Application\FS.Abp.CodingManagement.Application.csproj" />
+    <ProjectReference Include="..\..\src\FS.Abp.CodingManagement.EntityFrameworkCore\FS.Abp.CodingManagement.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\src\FS.Abp.CodingManagement.HttpApi\FS.Abp.CodingManagement.HttpApi.csproj" />
+  </ItemGroup>
+
+</Project>
