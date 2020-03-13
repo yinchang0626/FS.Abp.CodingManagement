@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<efcore context-namespace="FS.Abp.CodingManagement.EntityFrameworkCore" namespace="FS.Abp.CodingManagement" p1:name="CodingManagementDbContext" p1:Guid="d52dfa8e-d088-4750-a077-95093c0a8637" p1:VersionTag="1.201.0.0" xmlns:p1="http://devart.com/schemas/EntityDeveloper/1.0">
+<efcore context-namespace="FS.Abp.CodingManagement.EntityFrameworkCore" namespace="FS.Abp.CodingManagement" p1:name="CodingManagementDbContext" p1:Guid="d52dfa8e-d088-4750-a077-95093c0a8637" p1:VersionTag="1.221.0.0" xmlns:p1="http://devart.com/schemas/EntityDeveloper/1.0">
   <class name="$ComplexTypes">
     <component class="FS.Abp.CodingManagement.CreationAuditedEntity" IsExternal="true" p1:Guid="66425b5e-9bab-4a12-bc48-aa568a1869a5" p1:GenerateDTO="False">
       <property name="CreationTime" type="DateTime" p1:ValidateRequired="true" p1:Guid="0c0a9c69-ac8a-4089-a1b0-e74a06d845e5">
@@ -120,7 +120,7 @@
   </class>
   <class name="FS.Abp.CodingManagement.Coding.Codes" entity-set="Codes" p1:Guid="fa885f37-070e-48ec-89e2-b80a92cf56c7" p1:AbpEditor="YinChang" p1:EntityBase="&#xD;&#xA;        Volo.Abp.Domain.Entities.Auditing.AuditedAggregateRoot&lt;Guid&gt;,&#xD;&#xA;        Volo.Abp.MultiTenancy.IMultiTenant,&#xD;&#xA;        FS.Abp.Trees.ITree&lt;Codes&gt;">
     <p1:Attributes>
-      <p1:Attribute Name="FS.Abp.ED.Attributes.Entities.EntityAttribute" Assembly="FS.Abp.ED, Version=1.102.0.0, Culture=neutral, PublicKeyToken=null">
+      <p1:Attribute Name="FS.ED.Attributes.Entities.EntityAttribute" Assembly="FS.ED, Version=1.102.0.0, Culture=neutral, PublicKeyToken=null">
         <p1:AttributeConstructor />
         <p1:Properties>
           <p1:PropertyValue Name="EntityBaseStore" Type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -131,7 +131,7 @@
           </p1:PropertyValue>
         </p1:Properties>
       </p1:Attribute>
-      <p1:Attribute Name="FS.Abp.ED.Attributes.Module.ModuleAttribute" Assembly="FS.Abp.ED, Version=1.102.0.0, Culture=neutral, PublicKeyToken=null">
+      <p1:Attribute Name="FS.ED.Attributes.Module.ModuleAttribute" Assembly="FS.ED, Version=1.102.0.0, Culture=neutral, PublicKeyToken=null">
         <p1:AttributeConstructor />
         <p1:Properties>
           <p1:PropertyValue Name="Name" Type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -139,7 +139,7 @@
           </p1:PropertyValue>
         </p1:Properties>
       </p1:Attribute>
-      <p1:Attribute Name="FS.Abp.ED.Attributes.Partial.PartialAttribute" Assembly="FS.Abp.ED, Version=1.102.0.0, Culture=neutral, PublicKeyToken=null">
+      <p1:Attribute Name="FS.ED.Attributes.Partial.PartialAttribute" Assembly="FS.ED, Version=1.102.0.0, Culture=neutral, PublicKeyToken=null">
         <p1:AttributeConstructor />
         <p1:Properties>
           <p1:PropertyValue Name="EntityConfiguration" Type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -149,13 +149,13 @@
             <boolean>false</boolean>
           </p1:PropertyValue>
           <p1:PropertyValue Name="Repository" Type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-            <boolean>true</boolean>
+            <boolean>false</boolean>
           </p1:PropertyValue>
           <p1:PropertyValue Name="AppService" Type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
             <boolean>false</boolean>
           </p1:PropertyValue>
           <p1:PropertyValue Name="Dto" Type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-            <boolean>true</boolean>
+            <boolean>false</boolean>
           </p1:PropertyValue>
           <p1:PropertyValue Name="AutoMapperProfile" Type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
             <boolean>false</boolean>

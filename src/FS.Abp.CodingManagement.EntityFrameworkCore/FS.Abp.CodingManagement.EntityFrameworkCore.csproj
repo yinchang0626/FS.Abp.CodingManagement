@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="_Generated\FS.Abp.CodingManagement\Codes.Configuration.Generated.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="2.2.1" />
     <ProjectReference Include="..\..\..\FS.Abp.Trees\src\FS.Abp.Trees.EntityFrameworkCore\FS.Abp.Trees.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\..\FS.Abp.SettingManagement\src\FS.Abp.SettingManagement.EntityFrameworkCore\FS.Abp.SettingManagement.EntityFrameworkCore.csproj" />
