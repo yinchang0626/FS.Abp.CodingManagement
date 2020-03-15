@@ -6,7 +6,8 @@
   "peerDependencies": {
     "@angular/common": "^8.2.11",
     "@angular/core": "^8.2.11",
-    "@fs/ng-alain": "0.0.0",
-    "@fs/ngx-admin": "0.0.0"    
+    "@fs/setting-management": "",
+    "@fs/ng-alain": "",
+    "@fs/ngx-admin": ""    
   }
 }
