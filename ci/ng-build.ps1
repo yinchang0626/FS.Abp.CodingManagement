@@ -1,6 +1,10 @@
 $ErrorActionPreference = "Stop"
 
-cd ../angular
+cd ./angular
 
-ng build
+ls
+#ng config -g cli.warnings.versionMismatch false
 
+#ng build fs.coding-management
+
+cd ..

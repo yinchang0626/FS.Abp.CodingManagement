@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
-import { SFS.Abpchema } from '@delon/form';
+import { SFSchema  } from '@delon/form';
 
 @Component({
   selector: 'app-basic-list-edit',
@@ -8,7 +8,7 @@ import { SFS.Abpchema } from '@delon/form';
 })
 export class ProBasicListEditComponent {
   record: any = {};
-  schema: SFS.Abpchema = {
+  schema: SFSchema  = {
     properties: {
       title: { type: 'string', title: '任务名称', maxLength: 50 },
       createdAt: { type: 'string', title: '开始时间', format: 'date' },

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient } from '@delon/theme';
 import { STColumn, STComponent } from '@delon/abc';
-import { SFS.Abpchema } from '@delon/form';
+import { SFSchema  } from '@delon/form';
 
 @Component({
   selector: 'app-delon-form',
@@ -12,7 +12,7 @@ export class DelonFormComponent implements OnInit {
   url = `/user`;
   @ViewChild('st', { static: true })
   st: STComponent;
-  searchSchema: SFS.Abpchema = {
+  searchSchema: SFSchema  = {
     properties: {
       no: {
         type: 'string',
