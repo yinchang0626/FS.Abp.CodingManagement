@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { FsCodingManagementNgAlainModule } from '@fs/coding-management/ng-alain';
+import { CodingManagementNgAlainModule } from '@fs/coding-management/ng-alain';
 
 @NgModule({
-    imports: [FsCodingManagementNgAlainModule]
+    imports: [CodingManagementNgAlainModule]
 })
 export class CodingManagementWrapperModule {
 }

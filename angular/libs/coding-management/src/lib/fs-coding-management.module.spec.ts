@@ -1,14 +1,14 @@
 import { async, TestBed } from '@angular/core/testing';
-import { FsCodingManagementModule } from './fs-coding-management.module';
+import { CodingManagementModule } from './fs-coding-management.module';
 
-describe('FsCodingManagementModule', () => {
+describe('CodingManagementModule', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [FsCodingManagementModule]
+      imports: [CodingManagementModule]
     }).compileComponents();
   }));
 
   it('should create', () => {
-    expect(FsCodingManagementModule).toBeDefined();
+    expect(CodingManagementModule).toBeDefined();
   });
 });

@@ -6,7 +6,7 @@ import { finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { NotifyService } from '../../shared/services/notify/notify.service';
 import { CreateCode, UpdateCode } from '../providers/coding-management.actions';
-import { FsCodingManagementDtos } from '@fs/coding-management';
+import { CodingManagementDtos } from '@fs/coding-management';
 
 @Component({
     selector: 'fs-edit-code',
@@ -25,7 +25,7 @@ import { FsCodingManagementDtos } from '@fs/coding-management';
 
     tplModal: NzModalRef;
     form: FormGroup;
-    pageQuery: FsCodingManagementDtos.codesPageQueryParams = { skipCount: 0, maxResultCount: 999 } as FsCodingManagementDtos.codesPageQueryParams;
+    pageQuery: CodingManagementDtos.codesPageQueryParams = { skipCount: 0, maxResultCount: 999 } as CodingManagementDtos.codesPageQueryParams;
     loading: boolean = false;
     constructor(
         private modalService: NzModalService,
