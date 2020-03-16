@@ -4,6 +4,6 @@ import { Store } from '@ngxs/store';
 @Injectable({
   providedIn: 'root',
 })
-export class CodingManagementStateService{
+export class CodingsStateService{
   constructor(private store:Store) {}
 }

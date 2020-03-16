@@ -6,4 +6,3 @@ import { CodingManagementNgAlainModule } from '@fs/coding-management/ng-alain';
 })
 export class CodingManagementWrapperModule {
 }
-
