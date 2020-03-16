@@ -1,2 +1,3 @@
-export * from './fs-coding-management-ng-alain.module';
-export * from './shared';
+export * from './coding-management-ng-alain.module';
+export * from './codings/index';
+export * from './shared/index';

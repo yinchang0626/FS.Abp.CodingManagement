@@ -6,8 +6,8 @@ import { finalize } from 'rxjs/operators';
 import { NotifyService } from '../../shared/services/notify/notify.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { DeleteCode, UpdateListCodes, GetChildrenCodes } from '../providers/coding-management.actions';
-import { CodingManagementState } from '../providers/coding-management.state';
+import { DeleteCoding, UpdateListCodings, GetChildrenCodings } from '../providers/codings.actions';
+import { CodingsState } from '../providers/codings.state';
 import { CodingManagementDtos } from '@fs/coding-management';
 import * as _ from 'lodash';
 import { FsNgAlainTreeComponent } from '@fs/ng-alain/basic';
@@ -22,10 +22,10 @@ import { SettingManagementParameters } from '@fs/setting-management';
 export class DetailComponent implements OnInit {
   @ViewChild(FsNgAlainTreeComponent, {static: false}) fsNgAlainTreeComponent: FsNgAlainTreeComponent;
 
-  @Select(CodingManagementState.getChildrenCodes)
-  data$: Observable<CodingManagementDtos.code>;
+  @Select(CodingsState.getChildrenCodings)
+  data$: Observable<CodingManagementDtos.coding>;
 
-  rowData: Array<CodingManagementDtos.code>;
+  rowData: Array<CodingManagementDtos.coding>;
   form: FormGroup;
   loading: boolean = false;
   definitionId: string;
@@ -101,7 +101,7 @@ export class DetailComponent implements OnInit {
     if(this.definitionId){
       this.loading = true;
       this.store
-        .dispatch(new GetChildrenCodes(this.definitionId))
+        .dispatch(new GetChildrenCodings(this.definitionId))
         .pipe(finalize(() => this.loading = false))
         .subscribe(() => { },
         (error) => {
@@ -135,7 +135,7 @@ export class DetailComponent implements OnInit {
   }
 
   save() {
-    let updateInput: Array<CodingManagementDtos.code> = [] as Array<CodingManagementDtos.code> ;
+    let updateInput: Array<CodingManagementDtos.coding> = [] as Array<CodingManagementDtos.coding> ;
     this.rowData.forEach(x => {
       if (this.isEdit[x.id]){
         let no = (typeof (this.form.value[x.id].no) !== "string") ? JSON.stringify(this.form.value[x.id].no) : this.form.value[x.id].no;
@@ -154,11 +154,11 @@ export class DetailComponent implements OnInit {
     });
     this.loading = true;
     this.store.dispatch(
-      new UpdateListCodes(updateInput)
+      new UpdateListCodings(updateInput)
     )
     .pipe(finalize(() => this.loading = false))
     .subscribe((x) => {
-        this.router.navigate(['/coding-management/codes', this.definitionId]);
+        this.router.navigate(['/coding-management/codings', this.definitionId]);
         this.notifyService.success("資料更新成功");
     }, (error) => {
         this.notifyService.error("資料更新失敗");
@@ -172,10 +172,10 @@ export class DetailComponent implements OnInit {
       nzOkText: '是',
       nzCancelText: '否',
       nzOnOk:()=>{
-        this.store.dispatch(new DeleteCode(data))
+        this.store.dispatch(new DeleteCoding(data))
         .pipe(finalize(() => this.loading = false))
         .subscribe(() => {
-          this.router.navigate(['/coding-management/codes', this.definitionId]);
+          this.router.navigate(['/coding-management/codings', this.definitionId]);
           this.notifyService.success("資料更新成功");
         }, (error) => {
           this.notifyService.error("資料更新失敗");

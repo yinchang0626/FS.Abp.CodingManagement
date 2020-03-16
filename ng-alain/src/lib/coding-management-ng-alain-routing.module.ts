@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DynamicLayoutComponent, AuthGuard, PermissionGuard } from '@abp/ng.core';
 import { LayoutPassportComponent, LayoutDefaultComponent } from '@fs/ng-alain/basic';
-import { CodingManagementModule } from './coding-management/coding-management.module';
+import { CodingsModule } from './codings/codings.module';
 
 const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'code' },
@@ -12,8 +12,8 @@ const routes: Routes = [
         // canActivate: [AuthGuard, PermissionGuard],
         children: [
             {
-                path: 'codes',
-                loadChildren: () => CodingManagementModule
+                path: 'codings',
+                loadChildren: () => CodingsModule
             }
         ],
     }

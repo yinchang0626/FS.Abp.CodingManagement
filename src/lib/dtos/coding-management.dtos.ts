@@ -2,11 +2,11 @@ import { ABP } from '@abp/ng.core';
 
 export namespace CodingManagementDtos {
 
-    export type codesResponse = ABP.PagedResponse<code>;
+    export type codingsResponse = ABP.PagedResponse<coding>;
 
-    export interface codesPageQueryParams extends ABP.PageQueryParams {}
+    export interface codingsPageQueryParams extends ABP.PageQueryParams {}
 
-    export interface code {
+    export interface coding {
         id: string,
         no: string,
         displayName: string,
