@@ -11,7 +11,7 @@ import { FormsModule} from '@angular/forms';
 import { CodingManagementState } from './providers/coding-management.state';
 import { DetailComponent } from './detail/detail.component';
 import { EditCodeComponent } from './modal/edit-code.component';
-import { FsSettingManagementNgAlainModule } from '@fs/setting-management/ng-alain';
+import { SettingManagementNgAlainModule } from '@fs/setting-management/ng-alain';
 
 @NgModule({
   declarations: [MainComponent, LayoutComponent, DetailComponent, EditCodeComponent],
@@ -23,7 +23,7 @@ import { FsSettingManagementNgAlainModule } from '@fs/setting-management/ng-alai
     FormsModule,
     NgZorroAntdModule,
     DelonFormModule.forRoot(),
-    FsSettingManagementNgAlainModule
+    SettingManagementNgAlainModule
   ],
   providers: [
     

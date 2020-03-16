@@ -8,11 +8,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { DeleteCode, UpdateListCodes, GetChildrenCodes } from '../providers/coding-management.actions';
 import { CodingManagementState } from '../providers/coding-management.state';
-import { FsCodingManagementDtos } from '@fs/coding-management';
+import { CodingManagementDtos } from '@fs/coding-management';
 import * as _ from 'lodash';
 import { FsNgAlainTreeComponent } from '@fs/ng-alain/basic';
 import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd';
-import { FsSettingManagementParameters } from '@fs/setting-management';
+import { SettingManagementParameters } from '@fs/setting-management';
 
 @Component({
   selector: 'fs-detail',
@@ -23,9 +23,9 @@ export class DetailComponent implements OnInit {
   @ViewChild(FsNgAlainTreeComponent, {static: false}) fsNgAlainTreeComponent: FsNgAlainTreeComponent;
 
   @Select(CodingManagementState.getChildrenCodes)
-  data$: Observable<FsCodingManagementDtos.code>;
+  data$: Observable<CodingManagementDtos.code>;
 
-  rowData: Array<FsCodingManagementDtos.code>;
+  rowData: Array<CodingManagementDtos.code>;
   form: FormGroup;
   loading: boolean = false;
   definitionId: string;
@@ -41,7 +41,7 @@ export class DetailComponent implements OnInit {
   isEdit = {};
   isSeletedItem: string = "";
 
-  parameters = new FsSettingManagementParameters;
+  parameters = new SettingManagementParameters;
   constructor(
     private modalService: NzModalService,
     private store: Store,
@@ -135,7 +135,7 @@ export class DetailComponent implements OnInit {
   }
 
   save() {
-    let updateInput: Array<FsCodingManagementDtos.code> = [] as Array<FsCodingManagementDtos.code> ;
+    let updateInput: Array<CodingManagementDtos.code> = [] as Array<CodingManagementDtos.code> ;
     this.rowData.forEach(x => {
       if (this.isEdit[x.id]){
         let no = (typeof (this.form.value[x.id].no) !== "string") ? JSON.stringify(this.form.value[x.id].no) : this.form.value[x.id].no;
