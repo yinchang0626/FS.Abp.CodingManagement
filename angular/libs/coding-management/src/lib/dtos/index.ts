@@ -1,1 +1,1 @@
-export * from './fs-coding-management.dtos';
+export * from './coding-management.dtos';

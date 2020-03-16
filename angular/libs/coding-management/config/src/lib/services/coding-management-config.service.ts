@@ -17,7 +17,7 @@ export class CodingManagementConfigService {
       iconClass: 'fa fa-cog',
       children: [
         {
-          path: 'codes',
+          path: 'codings',
           name: '代碼表',
           order: 1,
           // requiredPolicy: 'AbpTenantManagement.Tenants',

@@ -5,9 +5,9 @@ import { finalize } from 'rxjs/operators';
 import { NotifyService } from '../../shared/services/notify/notify.service';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Router } from '@angular/router';
-import { GetCodes, DeleteCode } from '../providers/coding-management.actions';
+import { GetCodings, DeleteCoding } from '../providers/codings.actions';
 import { CodingManagementDtos } from '@fs/coding-management';
-import { CodingManagementState } from '../providers/coding-management.state';
+import { CodingsState } from '../providers/codings.state';
 import { SettingManagementParameters } from '@fs/setting-management';
 
 @Component({
@@ -16,11 +16,11 @@ import { SettingManagementParameters } from '@fs/setting-management';
   styleUrls: ['./main.component.less']
 })
 export class MainComponent implements OnInit {
-  @Select(CodingManagementState.getCodes)
-  data$: Observable<Array<CodingManagementDtos.code>>;
+  @Select(CodingsState.getCodings)
+  data$: Observable<Array<CodingManagementDtos.coding>>;
   
-  codeList: Array<CodingManagementDtos.code>;
-  pageQuery: CodingManagementDtos.codesPageQueryParams = { skipCount: 0, maxResultCount: 999 } as CodingManagementDtos.codesPageQueryParams;
+  codeList: Array<CodingManagementDtos.coding>;
+  pageQuery: CodingManagementDtos.codingsPageQueryParams = { skipCount: 0, maxResultCount: 999 } as CodingManagementDtos.codingsPageQueryParams;
   loading: boolean = false;
 
   parameters = new SettingManagementParameters;
@@ -46,7 +46,7 @@ export class MainComponent implements OnInit {
   loadData() {
     this.loading = true;
     this.store
-      .dispatch(new GetCodes(this.pageQuery))
+      .dispatch(new GetCodings(this.pageQuery))
       .pipe(finalize(() => this.loading = false))
       .subscribe(() => { },
       (error) => {
@@ -55,7 +55,7 @@ export class MainComponent implements OnInit {
   }
 
   editManageAction(item?){
-    this.router.navigate(['/coding-management/codes', item]);
+    this.router.navigate(['/coding-management/codings', item]);
   }
 
   deleteNode(data?, type?){
@@ -65,10 +65,10 @@ export class MainComponent implements OnInit {
       nzOkText: '是',
       nzCancelText: '否',
       nzOnOk:()=>{
-        this.store.dispatch(new DeleteCode(data))
+        this.store.dispatch(new DeleteCoding(data))
         .pipe(finalize(() => this.loading = false))
         .subscribe(() => {
-          this.router.navigate(['/coding-management/codes']);
+          this.router.navigate(['/coding-management/codings']);
           this.notifyService.success("資料更新成功");
         }, (error) => {
           this.notifyService.error("資料更新失敗");
