@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { FsSettingManagementNgAlainModule } from '@fs/setting-management/ng-alain'
+import { SettingManagementNgAlainModule } from '@fs/setting-management/ng-alain'
 
 @NgModule({
-  imports: [FsSettingManagementNgAlainModule],
+  imports: [SettingManagementNgAlainModule],
 })
 export class SettingManagementWrapperModule { }

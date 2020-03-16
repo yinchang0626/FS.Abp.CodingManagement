@@ -6,9 +6,9 @@ import { NotifyService } from '../../shared/services/notify/notify.service';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Router } from '@angular/router';
 import { GetCodes, DeleteCode } from '../providers/coding-management.actions';
-import { FsCodingManagementDtos } from '@fs/coding-management';
+import { CodingManagementDtos } from '@fs/coding-management';
 import { CodingManagementState } from '../providers/coding-management.state';
-import { FsSettingManagementParameters } from '@fs/setting-management';
+import { SettingManagementParameters } from '@fs/setting-management';
 
 @Component({
   selector: 'fs-main',
@@ -17,13 +17,13 @@ import { FsSettingManagementParameters } from '@fs/setting-management';
 })
 export class MainComponent implements OnInit {
   @Select(CodingManagementState.getCodes)
-  data$: Observable<Array<FsCodingManagementDtos.code>>;
+  data$: Observable<Array<CodingManagementDtos.code>>;
   
-  codeList: Array<FsCodingManagementDtos.code>;
-  pageQuery: FsCodingManagementDtos.codesPageQueryParams = { skipCount: 0, maxResultCount: 999 } as FsCodingManagementDtos.codesPageQueryParams;
+  codeList: Array<CodingManagementDtos.code>;
+  pageQuery: CodingManagementDtos.codesPageQueryParams = { skipCount: 0, maxResultCount: 999 } as CodingManagementDtos.codesPageQueryParams;
   loading: boolean = false;
 
-  parameters = new FsSettingManagementParameters;
+  parameters = new SettingManagementParameters;
   constructor(
     private store: Store,
     private modalService: NzModalService,

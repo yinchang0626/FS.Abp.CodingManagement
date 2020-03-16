@@ -1,11 +1,11 @@
 import { ABP } from '@abp/ng.core';
-import { FsCodingManagementDtos } from '@fs/coding-management';
+import { CodingManagementDtos } from '@fs/coding-management';
 
 export namespace CodingManagement {
     export interface State {
-        codesResponse: FsCodingManagementDtos.codesResponse;
-        codesPageQueryParams: FsCodingManagementDtos.codesPageQueryParams;
-        code: FsCodingManagementDtos.code;
+        codesResponse: CodingManagementDtos.codesResponse;
+        codesPageQueryParams: CodingManagementDtos.codesPageQueryParams;
+        code: CodingManagementDtos.code;
     }
 
 }

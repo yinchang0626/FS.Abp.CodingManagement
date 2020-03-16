@@ -1,10 +1,6 @@
-$lib="coding-management"
+$ErrorActionPreference = "Stop"
 
-$branch="angular/libs/"+$lib
-$remote="origin"
-$branchToPsuh=$branch+":"+$branch
+git subtree split -P angular/libs/coding-management -b angular/libs/coding-management
 
-git subtree split -P "$branch" -b "$branch"
-
-git push "$remote" "$branchToPsuh"
+git push origin angular/libs/coding-management:angular/libs/coding-management
 

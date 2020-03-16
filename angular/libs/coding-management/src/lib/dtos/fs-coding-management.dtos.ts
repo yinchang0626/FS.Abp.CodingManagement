@@ -1,6 +1,6 @@
 import { ABP } from '@abp/ng.core';
 
-export namespace FsCodingManagementDtos {
+export namespace CodingManagementDtos {
 
     export type codesResponse = ABP.PagedResponse<code>;
 
