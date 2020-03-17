@@ -8,8 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="_Generated\FS.Abp.CodingManagement\Dtos\CodesDtoAutoMapperProfile.Generated.cs" />
-    <Compile Remove="_Generated\FS.Abp.CodingManagement\Dtos\CodesDtoValidator.Generated.cs" />
+    <Compile Remove="_Generated\FS.Abp.CodingManagement\Dtos\**" />
+    <EmbeddedResource Remove="_Generated\FS.Abp.CodingManagement\Dtos\**" />
+    <None Remove="_Generated\FS.Abp.CodingManagement\Dtos\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,10 +20,6 @@
     <ProjectReference Include="..\..\..\FS.Abp.Trees\src\FS.Abp.Trees.Application\FS.Abp.Trees.Application.csproj" />
     <ProjectReference Include="..\FS.Abp.CodingManagement.Application.Contracts\FS.Abp.CodingManagement.Application.Contracts.csproj" />
     <ProjectReference Include="..\FS.Abp.CodingManagement.Domain\FS.Abp.CodingManagement.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="_Generated\FS.Abp.CodingManagement\Dtos\" />
   </ItemGroup>
 
 </Project>

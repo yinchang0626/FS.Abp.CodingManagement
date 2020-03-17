@@ -40,6 +40,10 @@ namespace FS.Abp.CodingManagement.Coding
             var result = this.MapToDto<CodesWithDetailsDto>(codes);
             return result;
         }
+        public async Task DeleteClearDefinitionCacheAsync(string no)
+        {
+            await this.codesService.ClearCacheAsync(no).ConfigureAwait(false);
+        }
     }
     
 }

@@ -12,6 +12,7 @@ namespace FS.Abp.CodingManagement.Coding
     public interface ICodesService : ITransientDependency
     {
         Task<Codes> GetDefinitionAsync(string definitionNo);
+        Task ClearCacheAsync(string definitionNo);
     }
     public class CodesService : ICodesService
     {
@@ -20,7 +21,7 @@ namespace FS.Abp.CodingManagement.Coding
         private readonly ICurrentTenant _currentTenant;
 
         public CodesService(
-            IDistributedCache<Codes> cache,
+            FS.Abp.CodingManagement.Caching.CodesCache cache,
             ICodesTreeRepository codesTreeRepository,
             ICurrentTenant currentTenant
             )
@@ -29,12 +30,18 @@ namespace FS.Abp.CodingManagement.Coding
             _codesTreeRepository = codesTreeRepository;
             _currentTenant = currentTenant;
         }
+        private string GetCacheKey(string definitionNo)
+        {
+
+            var currentTenant = _currentTenant.Id.HasValue ? _currentTenant.Id.Value.ToString() : "host";
+            return $"{currentTenant}-{definitionNo}";
+        }
 
         public async Task<Codes> GetDefinitionAsync(string definitionNo)
         {
             var currentTenant = _currentTenant.Id.HasValue ? _currentTenant.Id.Value.ToString() : "host";
             var result = await _cache.GetOrAddAsync(
-                $"{currentTenant}-{definitionNo}", //Cache key
+                GetCacheKey(definitionNo),
                 async () =>
                 {
                     return await _codesTreeRepository.GetDefinitionAsync(definitionNo).ConfigureAwait(false);
@@ -43,8 +50,13 @@ namespace FS.Abp.CodingManagement.Coding
                 {
                     SlidingExpiration = TimeSpan.FromHours(1)
                 }
-            );
+            ).ConfigureAwait(false);
             return result;
+        }
+        public async Task ClearCacheAsync(string definitionNo)
+        {
+            var currentTenant = _currentTenant.Id.HasValue ? _currentTenant.Id.Value.ToString() : "host";
+            await _cache.RemoveAsync(GetCacheKey(definitionNo)).ConfigureAwait(false);
         }
     }
 }
