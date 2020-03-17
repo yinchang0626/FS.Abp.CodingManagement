@@ -126,7 +126,7 @@ export class DetailComponent implements OnInit {
         let raw = this.rowData.filter(x => x.id === key)[0];
         let no = (typeof (x[key].no) != "string") ? JSON.stringify(x[key].no) : x[key].no;
         let name = (typeof (x[key].name) != "string") ? JSON.stringify(x[key].name) : x[key].name;
-        let description = (typeof (x[key].description) != "string") ? JSON.stringify(x[key].description) : x[key].description;
+        let description = (typeof (x[key].description) != "string" && x[key].description != null) ? JSON.stringify(x[key].description) : x[key].description;
         let isEdit = (raw.no !== no || raw.displayName !== name || raw.description !== description);
         if(isEdit) this.isEdit[key] = true;
       });
@@ -140,7 +140,7 @@ export class DetailComponent implements OnInit {
       if (this.isEdit[x.id]){
         let no = (typeof (this.form.value[x.id].no) !== "string") ? JSON.stringify(this.form.value[x.id].no) : this.form.value[x.id].no;
         let name = (typeof (this.form.value[x.id].name) !== "string") ? JSON.stringify(this.form.value[x.id].name) : this.form.value[x.id].name;
-        let description = (typeof (this.form.value[x.id].description) !== "string") ? JSON.stringify(this.form.value[x.id].description) : this.form.value[x.id].description;
+        let description = (typeof (this.form.value[x.id].description) !== "string" && this.form.value[x.id].description != null) ? JSON.stringify(this.form.value[x.id].description) : this.form.value[x.id].description;
         updateInput.push({
           "id": x.id,
           "no": no,
