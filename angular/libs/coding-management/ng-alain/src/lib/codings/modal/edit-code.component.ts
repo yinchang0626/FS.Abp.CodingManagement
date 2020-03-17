@@ -5,7 +5,7 @@ import { Store } from '@ngxs/store';
 import { finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { NotifyService } from '../../shared/services/notify/notify.service';
-import { CreateCode, UpdateCode } from '../providers/coding-management.actions';
+import { CreateCoding, UpdateCoding } from '../providers/codings.actions';
 import { CodingManagementDtos } from '@fs/coding-management';
 
 @Component({
@@ -25,7 +25,7 @@ import { CodingManagementDtos } from '@fs/coding-management';
 
     tplModal: NzModalRef;
     form: FormGroup;
-    pageQuery: CodingManagementDtos.codesPageQueryParams = { skipCount: 0, maxResultCount: 999 } as CodingManagementDtos.codesPageQueryParams;
+    pageQuery: CodingManagementDtos.codingsPageQueryParams = { skipCount: 0, maxResultCount: 999 } as CodingManagementDtos.codingsPageQueryParams;
     loading: boolean = false;
     constructor(
         private modalService: NzModalService,
@@ -68,12 +68,12 @@ import { CodingManagementDtos } from '@fs/coding-management';
             "parentId": (this.parentId) ? this.parentId : null
         };
         this.store.dispatch(
-            (this.item) ? new UpdateCode(data) : new CreateCode(data)
+            (this.item) ? new UpdateCoding(data) : new CreateCoding(data)
         )
         .pipe(finalize(() => this.loading = false))
         .subscribe((x) => {
             this.tplModal.destroy();
-            (this.definitionId) ? this.router.navigate(['/coding-management/codes', this.definitionId]) : this.router.navigate(['/coding-management/codes'])
+            (this.definitionId) ? this.router.navigate(['/coding-management/codings', this.definitionId]) : this.router.navigate(['/coding-management/codings'])
             this.notifyService.success("資料更新成功");
         }, (error) => {
             this.notifyService.error("資料更新失敗");

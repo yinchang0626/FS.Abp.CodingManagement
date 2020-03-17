@@ -4,21 +4,15 @@ import { NgAlainBasicModule } from '@fs/ng-alain/basic';
 import { NgxsModule } from '@ngxs/store';
 import { NotifyService } from './services/notify/notify.service';
 import { MessagesService } from './services/messages/messages.service';
-import { CodingManagementModule} from '@fs/coding-management'
 
-const COMPONENT = [
-  
-]
+const COMPONENT = []
 
 @NgModule({
   declarations: [...COMPONENT],
   imports: [
-    CoreModule,
-    CodingManagementModule,
     NgAlainBasicModule,
-    //NgxsModule.forFeature([])
   ],
-  exports: [...COMPONENT, NgAlainBasicModule,CodingManagementModule],
+  exports: [...COMPONENT, NgAlainBasicModule],
   providers: [
     NotifyService,
     MessagesService
