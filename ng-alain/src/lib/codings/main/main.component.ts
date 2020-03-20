@@ -9,6 +9,7 @@ import { GetCodings, DeleteCoding } from '../providers/codings.actions';
 import { CodingManagementDtos } from '@fs/coding-management';
 import { CodingsState } from '../providers/codings.state';
 import { SettingManagementParameters } from '@fs/setting-management';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'fs-main',
@@ -36,7 +37,7 @@ export class MainComponent implements OnInit {
     this.loadData();
     this.data$.subscribe((x) => {
       if(x.length > 0){
-        this.codeList = x.filter(x => x.definitionId == null).sort((a, b) => parseInt(a.no) - parseInt(b.no));
+        this.codeList = _.sortBy(x.filter(x => x.definitionId == null), 'no');
       } else {
         this.codeList = [];
       }
