@@ -74,13 +74,13 @@ export class DetailComponent implements OnInit {
       this.isSeletedItem = "";
       if(x && this.definitionId){
         this.root = x;
-        this.rowData = this.data = x['codeList'].sort((a, b) => parseInt(a.no) - parseInt(b.no));
+        this.rowData = this.data = _.sortBy(x['codeList'], 'no');
         this.expandedKeys = this.data.map(x => x.id);
         this.level = (this.rowData.length <= 0) ? 0 : _.maxBy(this.rowData, function(o){
           return o.code.split('.').length;
         }).code.split('.').length;
         for(let i = 0; i < this.level; i++){
-            this.treeData.push((i === 0) ? x['codeList'].sort((a, b) => parseInt(a.no) - parseInt(b.no)) : []);
+            this.treeData.push((i === 0) ? _.sortBy(x['codeList'], 'no') : []);
             this.treeValue.push({});
             this.openSelect.push((i === 0) ? true : false);
         }
@@ -193,10 +193,10 @@ export class DetailComponent implements OnInit {
         this.treeValue[lvl + 1] = this.treeData[lvl + 1] = [];
         this.openSelect[lvl + 1] = false;
       }
-      this.treeData[lvl] = this.rowData.filter(x => x.parentId === v).sort((a, b) => parseInt(a.no) - parseInt(b.no));
+      this.treeData[lvl] = _.sortBy(this.rowData.filter(x => x.parentId === v), 'no');
     } else {
         if(l < this.level){
-          this.treeData[lvl + 1] = this.rowData.filter(x => x.parentId === this.treeValue[lvl]['id']).sort((a, b) => parseInt(a.no) - parseInt(b.no));
+          this.treeData[lvl + 1] = this.rowData.filter(x => x.parentId === _.sortBy(this.treeValue[lvl]['id']), 'no');
           this.openSelect[lvl + 1] = (l !== this.level) ? true : false;
         }
     }
@@ -222,12 +222,12 @@ export class DetailComponent implements OnInit {
           this.data = this.data.concat(this.treeValue[index]);
       } else {
           if(index === 0){
-              let v = this.rowData.filter(y => y.parentId === this.definitionId).sort((a, b) => parseInt(a.no) - parseInt(b.no));
+              let v = _.sortBy(this.rowData.filter(y => y.parentId === this.definitionId), 'no');
               value[index] = v;
               this.data = this.data.concat(v);
           } else {
               value[index - 1].forEach((x) => {
-                  let v = (x['id']) ? this.rowData.filter(y => y.parentId === x['id']).sort((a, b) => parseInt(a.no) - parseInt(b.no)) : [];
+                  let v = (x['id']) ? _.sortBy(this.rowData.filter(y => y.parentId === x['id']), 'no') : [];
                   value[index] = value[index].concat(v);
                   this.data = this.data.concat(v);
               })
