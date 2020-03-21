@@ -29,6 +29,8 @@ namespace FS.Abp.CodingManagement.Coding.Dtos
 
         public System.Guid? ParentId { get; set; }
 
+        public bool Enable { get; set; }
+
     }
     public partial class CodesWithDetailsDto : CodesDto
     {
@@ -55,6 +57,8 @@ namespace FS.Abp.CodingManagement.Coding.Dtos
 
         public System.Guid? ParentId { get; set; }
 
+        public bool Enable { get; set; }
+
     }
     public partial class CodesUpdateInput : FS.Abp.Trees.Dtos.IUpdateInput
     {
@@ -69,6 +73,8 @@ namespace FS.Abp.CodingManagement.Coding.Dtos
         public System.Guid? DefinitionId { get; set; }
 
         public System.Guid? ParentId { get; set; }
+
+        public bool Enable { get; set; }
 
     }
     public partial class CodesGetListInput : PagedAndSortedResultRequestDto, FS.Abp.Trees.Dtos.IGetListInput

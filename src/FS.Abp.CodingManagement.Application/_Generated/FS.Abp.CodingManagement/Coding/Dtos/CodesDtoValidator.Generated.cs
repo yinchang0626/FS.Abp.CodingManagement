@@ -30,6 +30,9 @@ namespace FS.Abp.CodingManagement.Coding.Dtos
                 ;
             RuleFor(p => p.ParentId)
                 ;
+            RuleFor(p => p.Enable)
+                .NotNull()
+                ;
             CustomizeConfiguration();
         }
         partial void CustomizeConfiguration();
@@ -51,6 +54,9 @@ namespace FS.Abp.CodingManagement.Coding.Dtos
             RuleFor(p => p.DefinitionId)
                 ;
             RuleFor(p => p.ParentId)
+                ;
+            RuleFor(p => p.Enable)
+                .NotNull()
                 ;
             CustomizeConfiguration();
         }
