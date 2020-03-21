@@ -184,7 +184,7 @@
     <property name="ParentId" type="Guid" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="20c4076b-1e1d-4aca-af35-4cb46bd3ea9c">
       <column name="" />
     </property>
-    <property name="Enable" type="Boolean" p1:ValidateRequired="true" p1:Guid="fa0ff8f6-ddc0-49eb-b2c0-68a6adc1d724">
+    <property name="Enable" type="Boolean" constructor-parameter="True" p1:ValidateRequired="true" p1:Guid="fa0ff8f6-ddc0-49eb-b2c0-68a6adc1d724">
       <column name="" default="true" />
     </property>
     <property name="TenantId" type="Guid" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="1ac1a5eb-9a22-455a-8ce8-a433a980a994" p1:GenerateDTO="False">

@@ -49,6 +49,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200321031713_add_enable.cs" />
     <Compile Remove="Migrations\20200321031713_add_enable.Designer.cs" />
+    <Compile Remove="Migrations\20200321081647_enableDefaultValueFix.cs" />
+    <Compile Remove="Migrations\20200321081647_enableDefaultValueFix.Designer.cs" />
   </ItemGroup>
 
 </Project>

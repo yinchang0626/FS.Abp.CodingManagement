@@ -34,6 +34,11 @@ namespace FS.Abp.CodingManagement.Coding
             OnCreated();
         }
 
+        public Codes(bool enable) : this()
+        {
+            this.Enable = enable;
+        }
+
         public virtual string No
         {
             get;
