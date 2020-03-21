@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Compile Remove="_Generated\FS.Abp.CodingManagement\Codes.Generated.cs" />
+    <Compile Remove="_Generated\Microsoft.Extensions.DependencyInjection\IServiceCollectionExtensions.AbpSetting.Generated.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +18,10 @@
     <ProjectReference Include="..\..\..\FS.Abp.SettingManagement\src\FS.Abp.SettingManagement.Domain\FS.Abp.SettingManagement.Domain.csproj" />
     <ProjectReference Include="..\..\..\FS.Abp.Trees\src\FS.Abp.Trees.Domain\FS.Abp.Trees.Domain.csproj" />
     <ProjectReference Include="..\FS.Abp.CodingManagement.Domain.Shared\FS.Abp.CodingManagement.Domain.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="_Generated\Microsoft.Extensions.DependencyInjection\" />
   </ItemGroup>
 
 </Project>

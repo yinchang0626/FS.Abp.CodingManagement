@@ -28,6 +28,7 @@ namespace FS.Abp.CodingManagement.Coding
 
         public Codes()
         {
+            this.Enable = true;
             this.CodeList = new List<Codes>();
             this.Children = new List<Codes>();
             OnCreated();
@@ -64,6 +65,12 @@ namespace FS.Abp.CodingManagement.Coding
         }
 
         public virtual System.Guid? ParentId
+        {
+            get;
+            set;
+        }
+
+        public virtual bool Enable
         {
             get;
             set;

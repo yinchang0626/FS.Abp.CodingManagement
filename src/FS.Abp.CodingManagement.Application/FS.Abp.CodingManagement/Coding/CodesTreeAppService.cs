@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Entities;
+using Volo.Abp.Guids;
 
 namespace FS.Abp.CodingManagement.Coding
 {
@@ -12,6 +13,17 @@ namespace FS.Abp.CodingManagement.Coding
     {
         private ICodesService _codesService;
         public ICodesService codesService => this.LazyGetRequiredService(ref _codesService);
+
+        private IGuidGenerator _guidGenerator;
+        public IGuidGenerator guidGenerator => this.LazyGetRequiredService(ref _guidGenerator);
+
+        public async Task CreateListAsync(List<CodesCreateInput> input)
+        {
+            for(var i = 0; i < input.Count(); i++)
+            {
+                await this.CreateAsync(input[i]);
+            }
+        }
 
         public async Task UpdateListAsync(List<UpdateListInput> input)
         {

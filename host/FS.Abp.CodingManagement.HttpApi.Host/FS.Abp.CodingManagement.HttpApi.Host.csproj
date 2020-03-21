@@ -46,4 +46,9 @@
     <None Remove="Logs\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20200321031713_add_enable.cs" />
+    <Compile Remove="Migrations\20200321031713_add_enable.Designer.cs" />
+  </ItemGroup>
+
 </Project>
