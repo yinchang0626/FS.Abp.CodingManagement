@@ -53,6 +53,7 @@ import { CodingManagementDtos } from '@fs/coding-management';
         this.form = this.fb.group({
             no: [(this.item) ? this.item['no'] : '', [Validators.required]],
             name: [(this.item) ? this.item['displayName'] : '', [Validators.required]],
+            enable: [(this.item) ? this.item['enable'] : true, [Validators.required]],
             description: [(this.item) ? this.item['description'] : '', []]
         });
     }
@@ -65,7 +66,8 @@ import { CodingManagementDtos } from '@fs/coding-management';
             "description": this.form.value.description,
             "definitionId": (this.definitionId) ? this.definitionId : null,
             "code": (this.item) ? this.item['code'] : null,
-            "parentId": (this.parentId) ? this.parentId : null
+            "parentId": (this.parentId) ? this.parentId : null,
+            "enable": this.form.value.enable
         };
         this.store.dispatch(
             (this.item) ? new UpdateCoding(data) : new CreateCoding(data)

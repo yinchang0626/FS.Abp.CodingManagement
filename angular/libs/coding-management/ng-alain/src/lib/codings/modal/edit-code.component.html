@@ -9,6 +9,12 @@
     <nz-spin [nzSpinning]="loading">
         <form [formGroup]="form" id="ngForm">
             <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>啟用</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                    <label nz-checkbox name="enable" formControlName="enable"></label>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
                 <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>代碼</nz-form-label>
                 <nz-form-control [nzSm]="14" [nzXs]="24">
                     <input nz-input name="no" formControlName="no" type="text"/>
