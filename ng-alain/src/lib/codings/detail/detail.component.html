@@ -40,6 +40,12 @@
     <form nz-form [formGroup]="form">
       <div [formGroupName]="node.key">
         <nz-form-item>
+          <nz-form-label [nzSm]="5" [nzXs]="24" nzRequired>啟用</nz-form-label>
+          <nz-form-control [nzSm]="12" [nzXs]="24">
+            <label nz-checkbox name="enable" formControlName="enable"></label>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
           <nz-form-label [nzSm]="5" [nzXs]="24" nzRequired>代碼</nz-form-label>
           <nz-form-control [nzSm]="12" [nzXs]="24">
             <input nz-input type="text" [name]="node.origin.no" formControlName="no"/>

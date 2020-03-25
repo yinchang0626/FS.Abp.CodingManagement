@@ -13,6 +13,7 @@ export namespace CodingManagementDtos {
         description: string,
         definitionId: string,
         code: string,
-        parentId: string
+        parentId: string,
+        enable: boolean
     }
 }
