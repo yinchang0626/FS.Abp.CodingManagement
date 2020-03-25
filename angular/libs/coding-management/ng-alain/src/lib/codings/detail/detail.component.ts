@@ -116,9 +116,13 @@ export class DetailComponent implements OnInit {
       data[x.id] = this.fb.group({
         no: [x.no, [Validators.required]],
         name: [x.displayName, [Validators.required]],
-        description: [x.description, []]
+        enable: [x.enable, [Validators.required]],
+        description: [x.description, []],
       })
     });
+
+    console.log(this.rowData, data)
+    
     this.form = this.fb.group(data);
     this.form.valueChanges.subscribe(x => {
       this.isEdit = {};
@@ -127,7 +131,8 @@ export class DetailComponent implements OnInit {
         let no = (typeof (x[key].no) != "string") ? JSON.stringify(x[key].no) : x[key].no;
         let name = (typeof (x[key].name) != "string") ? JSON.stringify(x[key].name) : x[key].name;
         let description = (typeof (x[key].description) != "string" && x[key].description != null) ? JSON.stringify(x[key].description) : x[key].description;
-        let isEdit = (raw.no !== no || raw.displayName !== name || raw.description !== description);
+        let enable = x[key].enable;
+        let isEdit = (raw.no !== no || raw.displayName !== name || raw.description !== description || raw.enable !== enable);
         if(isEdit) this.isEdit[key] = true;
       });
       this.changeDetectorRef.detectChanges();
@@ -148,7 +153,8 @@ export class DetailComponent implements OnInit {
           "description": description,
           "definitionId": x.definitionId,
           "code": x.code,
-          "parentId": x.parentId
+          "parentId": x.parentId,
+          "enable": this.form.value[x.id].enable
         });
       }
     });

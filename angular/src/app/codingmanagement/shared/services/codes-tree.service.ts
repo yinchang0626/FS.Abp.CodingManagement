@@ -1,19 +1,19 @@
 import { RestService , PagedResultDto} from '@abp/ng.core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {CodesWithDetailsDto, CodesMoveInput, CodesGetListInput, CodesCreateInput, CodesUpdateInput} from '../models';
+import {CodesCreateInput, CodesDto, CodesWithDetailsDto, CodesMoveInput, CodesGetListInput, CodesUpdateInput} from '../models';
 
 @Injectable({providedIn: 'root'})
 export class CodesTreeService {
   constructor(private restService: RestService) {}
 
- createListByInput(body: any): Observable<void> {
+ createListByInput(body: CodesCreateInput): Observable<void> {
    return this.restService.request({ url: '/api/CodingManagement/codesTree/list', method: 'POST', body });
  }
  updateListByInput(body: any): Observable<void> {
    return this.restService.request({ url: '/api/CodingManagement/codesTree/list', method: 'PUT', body });
  }
- findChildrenByParentIdAndRecursive(recursive: boolean = False, parentId: string?): Observable<any[]> {
+ findChildrenByParentIdAndRecursive(recursive: boolean = False, parentId: string?): Observable<CodesDto[]> {
    return this.restService.request({ url: `/api/CodingManagement/codesTree/findChildren/${parentId}`, method: 'POST', params: { recursive } });
  }
  getDefinitionByNo(no: string): Observable<CodesWithDetailsDto> {
