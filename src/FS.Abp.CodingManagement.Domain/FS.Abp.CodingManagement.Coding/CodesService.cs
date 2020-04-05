@@ -39,23 +39,23 @@ namespace FS.Abp.CodingManagement.Coding
 
         public async Task<Codes> GetDefinitionAsync(string definitionNo)
         {
-            var currentTenant = _currentTenant.Id.HasValue ? _currentTenant.Id.Value.ToString() : "host";
-            var result = await _cache.GetOrAddAsync(
-                GetCacheKey(definitionNo),
-                async () =>
-                {
-                    return await _codesTreeRepository.GetDefinitionAsync(definitionNo).ConfigureAwait(false);
-                },
-                () => new DistributedCacheEntryOptions
-                {
-                    SlidingExpiration = TimeSpan.FromHours(1)
-                }
-            ).ConfigureAwait(false);
+            //var result = await _cache.GetOrAddAsync(
+            //    GetCacheKey(definitionNo),
+            //    async () =>
+            //    {
+            //        return await _codesTreeRepository.GetDefinitionAsync(definitionNo).ConfigureAwait(false);
+            //    },
+            //    () => new DistributedCacheEntryOptions
+            //    {
+            //        SlidingExpiration = TimeSpan.FromHours(1)
+            //    }
+            //).ConfigureAwait(false);
+            var result= await _codesTreeRepository.GetDefinitionAsync(definitionNo).ConfigureAwait(false); ;
+
             return result;
         }
         public async Task ClearCacheAsync(string definitionNo)
         {
-            var currentTenant = _currentTenant.Id.HasValue ? _currentTenant.Id.Value.ToString() : "host";
             await _cache.RemoveAsync(GetCacheKey(definitionNo)).ConfigureAwait(false);
         }
     }
