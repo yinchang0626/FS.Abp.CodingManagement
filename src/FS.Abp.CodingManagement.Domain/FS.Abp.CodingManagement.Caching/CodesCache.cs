@@ -46,12 +46,14 @@ namespace FS.Abp.CodingManagement.Caching
             IDistributedCache cache,
             ICancellationTokenProvider cancellationTokenProvider,
             Utf8JsonDistributedCacheSerializer serializer,
-            IDistributedCacheKeyNormalizer keyNormalizer) : base(
+            IDistributedCacheKeyNormalizer keyNormalizer,
+            IHybridServiceScopeFactory serviceScopeFactory) : base(
                 distributedCacheOption: distributedCacheOption,
                 cache: cache,
                 cancellationTokenProvider: cancellationTokenProvider,
                 serializer: serializer,
-                keyNormalizer: keyNormalizer)
+                keyNormalizer: keyNormalizer,
+                serviceScopeFactory: serviceScopeFactory)
         {
 
         }
