@@ -3,7 +3,7 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { finalize } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NotifyService } from '../../shared/services/notify/notify.service';
 import { CreateCoding, UpdateCoding } from '../providers/codings.actions';
 import { CodingManagementDtos } from '@fs/coding-management';
@@ -32,7 +32,8 @@ import { CodingManagementDtos } from '@fs/coding-management';
         private store: Store,
         private fb: FormBuilder,
         private router: Router,
-        private notifyService: NotifyService
+        private notifyService: NotifyService,
+        private activatedRoute:ActivatedRoute
     ) {}
 
     ngOnInit(): void {
@@ -75,7 +76,7 @@ import { CodingManagementDtos } from '@fs/coding-management';
         .pipe(finalize(() => this.loading = false))
         .subscribe((x) => {
             this.tplModal.destroy();
-            (this.definitionId) ? this.router.navigate(['/coding-management/codings', this.definitionId]) : this.router.navigate(['/coding-management/codings'])
+            (this.definitionId) ? this.router.navigate(['.', this.definitionId],{relativeTo: this.activatedRoute}) : this.router.navigate(['.'],{relativeTo: this.activatedRoute})
             this.notifyService.success("資料更新成功");
         }, (error) => {
             this.notifyService.error("資料更新失敗");
