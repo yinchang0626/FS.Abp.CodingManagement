@@ -1,8 +1,10 @@
-﻿using System;
+﻿using FS.Abp.CodingManagement.CodeSetting.Dtos;
+using FS.Abp.CodingManagement.Coding;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Volo.Abp.Settings;
 
 namespace FS.Abp.CodingManagement.CodeSetting
 {
@@ -25,10 +27,9 @@ namespace FS.Abp.CodingManagement.CodeSetting
         public async Task<List<CodeSettingInput>> PostGetCodeSettingsByCodeId(List<Guid> codeIds)
         {
             List<CodeSettingInput> codeSettingDtos = new List<CodeSettingInput>();
-
-            for (var i = 0; i < codeIds.Count(); i++)
+            var codes = this._codeRepository.Where(x => codeIds.Contains(x.Id)).ToList();
+            foreach (var code in codes)
             {
-                var code = await this._codeRepository.GetAsync(codeIds[i]);
                 var settings = await this._settingManager.GetAllAsync("Codes", code.Id.ToString());
 
                 CodeSettingInput dto = ObjectMapper.Map<FS.Abp.CodingManagement.Coding.Codes, CodeSettingInput>(code);
@@ -38,6 +39,49 @@ namespace FS.Abp.CodingManagement.CodeSetting
             }
 
             return codeSettingDtos;
+        }
+
+        public async Task<List<CodeSettingInput>> PostGetCodeSettingsByCodeIdAndSettingKeys(List<GetCodeSettingsByCodeIdAndSettingKeysInputDto> inputs)
+        {
+            List<CodeSettingInput> codeSettingDtos = new List<CodeSettingInput>();
+            var codeInputs = getCodeInputs(inputs);
+            foreach (var codeInput in codeInputs)
+            {
+                var settings = await getSettings(codeInput.input);
+
+                CodeSettingInput dto = ObjectMapper.Map<Codes, CodeSettingInput>(codeInput.code);
+                dto.Settings = settings;
+
+                codeSettingDtos.Add(dto);
+            }
+
+            return codeSettingDtos;
+            List<(GetCodeSettingsByCodeIdAndSettingKeysInputDto input, Codes code)> getCodeInputs(List<GetCodeSettingsByCodeIdAndSettingKeysInputDto> inputs)
+            {
+                var codeIds = inputs.Select(x => x.CodeId).ToList();
+                var codes = this._codeRepository.Where(x => codeIds.Contains(x.Id)).ToList();
+                var codeInputs = inputs.Join(codes,
+                    input => input.CodeId,
+                    code => code.Id,
+                    (input, code) => (input, code))
+                    .ToList();
+                return codeInputs;
+            }
+            async Task<List<SettingValue>> getSettings(GetCodeSettingsByCodeIdAndSettingKeysInputDto input)
+            {
+                var settings = new List<SettingValue>();
+                foreach (var settingKey in input.SettingKeys)
+                {
+                    var settingValue = await this._settingManager.GetOrNullAsync(settingKey, "Codes", input.CodeId.ToString());
+                    var setting = new SettingValue()
+                    {
+                        Name = settingKey,
+                        Value = settingValue
+                    };
+                    settings.Add(setting);
+                }
+                return settings;
+            }
         }
 
         public async Task PostCreateOrUpdateCodeSettings(CreateOrUpdateCodeSettingsInput input)
