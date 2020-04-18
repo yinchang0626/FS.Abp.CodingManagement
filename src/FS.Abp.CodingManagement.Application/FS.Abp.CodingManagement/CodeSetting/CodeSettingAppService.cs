@@ -41,7 +41,7 @@ namespace FS.Abp.CodingManagement.CodeSetting
 
             return codeSettingDtos;
         }
-
+        //todo: rename CodeSettingInput output dto,dont use 'Input' for a output param
         public async Task<List<CodeSettingInput>> PostLoadCodeSettingsBy(PostLoadCodeSettingsInputDto inputs)
         {
             List<CodeSettingInput> codeSettingDtos = new List<CodeSettingInput>();
