@@ -24,6 +24,7 @@ namespace FS.Abp.CodingManagement.CodeSetting
             this._codeSettingDomainService = codeSettingDomainService;
         }
 
+        [Obsolete("replaced by PostLoadCodeSettingsBy")]
         public async Task<List<CodeSettingInput>> PostGetCodeSettingsByCodeId(List<Guid> codeIds)
         {
             List<CodeSettingInput> codeSettingDtos = new List<CodeSettingInput>();
@@ -41,44 +42,45 @@ namespace FS.Abp.CodingManagement.CodeSetting
             return codeSettingDtos;
         }
 
-        public async Task<List<CodeSettingInput>> PostGetCodeSettingsByCodeIdAndSettingKeys(List<GetCodeSettingsByCodeIdAndSettingKeysInputDto> inputs)
+        public async Task<List<CodeSettingInput>> PostLoadCodeSettingsBy(PostLoadCodeSettingsInputDto inputs)
         {
             List<CodeSettingInput> codeSettingDtos = new List<CodeSettingInput>();
-            var codeInputs = getCodeInputs(inputs);
-            foreach (var codeInput in codeInputs)
+            var codes = getCodeInputs(inputs.CodeIds);
+            foreach (var code in codes)
             {
-                var settings = await getSettings(codeInput.input);
+                var settings = await getSettings(code.Id,inputs.SettingKeys);
 
-                CodeSettingInput dto = ObjectMapper.Map<Codes, CodeSettingInput>(codeInput.code);
+                CodeSettingInput dto = ObjectMapper.Map<Codes, CodeSettingInput>(code);
                 dto.Settings = settings;
 
                 codeSettingDtos.Add(dto);
             }
 
             return codeSettingDtos;
-            List<(GetCodeSettingsByCodeIdAndSettingKeysInputDto input, Codes code)> getCodeInputs(List<GetCodeSettingsByCodeIdAndSettingKeysInputDto> inputs)
+            List<Codes> getCodeInputs(List<Guid> codeIds)
             {
-                var codeIds = inputs.Select(x => x.CodeId).ToList();
                 var codes = this._codeRepository.Where(x => codeIds.Contains(x.Id)).ToList();
-                var codeInputs = inputs.Join(codes,
-                    input => input.CodeId,
-                    code => code.Id,
-                    (input, code) => (input, code))
-                    .ToList();
-                return codeInputs;
+                return codes;
             }
-            async Task<List<SettingValue>> getSettings(GetCodeSettingsByCodeIdAndSettingKeysInputDto input)
+            async Task<List<SettingValue>> getSettings(Guid codeId, List<string> settingKeys)
             {
                 var settings = new List<SettingValue>();
-                foreach (var settingKey in input.SettingKeys)
+                if (settingKeys == null || settingKeys.Count == 0)
                 {
-                    var settingValue = await this._settingManager.GetOrNullAsync(settingKey, "Codes", input.CodeId.ToString());
-                    var setting = new SettingValue()
+                    settings = await this._settingManager.GetAllAsync("Codes", codeId.ToString());
+                }
+                else 
+                {
+                    foreach (var settingKey in settingKeys)
                     {
-                        Name = settingKey,
-                        Value = settingValue
-                    };
-                    settings.Add(setting);
+                        var settingValue = await this._settingManager.GetOrNullAsync(settingKey, "Codes", codeId.ToString());
+                        var setting = new SettingValue()
+                        {
+                            Name = settingKey,
+                            Value = settingValue
+                        };
+                        settings.Add(setting);
+                    }
                 }
                 return settings;
             }

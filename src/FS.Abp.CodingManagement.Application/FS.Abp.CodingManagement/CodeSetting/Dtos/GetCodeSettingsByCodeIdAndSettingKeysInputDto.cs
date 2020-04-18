@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace FS.Abp.CodingManagement.CodeSetting.Dtos
 {
-    public class GetCodeSettingsByCodeIdAndSettingKeysInputDto
+    public class PostLoadCodeSettingsInputDto
     {
-        public Guid CodeId { get; set; }
+        public List<Guid> CodeIds { get; set; }
         public List<string> SettingKeys { get; set; }
     }
 }
