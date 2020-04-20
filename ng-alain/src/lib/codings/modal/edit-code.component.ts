@@ -76,7 +76,9 @@ import { CodingManagementDtos } from '@fs/coding-management';
         .pipe(finalize(() => this.loading = false))
         .subscribe((x) => {
             this.tplModal.destroy();
-            (this.definitionId) ? this.router.navigate(['.', this.definitionId],{relativeTo: this.activatedRoute}) : this.router.navigate(['.'],{relativeTo: this.activatedRoute})
+            //TODO: erro when url become :/coding-management/codings/bfddfe13-f7d7-3e62-71f9-39f47580078a/xxxxx
+            //(this.definitionId) ? this.router.navigate(['.', this.definitionId],{relativeTo: this.activatedRoute}) : this.router.navigate(['.'],{relativeTo: this.activatedRoute})
+            this.router.navigate(['.'],{relativeTo: this.activatedRoute});
             this.notifyService.success("資料更新成功");
         }, (error) => {
             this.notifyService.error("資料更新失敗");
