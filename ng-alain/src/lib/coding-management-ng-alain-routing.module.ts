@@ -3,6 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { DynamicLayoutComponent, AuthGuard, PermissionGuard } from '@abp/ng.core';
 import { CodingsModule } from './codings/codings.module';
 
+export function LoadCodingModule() {
+    return CodingsModule;
+  }
+
 const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'code' },
     {
@@ -12,7 +16,7 @@ const routes: Routes = [
         children: [
             {
                 path: 'codings',
-                loadChildren: () => CodingsModule
+                loadChildren: LoadCodingModule
             }
         ],
     }
