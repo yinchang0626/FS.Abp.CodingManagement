@@ -7,3 +7,5 @@ export * from './codes-update-input';
 export * from './create-or-update-code-settings-input';
 export * from './post-load-code-settings-input-dto';
 export * from './post-load-code-settings-output';
+export * from './codes-detail-with-setting-obj';
+export * from './codes-with-setting';
