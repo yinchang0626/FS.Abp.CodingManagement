@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CodesDto, CodesWithDetailsDto } from '@fs/coding-management/core';
-import { SettingManagementDto } from '@fs/setting-management'
+import { CodesDto, CodesWithDetailsDto, CodeDetailWithSettingObj, CodesWthSettingDto } from '@fs/coding-management/core';
 import * as _ from 'lodash';
 
 @Injectable({
@@ -32,7 +31,7 @@ export class CodeProcessService {
   }
 
 
-  getCodeChildrenDetailWithSetting(children: CodesWthSettingDto[], codeList: CodesWthSettingDto[]): CodeDetailWithSettingObj[] {
+  getCodeChildrenDetailWithSetting(children: CodesWthSettingDto[], codeList: CodesWthSettingDto[], HidefalseEnable:boolean = false): CodeDetailWithSettingObj[] {
     console.log(codeList)
     var childrenIds = children.map(x => x.id);
     codeList = codeList.filter(x => !childrenIds.includes(x.id));
@@ -41,7 +40,11 @@ export class CodeProcessService {
     for (var i = 0; i < children.length; i++) {
       var item = children[i];
 
-      var childrenCodes = _.sortBy(codeList.filter(x => x.parentId == children[i].id && x.enable == true), "no");
+      if(HidefalseEnable){
+        var codeList = codeList.filter(x => x.enable == true)
+      }
+
+      var childrenCodes = _.sortBy(codeList.filter(x => x.parentId == children[i].id ), "no");
       var codeListCodes = codeList.filter(x => _.startsWith(x.code, children[i].code));
       item.children = this.getCodeChildrenDetail(childrenCodes, codeListCodes);
       item.codeList = codeListCodes;
@@ -54,25 +57,4 @@ export class CodeProcessService {
     return datas;
   }
 
-}
-
-
-export class CodeDetailWithSettingObj extends CodesWithDetailsDto {
-  settings: SettingManagementDto.setting[];
-  settingObj: { [key: string]: any };
-
-  constructor(item) {
-    super(item);
-    if (item.settings) {
-      this.settingObj = {};
-      item.settings.forEach(setting => {
-        var rename = _.last(setting.name.split("."));
-        this.settingObj[rename] = setting.value
-      });
-    }
-  }
-}
-
-export class CodesWthSettingDto extends CodesWithDetailsDto {
-  settings: SettingManagementDto.setting[];
 }
