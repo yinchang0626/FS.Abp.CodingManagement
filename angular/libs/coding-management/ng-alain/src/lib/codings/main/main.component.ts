@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { NotifyService } from '../../shared/services/notify/notify.service';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { GetCodings, DeleteCoding } from '../providers/codings.actions';
 import { CodingManagementDtos } from '@fs/coding-management';
 import { CodingsState } from '../providers/codings.state';
@@ -30,6 +30,7 @@ export class MainComponent implements OnInit {
     private modalService: NzModalService,
     private notifyService: NotifyService,
     private router: Router,
+    private activatedRoute:ActivatedRoute
   ) {
   }
 
@@ -56,7 +57,7 @@ export class MainComponent implements OnInit {
   }
 
   editManageAction(item?){
-    this.router.navigate(['/coding-management/codings', item]);
+    this.router.navigate(['.', item],{relativeTo: this.activatedRoute});
   }
 
   deleteNode(data?, type?){
@@ -69,7 +70,7 @@ export class MainComponent implements OnInit {
         this.store.dispatch(new DeleteCoding(data))
         .pipe(finalize(() => this.loading = false))
         .subscribe(() => {
-          this.router.navigate(['/coding-management/codings']);
+          this.router.navigate(['.'],{relativeTo: this.activatedRoute});
           this.notifyService.success("資料更新成功");
         }, (error) => {
           this.notifyService.error("資料更新失敗");
