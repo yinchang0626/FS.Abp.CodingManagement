@@ -1,4 +1,4 @@
-import { CodesDto, CodesWithDetailsDto } from '@fs/coding-management/core';
+import { CodesWithDetailsDto } from './codes-with-details-dto';
 import { SettingManagementDto } from '@fs/setting-management';
 import * as _ from 'lodash';
 
