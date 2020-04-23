@@ -1,7 +1,7 @@
 import { RestService } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {CreateOrUpdateCodeSettingsInput, PostLoadCodeSettingsInputDto, PostLoadCodeSettingsOutputDto} from '../models';
+import {CreateOrUpdateCodeSettingsInput, PostLoadCodeSettingsInputDto, PostLoadCodeSettingsOutputDto} from '../../models';
 
 @Injectable({providedIn: 'root'})
 export class CodeSettingService {

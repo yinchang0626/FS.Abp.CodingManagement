@@ -1,7 +1,8 @@
 import { RestService , PagedResultDto} from '@abp/ng.core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {CodesCreateInput, CodesDto, CodesWithDetailsDto, CodesMoveInput, CodesGetListInput, CodesUpdateInput} from '../models';
+import {CodesCreateInput, CodesDto, CodesWithDetailsDto,
+   CodesMoveInput, CodesGetListInput, CodesUpdateInput} from '../../models';
 
 @Injectable({providedIn: 'root'})
 export class CodesTreeService {

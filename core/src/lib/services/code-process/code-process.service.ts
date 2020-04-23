@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CodesDto, CodesWithDetailsDto, CodeDetailWithSettingObj, CodesWthSettingDto } from '@fs/coding-management/core';
+import {CodesDto} from '../../models/codes-dto';
+import {CodesWithDetailsDto} from '../../models/codes-with-details-dto';
+import {CodeDetailWithSettingObj} from '../../models/codes-detail-with-setting-obj';
+import { CodesWithSettingDto } from '../../models/codes-with-setting';
 import * as _ from 'lodash';
 
 @Injectable({
@@ -16,9 +19,6 @@ export class CodeProcessService {
     var datas: CodesWithDetailsDto[] = [];
     for (var i = 0; i < children.length; i++) {
       var item = new CodesWithDetailsDto(children[i]);
-      // item.children = codeList.filter(x => x.parentId == children[i].id);
-      // item.codeList = codeList.filter(x => _.startsWith(x.code, children[i].code));
-
       var childrenCodes = codeList.filter(x => x.parentId == children[i].id);
       var codeListCodes = codeList.filter(x => _.startsWith(x.code, children[i].code));
 
@@ -31,7 +31,7 @@ export class CodeProcessService {
   }
 
 
-  getCodeChildrenDetailWithSetting(children: CodesWthSettingDto[], codeList: CodesWthSettingDto[], HidefalseEnable:boolean = false): CodeDetailWithSettingObj[] {
+  getCodeChildrenDetailWithSetting(children: CodesWithSettingDto[], codeList: CodesWithSettingDto[], HidefalseEnable:boolean = false): CodeDetailWithSettingObj[] {
     console.log(codeList)
     var childrenIds = children.map(x => x.id);
     codeList = codeList.filter(x => !childrenIds.includes(x.id));
