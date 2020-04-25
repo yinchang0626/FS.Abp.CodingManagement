@@ -1,7 +1,7 @@
-import { NgModule, Injectable } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AccountConfigService } from '@abp/ng.account.config';
-import { addAbpRoutes, eLayoutType, ABP } from '@abp/ng.core';
+import {  ABP } from '@abp/ng.core';
+import { LazyLibsRoutes } from './lazy-libs/lazy-libs-routes.module';
 //import { LayoutDefaultComponent } from '@fs/ng-alain';
 //import { AuthGuard } from '@fs/core';
 const routes: Routes = [
@@ -24,30 +24,10 @@ const routes: Routes = [
         },
     },
     {
-        path: 'account',
-        loadChildren: () => import('./lazy-libs/account-wrapper.module').then(m => m.AccountWrapperModule)
+        path:'',
+        children:LazyLibsRoutes
     },
-    {
-        path: 'identity',
-        loadChildren: () => import('./lazy-libs/identity-wrapper.module').then(m => m.IdentityWrapperModule),
-    },
-    {
-        path: 'tenant-management',
-        loadChildren: () =>
-            import('./lazy-libs/tenant-management-wrapper.module').then(m => m.TenantManagementWrapperModule),
-    },
-    {
-        path: 'setting-management',
-        loadChildren: () =>
-            import('./lazy-libs/setting-management-wrapper.module').then(m => m.SettingManagementWrapperModule),
-    },
-    {
-        path: 'coding-management',
-        loadChildren: () =>
-            import('./lazy-libs/coding-management-wrapper.module').then(m => m.CodingManagementWrapperModule),
-    }
-
-
+    ...LazyLibsRoutes,
 ];
 @NgModule({
     imports: [
