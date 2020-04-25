@@ -29,6 +29,9 @@ using Volo.Abp.Security.Claims;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.VirtualFileSystem;
 using Volo.Abp.AspNetCore.Mvc;
+using Volo.Abp.Identity.EntityFrameworkCore;
+using Volo.Abp.Identity;
+using Volo.Abp.IdentityServer.EntityFrameworkCore;
 
 namespace FS.Abp.CodingManagement
 {
@@ -43,6 +46,11 @@ namespace FS.Abp.CodingManagement
         typeof(AbpPermissionManagementEntityFrameworkCoreModule),
         typeof(AbpSettingManagementEntityFrameworkCoreModule),
         typeof(AbpAspNetCoreSerilogModule),
+
+        typeof(AbpIdentityEntityFrameworkCoreModule),
+        typeof(AbpIdentityApplicationModule),
+        typeof(AbpIdentityHttpApiModule),
+        typeof(AbpIdentityServerEntityFrameworkCoreModule),
 
         typeof(FS.Abp.SettingManagement.EntityFrameworkCore.SettingManagementEntityFrameworkCoreModule),
         typeof(FS.Abp.SettingManagement.SettingManagementApplicationModule),
