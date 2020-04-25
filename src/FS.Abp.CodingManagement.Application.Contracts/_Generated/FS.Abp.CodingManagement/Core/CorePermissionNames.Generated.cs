@@ -15,10 +15,12 @@ namespace FS.Abp.CodingManagement.Core
     {
         public const string GroupName = "FS.Abp.CodingManagement.Core";
 
-        public static class Coding
+        public static class DevelopPage
         {
-            public const string Default = GroupName + ".Coding";
-            public const string DevelopPage = Default + ".DevelopPage";
+            public const string Default = GroupName + ".DevelopPage";
+            public const string Create = Default + ".Create";
+            public const string Edit = Default + ".Edit";
+            public const string Delete = Default + ".Delete";
         }
 
         public static string[] GetAll()

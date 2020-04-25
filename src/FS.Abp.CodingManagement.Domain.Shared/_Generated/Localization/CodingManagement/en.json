@@ -1,8 +1,14 @@
 ﻿{
   "culture": "en",
   "texts": {
-    "CodingPermissions.DevelopPage": "DevelopPage",
-    "DisplayName:CodingPermissions.DevelopPage": "DevelopPage",
-    "Description:CodingPermissions.DevelopPage": "DevelopPage"
+    "DevelopPagePermissions.Create": "Create",
+    "DisplayName:DevelopPagePermissions.Create": "Create",
+    "Description:DevelopPagePermissions.Create": "Create",
+    "DevelopPagePermissions.Edit": "Edit",
+    "DisplayName:DevelopPagePermissions.Edit": "Edit",
+    "Description:DevelopPagePermissions.Edit": "Edit",
+    "DevelopPagePermissions.Delete": "Delete",
+    "DisplayName:DevelopPagePermissions.Delete": "Delete",
+    "Description:DevelopPagePermissions.Delete": "Delete"
   }
 }

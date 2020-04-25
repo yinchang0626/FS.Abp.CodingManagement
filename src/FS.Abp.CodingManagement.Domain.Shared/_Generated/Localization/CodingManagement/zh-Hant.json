@@ -1,8 +1,14 @@
 ﻿{
   "culture": "zh-Hant",
   "texts": {
-    "DisplayName:CodingPermissions.DevelopPage": "開發員頁面",
-    "CodingPermissions.DevelopPage": "DevelopPage",
-    "Description:CodingPermissions.DevelopPage": "DevelopPage"
+    "DisplayName:DevelopPagePermissions.Create": "開發員頁面",
+    "DevelopPagePermissions.Create": "Create",
+    "Description:DevelopPagePermissions.Create": "Create",
+    "DevelopPagePermissions.Edit": "Edit",
+    "DisplayName:DevelopPagePermissions.Edit": "Edit",
+    "Description:DevelopPagePermissions.Edit": "Edit",
+    "DevelopPagePermissions.Delete": "Delete",
+    "DisplayName:DevelopPagePermissions.Delete": "Delete",
+    "Description:DevelopPagePermissions.Delete": "Delete"
   }
 }

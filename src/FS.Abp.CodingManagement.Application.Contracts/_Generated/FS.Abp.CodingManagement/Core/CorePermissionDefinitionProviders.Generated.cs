@@ -18,8 +18,10 @@ namespace FS.Abp.CodingManagement.Core
         {
             var CoreGroup = context.AddGroup(CorePermissionNames.GroupName);
 
-            var Coding = CoreGroup.AddPermission(CorePermissionNames.Coding.Default);
-            Coding.AddChild(CorePermissionNames.Coding.DevelopPage);
+            var DevelopPage = CoreGroup.AddPermission(CorePermissionNames.DevelopPage.Default);
+            DevelopPage.AddChild(CorePermissionNames.DevelopPage.Create);
+            DevelopPage.AddChild(CorePermissionNames.DevelopPage.Edit);
+            DevelopPage.AddChild(CorePermissionNames.DevelopPage.Delete);
         }
 
         private static LocalizableString L(string name)
