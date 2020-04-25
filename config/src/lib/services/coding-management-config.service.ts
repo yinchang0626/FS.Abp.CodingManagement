@@ -12,7 +12,7 @@ export class CodingManagementConfigService {
       path: 'coding-management',
       parentName: 'AbpUiNavigation::Menu:Administration',
       // requiredPolicy: 'AbpAccount.SettingManagement',
-      requiredPolicy: 'FS.Abp.CodingManagement.Core.Coding.DevelopPage',
+      requiredPolicy: 'FS.Abp.CodingManagement.Core.DevelopPage',
       layout: eLayoutType.application,
       order: 7,
       iconClass: 'fa fa-cog',
@@ -21,7 +21,7 @@ export class CodingManagementConfigService {
           path: 'codings',
           name: '代碼表',
           order: 1,
-          requiredPolicy: 'FS.Abp.CodingManagement.Core.Coding.DevelopPage',
+          requiredPolicy: 'FS.Abp.CodingManagement.Core.DevelopPage',
         },
       ]
     } as ABP.FullRoute;
