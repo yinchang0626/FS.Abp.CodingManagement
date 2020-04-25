@@ -32,6 +32,9 @@ using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.IdentityServer.EntityFrameworkCore;
+using Volo.Abp.PermissionManagement;
+using Volo.Abp.PermissionManagement.HttpApi;
+using Volo.Abp.PermissionManagement.Identity;
 
 namespace FS.Abp.CodingManagement
 {
@@ -43,7 +46,10 @@ namespace FS.Abp.CodingManagement
         typeof(AbpAutofacModule),
         typeof(AbpEntityFrameworkCoreSqlServerModule),
         typeof(AbpAuditLoggingEntityFrameworkCoreModule),
+        typeof(AbpPermissionManagementDomainIdentityModule),
         typeof(AbpPermissionManagementEntityFrameworkCoreModule),
+        typeof(AbpPermissionManagementApplicationModule),
+        typeof(AbpPermissionManagementHttpApiModule),
         typeof(AbpSettingManagementEntityFrameworkCoreModule),
         typeof(AbpAspNetCoreSerilogModule),
 

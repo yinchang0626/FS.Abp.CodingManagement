@@ -12,7 +12,7 @@ const routes: Routes = [
     {
         path: '',
         component: DynamicLayoutComponent,
-        // canActivate: [AuthGuard, PermissionGuard],
+        canActivate: [AuthGuard, PermissionGuard],
         children: [
             {
                 path: 'codings',

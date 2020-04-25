@@ -17,6 +17,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="_Generated\Localization\CodingManagement\en.json" />
+    <None Remove="_Generated\Localization\CodingManagement\zh-Hant.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="_Generated\Localization\CodingManagement\en.json" />
+    <EmbeddedResource Include="_Generated\Localization\CodingManagement\zh-Hant.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\FS.Abp.SettingManagement\src\FS.Abp.SettingManagement.Domain.Shared\FS.Abp.SettingManagement.Domain.Shared.csproj" />
     <ProjectReference Include="..\..\..\FS.Abp.Trees\src\FS.Abp.Trees.Domain.Shared\FS.Abp.Trees.Domain.Shared.csproj" />
   </ItemGroup>
