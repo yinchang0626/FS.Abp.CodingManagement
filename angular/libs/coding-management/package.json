@@ -1,0 +1,13 @@
+{
+  "name": "@fs/coding-management",
+  "version": "0.0.0",
+  "dependencies": {
+  },  
+  "peerDependencies": {
+    "@angular/common": "^8.2.11",
+    "@angular/core": "^8.2.11",
+    "@fs/setting-management": "",
+    "@fs/ng-alain": "",
+    "@fs/ngx-admin": ""    
+  }
+}
