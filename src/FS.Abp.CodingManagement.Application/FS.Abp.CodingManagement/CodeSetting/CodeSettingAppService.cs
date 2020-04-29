@@ -92,7 +92,7 @@ namespace FS.Abp.CodingManagement.CodeSetting
             for (var i = 0; i < delCodes.Count(); i++)
             {
                 await this._codeSettingDomainService.DeleteCodeSetting(delCodes[i]);
-                await this._codeRepository.DeleteAsync(delCodes[i], true).ConfigureAwait(false);
+                await this._codeRepository.DeleteAsync(delCodes[i]).ConfigureAwait(false);
             }
 
             var codeSettingDtos = input.EditItems;
