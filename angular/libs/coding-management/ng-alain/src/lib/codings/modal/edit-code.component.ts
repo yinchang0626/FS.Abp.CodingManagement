@@ -25,7 +25,7 @@ import { CodingManagementDtos } from '@fs/coding-management';
 
     tplModal: NzModalRef;
     form: FormGroup;
-    pageQuery: CodingManagementDtos.codingsPageQueryParams = { skipCount: 0, maxResultCount: 999 } as CodingManagementDtos.codingsPageQueryParams;
+    pageQuery: CodingManagementDtos.codingsPageQueryParams = { skipCount: 0, maxResultCount: 999999 } as CodingManagementDtos.codingsPageQueryParams;
     loading: boolean = false;
     constructor(
         private modalService: NzModalService,
