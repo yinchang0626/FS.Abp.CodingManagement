@@ -47,14 +47,14 @@ export class CodingsState {
     createCoding({ dispatch }: StateContext<Codings.State>, { payload }: CreateCoding) {
         return this.codingManagementService.createCoding(payload)
                    .pipe(switchMap(() =>
-                        (payload.parentId) ? dispatch(new GetChildrenCodings(payload.definitionId)) : dispatch(new GetCodings({ skipCount: 0, maxResultCount: 999999 }))
+                        (payload.parentId) ? dispatch(new GetChildrenCodings(payload.definitionId)) : dispatch(new GetCodings({ skipCount: 0, maxResultCount: 999 }))
                    ));
     }
 
     @Action(UpdateCoding)
     updateCoding({ dispatch }: StateContext<Codings.State>, { payload }: UpdateCoding) {
         return this.codingManagementService.updateCodingById(payload)
-                   .pipe(switchMap(() => dispatch(new GetCodings({ skipCount: 0, maxResultCount: 999999 }))));
+                   .pipe(switchMap(() => dispatch(new GetCodings({ skipCount: 0, maxResultCount: 999 }))));
     }
 
     @Action(UpdateListCodings)
@@ -69,7 +69,7 @@ export class CodingsState {
     deleteCoding({ dispatch }: StateContext<Codings.State>, { payload }: DeleteCoding) {
         return this.codingManagementService.deleteCodingById(payload.id)
                    .pipe(switchMap(() => (
-                       (payload.parentId) ? dispatch(new GetChildrenCodings(payload.definitionId)) : dispatch(new GetCodings({ skipCount: 0, maxResultCount: 999999 }))
+                       (payload.parentId) ? dispatch(new GetChildrenCodings(payload.definitionId)) : dispatch(new GetCodings({ skipCount: 0, maxResultCount: 999 }))
                    )));
     }
 }
