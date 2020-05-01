@@ -21,7 +21,7 @@ export class MainComponent implements OnInit {
   data$: Observable<Array<CodingManagementDtos.coding>>;
   
   codeList: Array<CodingManagementDtos.coding>;
-  pageQuery: CodingManagementDtos.codingsPageQueryParams = { skipCount: 0, maxResultCount: 999999 } as CodingManagementDtos.codingsPageQueryParams;
+  pageQuery: CodingManagementDtos.codingsPageQueryParams = { skipCount: 0, maxResultCount: 999 } as CodingManagementDtos.codingsPageQueryParams;
   loading: boolean = false;
 
   parameters = new SettingManagementParameters;
