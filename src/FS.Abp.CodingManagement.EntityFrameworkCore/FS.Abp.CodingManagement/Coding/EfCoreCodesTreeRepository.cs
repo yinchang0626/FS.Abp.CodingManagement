@@ -8,6 +8,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace FS.Abp.CodingManagement.Coding
 {
@@ -19,6 +20,20 @@ namespace FS.Abp.CodingManagement.Coding
                 .Include(e => e.CodeList)
                 .ToListAsync().ConfigureAwait(false);
             return results.Single();
+        }
+        public override async Task<Codes> InsertAsync(Codes entity, bool autoSave = false, CancellationToken cancellationToken = default)
+        {
+            entity.Code = await GetNextChildCodeAsync(entity.ParentId);
+            if (string.IsNullOrEmpty(entity.DisplayName))
+            {
+                entity.DisplayName = entity.Code;
+            }
+            if (string.IsNullOrEmpty(entity.No))
+            {
+                entity.No = entity.Code;
+            }
+            await ValidateEntityAsync(entity);
+            return await base.InsertAsync(entity, autoSave, cancellationToken);
         }
     }
 }
