@@ -9,6 +9,11 @@ namespace FS.Abp.CodingManagement.CodeSetting
         public List<Volo.Abp.Settings.SettingValue> Settings { get; set; }
     }
 
+    public class CodeSettingOutput : FS.Abp.CodingManagement.Coding.Dtos.CodesDto
+    {
+        public List<Volo.Abp.Settings.SettingValue> Settings { get; set; }
+    }
+
     public class CreateOrUpdateCodeSettingsInput
     {
         public List<CodeSettingInput> EditItems { get; set; }

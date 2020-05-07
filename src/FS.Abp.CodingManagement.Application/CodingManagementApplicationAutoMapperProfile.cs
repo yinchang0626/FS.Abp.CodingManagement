@@ -12,6 +12,9 @@ namespace FS.Abp.CodingManagement
 
             CreateMap<FS.Abp.CodingManagement.Coding.Codes, CodeSetting.CodeSettingInput>();
             CreateMap<CodeSetting.CodeSettingInput, FS.Abp.CodingManagement.Coding.Codes>();
+
+            CreateMap<FS.Abp.CodingManagement.Coding.Codes, CodeSetting.CodeSettingOutput>();
+            CreateMap<CodeSetting.CodeSettingOutput, FS.Abp.CodingManagement.Coding.Codes>();
         }
     }
 }
