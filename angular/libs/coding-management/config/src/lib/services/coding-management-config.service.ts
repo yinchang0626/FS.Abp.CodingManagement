@@ -1,12 +1,11 @@
-import { addAbpRoutes, eLayoutType, RestService, ABP } from '@abp/ng.core';
+import { addAbpRoutes, eLayoutType, ABP } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CodingManagementConfigService {
-  constructor(private router: Router, private restService: RestService) {
+  constructor() {
     const route = {
       name: 'Coding Management',
       path: 'coding-management',
@@ -27,12 +26,5 @@ export class CodingManagementConfigService {
     } as ABP.FullRoute;
 
     addAbpRoutes(route);
-
-    // setTimeout(() => {
-    //   const tabs = getSettingTabs();
-    //   if (!tabs || !tabs.length) {
-    //     this.store.dispatch(new PatchRouteByName('AbpSettingManagement::Settings', { ...route, invisible: true }));
-    //   }
-    // });
   }
 }
