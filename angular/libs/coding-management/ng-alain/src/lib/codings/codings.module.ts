@@ -9,12 +9,10 @@ import { CodingsState } from './providers/codings.state';
 import { DetailComponent } from './detail/detail.component';
 import { EditCodeComponent } from './modal/edit-code.component';
 import { SettingManagementNgAlainModule } from '@fs/setting-management/ng-alain';
-import {CoreModule} from '@fs/core';
 
 @NgModule({
   declarations: [MainComponent, LayoutComponent, DetailComponent, EditCodeComponent],
   imports: [
-    CoreModule,
     NgAlainBasicModule,
     SharedModule,
     CodingsRoutingModule,
