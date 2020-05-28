@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { NgAlainBasicModule } from '@fs/ng-alain/basic';
-import { NotifyService } from './services/notify/notify.service';
-import { MessagesService } from './services/messages/messages.service';
 
 const COMPONENT = []
 
@@ -12,8 +10,6 @@ const COMPONENT = []
   ],
   exports: [...COMPONENT, NgAlainBasicModule],
   providers: [
-    NotifyService,
-    MessagesService
   ]
 })
 export class SharedModule { }

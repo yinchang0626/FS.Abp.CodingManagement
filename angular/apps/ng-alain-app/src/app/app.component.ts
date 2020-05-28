@@ -3,7 +3,8 @@ import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { VERSION as VERSION_ALAIN, TitleService } from '@delon/theme';
 import { VERSION as VERSION_ZORRO, NzModalService } from 'ng-zorro-antd';
-import {CoreService} from '@fs/core';
+
+
 
 @Component({
     selector: 'app-root',
@@ -17,8 +18,7 @@ export class AppComponent implements OnInit {
         renderer: Renderer2,
         private router: Router,
         private titleSrv: TitleService,
-        private modalSrv: NzModalService,
-        private coreService:CoreService
+        private modalSrv: NzModalService,        
     ) {
         renderer.setAttribute(el.nativeElement, 'ng-alain-version', VERSION_ALAIN.full);
         renderer.setAttribute(el.nativeElement, 'ng-zorro-version', VERSION_ZORRO.full);
@@ -28,7 +28,6 @@ export class AppComponent implements OnInit {
         this.router.events.pipe(filter(evt => evt instanceof NavigationEnd)).subscribe(() => {
             this.titleSrv.setTitle();
             this.modalSrv.closeAll();
-        });
-        this.coreService.onAppComponentOnInit(this.router);
+        });       
     }
 }
