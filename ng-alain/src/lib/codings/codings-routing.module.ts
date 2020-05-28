@@ -12,12 +12,10 @@ const routes: Routes = [
       {
         path: '',
         component: MainComponent,
-        // data: { requiredPolicy: 'AbpIdentity.Roles' },
         children: [
           {
             path: ':definitionId',
             component: DetailComponent,
-            // data: { requiredPolicy: 'AbpIdentity.Roles' },
           }
         ]
       }

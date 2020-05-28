@@ -4,16 +4,15 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { finalize } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NotifyService } from '../../shared/services/notify/notify.service';
-import { CreateCoding, UpdateCoding } from '../providers/codings.actions';
-import { CodingManagementDtos } from '@fs/coding-management';
+import { NotifyService } from '@fs/ng-alain/shared';
+import { CodingManagementDtos, CreateCoding, UpdateCoding } from '@fs/theme.core';
 
 @Component({
     selector: 'fs-edit-code',
     templateUrl: './edit-code.component.html',
     styleUrls: ['./edit-code.component.less']
-  })
-  export class EditCodeComponent implements OnInit {
+})
+export class EditCodeComponent implements OnInit {
     @Input()
     item = null;
 
@@ -33,8 +32,8 @@ import { CodingManagementDtos } from '@fs/coding-management';
         private fb: FormBuilder,
         private router: Router,
         private notifyService: NotifyService,
-        private activatedRoute:ActivatedRoute
-    ) {}
+        private activatedRoute: ActivatedRoute
+    ) { }
 
     ngOnInit(): void {
     }
@@ -73,19 +72,19 @@ import { CodingManagementDtos } from '@fs/coding-management';
         this.store.dispatch(
             (this.item) ? new UpdateCoding(data) : new CreateCoding(data)
         )
-        .pipe(finalize(() => this.loading = false))
-        .subscribe((x) => {
-            this.tplModal.destroy();
-            //TODO: erro when url become :/coding-management/codings/bfddfe13-f7d7-3e62-71f9-39f47580078a/bfddfe13-f7d7-3e62-71f9-39f47580078a
-            //(this.definitionId) ? this.router.navigate(['.', this.definitionId],{relativeTo: this.activatedRoute}) : this.router.navigate(['.'],{relativeTo: this.activatedRoute})
-            this.router.navigate(['.'],{relativeTo: this.activatedRoute});
-            this.notifyService.success("資料更新成功");
-        }, (error) => {
-            this.notifyService.error("資料更新失敗");
-        });
+            .pipe(finalize(() => this.loading = false))
+            .subscribe((x) => {
+                this.tplModal.destroy();
+                //TODO: erro when url become :/coding-management/codings/bfddfe13-f7d7-3e62-71f9-39f47580078a/bfddfe13-f7d7-3e62-71f9-39f47580078a
+                //(this.definitionId) ? this.router.navigate(['.', this.definitionId],{relativeTo: this.activatedRoute}) : this.router.navigate(['.'],{relativeTo: this.activatedRoute})
+                this.router.navigate(['.'], { relativeTo: this.activatedRoute });
+                this.notifyService.success("資料更新成功");
+            }, (error) => {
+                this.notifyService.error("資料更新失敗");
+            });
     }
 
     close(): void {
         this.tplModal.destroy();
     }
-  }
+}
