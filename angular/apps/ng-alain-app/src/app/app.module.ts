@@ -10,8 +10,7 @@ import { SharedModule } from './shared/shared.module';
     declarations: [AppComponent],
     imports: [
         BrowserModule,
-        BrowserAnimationsModule,
-        //HttpClientModule,
+        BrowserAnimationsModule,            
         CoreModule,
         SharedModule,
         AppRoutingModule,

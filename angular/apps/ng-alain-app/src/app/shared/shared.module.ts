@@ -8,26 +8,12 @@ import { NgAlainBasicModule } from '@fs/ng-alain/basic';
 
 @NgModule({
   declarations: [],
-    imports: [
-        CoreModule,
-        //ThemeSharedModule,
-        //ThemeBasicModule,
-        //AlainSharedModule,
-        NgAlainBasicModule,
-        TableModule,
-        NgbDropdownModule
-
-    ],
-    exports: [
-        CoreModule,
-        //ThemeSharedModule,
-        //ThemeBasicModule,
-        //AlainSharedModule,
-        NgAlainBasicModule,
-        TableModule,
-        NgbDropdownModule
-
-    ],
+  imports: [
+    NgAlainBasicModule,
+  ],
+  exports: [
+    NgAlainBasicModule,
+  ],
   providers: [],
 })
-export class SharedModule {}
+export class SharedModule { }

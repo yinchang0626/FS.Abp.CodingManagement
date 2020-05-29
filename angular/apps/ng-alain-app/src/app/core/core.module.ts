@@ -9,19 +9,16 @@ import { AccountConfigModule } from '@abp/ng.account.config';
 import { IdentityConfigModule } from '@fs/identity/config';
 import { TenantManagementConfigModule } from '@fs/tenant-management/config';
 import { SettingManagementConfigModule } from '@fs/setting-management/config';
-import { LayoutDefaultComponent, LayoutPassportComponent, LayoutFullScreenComponent } from '@fs/ng-alain/basic';
-
 import { CodingManagementConfigModule } from '@fs/coding-management/config';
 
 
 
 
 const LOGGERS = [NgxsLoggerPluginModule.forRoot({ disabled: false })];
-const AbpConfigModules=[
+const AbpConfigModules=[  
   AbpCoreModule.forRoot({
     environment
   }),
-
   AccountConfigModule.forRoot({ redirectUrl: '/' }),
   IdentityConfigModule,
   TenantManagementConfigModule,
@@ -33,11 +30,12 @@ const AbpConfigModules=[
 @NgModule({
   declarations: [
   ],
-  imports: [    
+  imports: [
     ...AbpConfigModules,
     NgxsModule.forRoot([]),
-    NgAlainModule.forRoot(),
+    NgxsModule.forRoot([]),
     ...(environment.production ? [] : LOGGERS),
+    NgAlainModule.forRoot(),  
   ],
   exports: [
 
