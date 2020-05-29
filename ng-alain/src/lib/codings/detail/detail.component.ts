@@ -6,17 +6,21 @@ import { finalize } from 'rxjs/operators';
 import { NotifyService } from '@fs/ng-alain/shared';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { DeleteCoding, UpdateListCodings, GetChildrenCodings } from '../providers/codings.actions';
+import { CodingsState } from '../providers/codings.state';
+import { CodingManagementDtos } from '@fs/coding-management';
 import * as _ from 'lodash';
 import { FsNgAlainTreeComponent } from '@fs/ng-alain/basic';
 import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd';
-import { CodingsStateService, CodingManagementDtos, SettingManagementParameters, CodingsState, DeleteCoding, UpdateListCodings, GetChildrenCodings } from '@fs/theme.core';
+import { SettingManagementParameters } from '@fs/setting-management';
+
 @Component({
   selector: 'fs-detail',
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.less']
 })
 export class DetailComponent implements OnInit {
-  @ViewChild(FsNgAlainTreeComponent, { static: false }) fsNgAlainTreeComponent: FsNgAlainTreeComponent;
+  @ViewChild(FsNgAlainTreeComponent, {static: false}) fsNgAlainTreeComponent: FsNgAlainTreeComponent;
 
   @Select(CodingsState.getChildrenCodings)
   data$: Observable<CodingManagementDtos.coding>;
@@ -40,7 +44,6 @@ export class DetailComponent implements OnInit {
   parameters = new SettingManagementParameters;
   constructor(
     private modalService: NzModalService,
-    private codingsStateService: CodingsStateService,
     private store: Store,
     private fb: FormBuilder,
     private router: Router,
@@ -52,7 +55,7 @@ export class DetailComponent implements OnInit {
     this.activatedRoute.params.subscribe(queryParams => {
       this.definitionId = queryParams['definitionId'] || null;
       this.form = new FormGroup({});
-      if (this.definitionId) {
+      if(this.definitionId){
         this.loadData();
       }
     });
@@ -69,17 +72,17 @@ export class DetailComponent implements OnInit {
       this.nodeData = {};
       this.isEdit = {};
       this.isSeletedItem = "";
-      if (x && this.definitionId) {
+      if(x && this.definitionId){
         this.root = x;
         this.rowData = this.data = _.sortBy(x['codeList'], 'no');
         this.expandedKeys = this.data.map(x => x.id);
-        this.level = (this.rowData.length <= 0) ? 0 : _.maxBy(this.rowData, function (o) {
+        this.level = (this.rowData.length <= 0) ? 0 : _.maxBy(this.rowData, function(o){
           return o.code.split('.').length;
         }).code.split('.').length;
-        for (let i = 0; i < this.level; i++) {
-          this.treeData.push((i === 0) ? _.sortBy(x['codeList'], 'no') : []);
-          this.treeValue.push({});
-          this.openSelect.push((i === 0) ? true : false);
+        for(let i = 0; i < this.level; i++){
+            this.treeData.push((i === 0) ? _.sortBy(x['codeList'], 'no') : []);
+            this.treeValue.push({});
+            this.openSelect.push((i === 0) ? true : false);
         }
         this.init();
         this.buildForm();
@@ -89,21 +92,21 @@ export class DetailComponent implements OnInit {
     });
   }
 
-  init() {
+  init(){
     this.changeDetectorRef.detectChanges();
     this.fsNgAlainTreeComponent.init();
   }
 
   loadData() {
-    if (this.definitionId) {
+    if(this.definitionId){
       this.loading = true;
       this.store
         .dispatch(new GetChildrenCodings(this.definitionId))
         .pipe(finalize(() => this.loading = false))
         .subscribe(() => { },
-          (error) => {
-            this.notifyService.error('查詢失敗');
-          });
+        (error) => {
+          this.notifyService.error('查詢失敗');
+        });
     }
   }
 
@@ -119,7 +122,7 @@ export class DetailComponent implements OnInit {
     });
 
     console.log(this.rowData, data)
-
+    
     this.form = this.fb.group(data);
     this.form.valueChanges.subscribe(x => {
       this.isEdit = {};
@@ -130,16 +133,16 @@ export class DetailComponent implements OnInit {
         let description = (typeof (x[key].description) != "string" && x[key].description != null) ? JSON.stringify(x[key].description) : x[key].description;
         let enable = x[key].enable;
         let isEdit = (raw.no !== no || raw.displayName !== name || raw.description !== description || raw.enable !== enable);
-        if (isEdit) this.isEdit[key] = true;
+        if(isEdit) this.isEdit[key] = true;
       });
       this.changeDetectorRef.detectChanges();
     });
   }
 
   save() {
-    let updateInput: Array<CodingManagementDtos.coding> = [] as Array<CodingManagementDtos.coding>;
+    let updateInput: Array<CodingManagementDtos.coding> = [] as Array<CodingManagementDtos.coding> ;
     this.rowData.forEach(x => {
-      if (this.isEdit[x.id]) {
+      if (this.isEdit[x.id]){
         let no = (typeof (this.form.value[x.id].no) !== "string") ? JSON.stringify(this.form.value[x.id].no) : this.form.value[x.id].no;
         let name = (typeof (this.form.value[x.id].name) !== "string") ? JSON.stringify(this.form.value[x.id].name) : this.form.value[x.id].name;
         let description = (typeof (this.form.value[x.id].description) !== "string" && this.form.value[x.id].description != null) ? JSON.stringify(this.form.value[x.id].description) : this.form.value[x.id].description;
@@ -159,108 +162,108 @@ export class DetailComponent implements OnInit {
     this.store.dispatch(
       new UpdateListCodings(updateInput)
     )
-      .pipe(finalize(() => this.loading = false))
-      .subscribe((x) => {
+    .pipe(finalize(() => this.loading = false))
+    .subscribe((x) => {
         this.router.navigate(['/coding-management/codings', this.definitionId]);
         this.notifyService.success("資料更新成功");
-      }, (error) => {
+    }, (error) => {
         this.notifyService.error("資料更新失敗");
-      });
+    });
   }
 
-  deleteNode(data?) {
+  deleteNode(data?){
     this.modalService.confirm({
       nzTitle: 'Confirm',
       nzContent: '確定是否刪除？',
       nzOkText: '是',
       nzCancelText: '否',
-      nzOnOk: () => {
+      nzOnOk:()=>{
         this.store.dispatch(new DeleteCoding(data))
-          .pipe(finalize(() => this.loading = false))
-          .subscribe(() => {
-            this.router.navigate(['/coding-management/codings', this.definitionId]);
-            this.notifyService.success("資料更新成功");
-          }, (error) => {
-            this.notifyService.error("資料更新失敗");
-          });
+        .pipe(finalize(() => this.loading = false))
+        .subscribe(() => {
+          this.router.navigate(['/coding-management/codings', this.definitionId]);
+          this.notifyService.success("資料更新成功");
+        }, (error) => {
+          this.notifyService.error("資料更新失敗");
+        });
       }
     });
   }
 
-  loadValue(lvl: number) {
+  loadValue(lvl: number){
     let l = lvl + 2;
-    if (!this.treeValue[lvl]) {
+    if(!this.treeValue[lvl]) {
       let v = (lvl !== 0) ? this.treeValue[lvl - 1]['id'] : this.definitionId;
       this.treeValue[lvl] = [];
-      if (l < this.level) {
+      if(l < this.level){
         this.treeValue[lvl + 1] = this.treeData[lvl + 1] = [];
         this.openSelect[lvl + 1] = false;
       }
       this.treeData[lvl] = _.sortBy(this.rowData.filter(x => x.parentId === v), 'no');
     } else {
-      if (l < this.level) {
-        this.treeData[lvl + 1] = this.rowData.filter(x => x.parentId === _.sortBy(this.treeValue[lvl]['id']), 'no');
-        this.openSelect[lvl + 1] = (l !== this.level) ? true : false;
-      }
+        if(l < this.level){
+          this.treeData[lvl + 1] = this.rowData.filter(x => x.parentId === _.sortBy(this.treeValue[lvl]['id']), 'no');
+          this.openSelect[lvl + 1] = (l !== this.level) ? true : false;
+        }
     }
-    if (l < this.level) {
-      for (let i = lvl + 2; i < this.treeData.length; i++) {
-        this.openSelect[i] = false;
-        this.treeData[i] = [];
-        this.treeValue[i] = [];
-      }
+    if(l < this.level){
+        for(let i = lvl + 2; i < this.treeData.length; i++){
+            this.openSelect[i] = false;
+            this.treeData[i] = [];
+            this.treeValue[i] = [];
+        }
     }
   }
 
-  search() {
+  search(){
     this.nzContextMenuService.close();
     this.data = [];
     this.nodeData = {};
     let value = [];
     this.isSeletedItem = "";
-    for (let index = 0; index < this.treeValue.length; index++) {
+    for(let index = 0; index < this.treeValue.length; index++){
       value.push([]);
-      if (this.treeValue[index]['id']) {
-        value[index][0] = this.treeValue[index];
-        this.data = this.data.concat(this.treeValue[index]);
+      if(this.treeValue[index]['id']){
+          value[index][0] = this.treeValue[index];
+          this.data = this.data.concat(this.treeValue[index]);
       } else {
-        if (index === 0) {
-          let v = _.sortBy(this.rowData.filter(y => y.parentId === this.definitionId), 'no');
-          value[index] = v;
-          this.data = this.data.concat(v);
-        } else {
-          value[index - 1].forEach((x) => {
-            let v = (x['id']) ? _.sortBy(this.rowData.filter(y => y.parentId === x['id']), 'no') : [];
-            value[index] = value[index].concat(v);
-            this.data = this.data.concat(v);
-          })
-        }
+          if(index === 0){
+              let v = _.sortBy(this.rowData.filter(y => y.parentId === this.definitionId), 'no');
+              value[index] = v;
+              this.data = this.data.concat(v);
+          } else {
+              value[index - 1].forEach((x) => {
+                  let v = (x['id']) ? _.sortBy(this.rowData.filter(y => y.parentId === x['id']), 'no') : [];
+                  value[index] = value[index].concat(v);
+                  this.data = this.data.concat(v);
+              })
+          }
       }
     }
     this.init();
   }
 
-  onNodeClick(node) {
+  onNodeClick(node){
   }
 
-  clickItem(node) {
+  clickItem(node){
     this.nzContextMenuService.close();
-    if (this.isSeletedItem === node.key) {
+    if(this.isSeletedItem === node.key){
       this.isSeletedItem = "";
     } else {
       this.isSeletedItem = node.key;
     }
   }
 
-  searchColor(node) {
-    if (!this.fsNgAlainTreeComponent || !this.fsNgAlainTreeComponent.searchValue) return node.title;
+  searchColor(node){
+    if(!this.fsNgAlainTreeComponent || !this.fsNgAlainTreeComponent.searchValue) return node.title;
     var regStr = "";
     var extraText = "~!@#$%^&*()_+=-|\\?/.,<>'\";:[]{}";
     var searchArr = this.fsNgAlainTreeComponent.searchValue.split("");
     searchArr.forEach(x => {
-      if (extraText.includes(x)) {
+      if(extraText.includes(x)){
         regStr += "\\" + x;
-      } else {
+      }else{
         regStr += x;
       }
     });
@@ -275,7 +278,7 @@ export class DetailComponent implements OnInit {
     this.nzContextMenuService.create($event, menu);
   }
 
-  setting(visible, providerKey) {
+  setting(visible, providerKey){
     this.nzContextMenuService.close();
     this.parameters = {
       providerKey: providerKey,

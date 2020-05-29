@@ -5,7 +5,10 @@ import { finalize } from 'rxjs/operators';
 import { NotifyService } from '@fs/ng-alain/shared';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Router, ActivatedRoute } from '@angular/router';
-import { SettingManagementParameters, CodingsState, CodingManagementDtos, GetCodings, DeleteCoding } from '@fs/theme.core';
+import { GetCodings, DeleteCoding } from '../providers/codings.actions';
+import { CodingManagementDtos } from '@fs/coding-management';
+import { CodingsState } from '../providers/codings.state';
+import { SettingManagementParameters } from '@fs/setting-management';
 import * as _ from 'lodash';
 
 @Component({
@@ -16,7 +19,7 @@ import * as _ from 'lodash';
 export class MainComponent implements OnInit {
   @Select(CodingsState.getCodings)
   data$: Observable<Array<CodingManagementDtos.coding>>;
-
+  
   codeList: Array<CodingManagementDtos.coding>;
   pageQuery: CodingManagementDtos.codingsPageQueryParams = { skipCount: 0, maxResultCount: 999 } as CodingManagementDtos.codingsPageQueryParams;
   loading: boolean = false;
@@ -27,14 +30,14 @@ export class MainComponent implements OnInit {
     private modalService: NzModalService,
     private notifyService: NotifyService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute:ActivatedRoute
   ) {
   }
 
   ngOnInit() {
     this.loadData();
     this.data$.subscribe((x) => {
-      if (x.length > 0) {
+      if(x.length > 0){
         this.codeList = _.sortBy(x.filter(x => x.definitionId == null), 'no');
       } else {
         this.codeList = [];
@@ -48,35 +51,35 @@ export class MainComponent implements OnInit {
       .dispatch(new GetCodings(this.pageQuery))
       .pipe(finalize(() => this.loading = false))
       .subscribe(() => { },
-        (error) => {
-          this.notifyService.error('查詢失敗');
-        });
+      (error) => {
+        this.notifyService.error('查詢失敗');
+      });
   }
 
-  editManageAction(item?) {
-    this.router.navigate(['.', item], { relativeTo: this.activatedRoute });
+  editManageAction(item?){
+    this.router.navigate(['.', item],{relativeTo: this.activatedRoute});
   }
 
-  deleteNode(data?, type?) {
+  deleteNode(data?, type?){
     this.modalService.confirm({
       nzTitle: 'Confirm',
       nzContent: '確定是否刪除？',
       nzOkText: '是',
       nzCancelText: '否',
-      nzOnOk: () => {
+      nzOnOk:()=>{
         this.store.dispatch(new DeleteCoding(data))
-          .pipe(finalize(() => this.loading = false))
-          .subscribe(() => {
-            this.router.navigate(['.'], { relativeTo: this.activatedRoute });
-            this.notifyService.success("資料更新成功");
-          }, (error) => {
-            this.notifyService.error("資料更新失敗");
-          });
+        .pipe(finalize(() => this.loading = false))
+        .subscribe(() => {
+          this.router.navigate(['.'],{relativeTo: this.activatedRoute});
+          this.notifyService.success("資料更新成功");
+        }, (error) => {
+          this.notifyService.error("資料更新失敗");
+        });
       }
     });
   }
 
-  setting(visible, providerKey) {
+  setting(visible, providerKey){
     this.parameters = {
       providerKey: providerKey,
       providerName: 'Codes',
