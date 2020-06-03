@@ -28,7 +28,9 @@ namespace FS.Abp.CodingManagement.EntityFrameworkCore
 
             optionsAction?.Invoke(options);
 
+            builder.Ignore<FS.Abp.CodingManagement.Versions.Versions>();
             builder.ApplyConfiguration<FS.Abp.CodingManagement.Coding.Codes>(new FS.Abp.CodingManagement.Coding.CodesConfiguration(options));
+            builder.ApplyConfiguration<FS.Abp.CodingManagement.Versions.Version>(new FS.Abp.CodingManagement.Versions.VersionConfiguration(options));
         }
     }
 }

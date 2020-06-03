@@ -34,6 +34,12 @@ namespace FS.Abp.CodingManagement.EntityFrameworkCore
             get;
             set;
         }
+
+        public virtual DbSet<FS.Abp.CodingManagement.Versions.Version> Versions
+        {
+            get;
+            set;
+        }
         public CodingManagementDbContext(DbContextOptions<CodingManagementDbContext> options) :
             base(options)
         {

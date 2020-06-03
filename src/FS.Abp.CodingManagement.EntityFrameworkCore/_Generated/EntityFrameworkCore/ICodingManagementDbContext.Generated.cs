@@ -29,5 +29,6 @@ namespace FS.Abp.CodingManagement.EntityFrameworkCore
     public partial interface ICodingManagementDbContext : IEfCoreDbContext
     {
         DbSet<FS.Abp.CodingManagement.Coding.Codes> Codes { get; set; }
+        DbSet<FS.Abp.CodingManagement.Versions.Version> Versions { get; set; }
     }
 }

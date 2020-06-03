@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Compile Remove="_Generated\FS.Abp.CodingManagement\Codes.Configuration.Generated.cs" />
+    <Compile Remove="_Generated\FS.Abp.CodingManagement\Version.Configuration.Generated.cs" />
   </ItemGroup>
 
   <ItemGroup>
