@@ -27,4 +27,35 @@
     <ProjectReference Include="..\FS.Abp.CodingManagement.Domain.Shared\FS.Abp.CodingManagement.Domain.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Coding\CodeConfig.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Coding</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Coding\Codes.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Coding</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Coding\ICodesTreeRepository.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Coding</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Versions\IVersionRepository.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Versions</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Versions\Version.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Versions</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Versions\Versions.AbpSetting.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Versions</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Versions\Versions.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Versions</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>

@@ -25,4 +25,47 @@
     <Folder Include="_Generated\FS.Abp.CodingManagement\Dtos\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Coding\CodesTreeAppService.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Coding</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Coding\Dtos\CodeConfigDtoAutoMapperProfile.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Dtos</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Coding\Dtos\CodeConfigDtoValidator.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Dtos</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Coding\Dtos\CodesDtoAutoMapperProfile.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Dtos</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Coding\Dtos\CodesDtoValidator.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Dtos</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Versions\Dtos\VersionDtoAutoMapperProfile.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Dtos</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Versions\Dtos\VersionDtoValidator.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Dtos</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Versions\Dtos\VersionsDtoAutoMapperProfile.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Dtos</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Versions\Dtos\VersionsDtoValidator.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Dtos</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Versions\VersionCrudAppService.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Versions</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>

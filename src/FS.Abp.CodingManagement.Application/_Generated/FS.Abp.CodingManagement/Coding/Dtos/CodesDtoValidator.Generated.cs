@@ -33,6 +33,8 @@ namespace FS.Abp.CodingManagement.Coding.Dtos
             RuleFor(p => p.Enable)
                 .NotNull()
                 ;
+            RuleFor(p => p.Config)
+                ;
             CustomizeConfiguration();
         }
         partial void CustomizeConfiguration();
@@ -57,6 +59,8 @@ namespace FS.Abp.CodingManagement.Coding.Dtos
                 ;
             RuleFor(p => p.Enable)
                 .NotNull()
+                ;
+            RuleFor(p => p.Config)
                 ;
             CustomizeConfiguration();
         }

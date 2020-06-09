@@ -25,4 +25,39 @@
     <Folder Include="_Generated\FS.Abp.CodingManagement\Dtos\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Coding\Dtos\CodeConfigDto.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Dtos</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Coding\Dtos\CodesDto.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Dtos</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Coding\ICodesTreeAppService.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Coding</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Core\CorePermissionDefinitionProviders.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Core</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Core\CorePermissionNames.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Core</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Versions\Dtos\VersionDto.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Dtos</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Versions\Dtos\VersionsDto.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Dtos</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Versions\IVersionCrudAppService.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Versions</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>

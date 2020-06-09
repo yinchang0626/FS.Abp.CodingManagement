@@ -80,6 +80,18 @@ namespace FS.Abp.CodingManagement.Coding
             get;
             set;
         }
+        public virtual FS.Abp.CodingManagement.Coding.CodeConfig Config 
+        {
+
+            get
+            {
+                return this.GetExtraProperty<FS.Abp.CodingManagement.Coding.CodeConfig>(nameof(Config));
+            }
+            set
+            {
+                this.SetExtraProperty(nameof(Config), value);
+            }
+        } 
 
         public virtual System.Guid? TenantId
         {

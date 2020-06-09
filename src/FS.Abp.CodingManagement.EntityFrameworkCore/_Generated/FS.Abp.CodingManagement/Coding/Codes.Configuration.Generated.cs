@@ -39,6 +39,7 @@ namespace FS.Abp.CodingManagement.Coding
             builder.Property<System.Guid?>(x => x.DefinitionId).HasColumnName(@"DefinitionId").ValueGeneratedNever();
             builder.Property<System.Guid?>(x => x.ParentId).HasColumnName(@"ParentId").ValueGeneratedNever();
             builder.Property<bool>(x => x.Enable).HasColumnName(@"Enable").IsRequired().ValueGeneratedNever().HasDefaultValue(true);
+            builder.Ignore(x => x.Config);
             builder.Property<System.Guid?>(x => x.TenantId).HasColumnName(@"TenantId").ValueGeneratedNever();
             builder.HasKey(@"Id");
             builder.HasMany(x => x.CodeList).WithOne(op => op.Definition).IsRequired(false).HasForeignKey(@"DefinitionId");

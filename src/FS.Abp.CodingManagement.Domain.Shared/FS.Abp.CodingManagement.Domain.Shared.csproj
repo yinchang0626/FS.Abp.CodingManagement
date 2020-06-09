@@ -22,8 +22,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="_Generated\Localization\CodingManagement\en.json" />
-    <EmbeddedResource Include="_Generated\Localization\CodingManagement\zh-Hant.json" />
+    <EmbeddedResource Include="_Generated\Localization\CodingManagement\en.json">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CodingManagement</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="_Generated\Localization\CodingManagement\zh-Hant.json">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CodingManagement</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -32,12 +38,35 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="DataModel\CodingManagement.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CodingManagement.efml</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\Volo.Abp.Localization\LocalizationResourceExtensions.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Volo.Abp.Localization</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="DataModel\CodingManagement.edps">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CodingManagement.efml</DependentUpon>
+    </None>
     <None Update="DataModel\CodingManagement.efml">
       <Generator>DevartEFCoreGenerator</Generator>
       <LastGenOutput>CodingManagement.info</LastGenOutput>
     </None>
     <None Update="DataModel\CodingManagement.info">
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CodingManagement.efml</DependentUpon>
+    </None>
+    <None Update="DataModel\CodingManagement.Permission.view">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CodingManagement.efml</DependentUpon>
+    </None>
+    <None Update="DataModel\CodingManagement.Settings.view">
       <AutoGen>True</AutoGen>
       <DependentUpon>CodingManagement.efml</DependentUpon>
     </None>

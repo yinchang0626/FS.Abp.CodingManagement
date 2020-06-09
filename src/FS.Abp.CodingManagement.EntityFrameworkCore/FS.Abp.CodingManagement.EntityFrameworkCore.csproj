@@ -19,4 +19,39 @@
     <ProjectReference Include="..\FS.Abp.CodingManagement.Domain\FS.Abp.CodingManagement.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="_Generated\EntityFrameworkCore\CodingManagementDbContext.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EntityFrameworkCore</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\EntityFrameworkCore\CodingManagementDbContextModelCreatingExtensions.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EntityFrameworkCore</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\EntityFrameworkCore\CodingManagementModelBuilderConfigurationOptions.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EntityFrameworkCore</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\EntityFrameworkCore\ICodingManagementDbContext.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EntityFrameworkCore</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Coding\Codes.Configuration.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Coding</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Coding\EfCoreCodesTreeRepository.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Coding</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Versions\EfCoreVersionRepository.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Versions</DependentUpon>
+    </Compile>
+    <Compile Update="_Generated\FS.Abp.CodingManagement\Versions\Version.Configuration.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Versions</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>
