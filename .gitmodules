@@ -1,0 +1,4 @@
+[submodule "angular/themes/theme-core"]
+	path = angular/themes/theme-core
+	url = http://bitbucket.furthersoftware.com.tw/scm/mod/fs.abp.themes.git
+	branch = angular/themes/theme-core
