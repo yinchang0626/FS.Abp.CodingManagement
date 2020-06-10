@@ -21,6 +21,12 @@ namespace FS.Abp.CodingManagement.Coding
                 .ToListAsync().ConfigureAwait(false);
             return results.Single();
         }
+        public async Task<List<Codes>> GetDefinitionsAsync()
+        {
+            var results = await this.Where(x => x.ParentId == null)
+                .ToListAsync().ConfigureAwait(false);
+            return results;
+        }
         public override async Task<Codes> InsertAsync(Codes entity, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             entity.Code = await GetNextChildCodeAsync(entity.ParentId);

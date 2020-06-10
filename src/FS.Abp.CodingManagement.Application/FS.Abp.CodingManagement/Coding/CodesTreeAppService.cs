@@ -1,4 +1,5 @@
 ﻿using FS.Abp.CodingManagement.Coding.Dtos;
+using FS.Abp.CodingManagement.Coding.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,9 @@ using Volo.Abp.Guids;
 
 namespace FS.Abp.CodingManagement.Coding
 {
+    //todo:rename to CodesAppService
+    //todo:definitionNo params change to url
+    //todo:Cache
     public partial class CodesTreeAppService
     {
         private ICodesService _codesService;
@@ -16,6 +20,9 @@ namespace FS.Abp.CodingManagement.Coding
 
         private IGuidGenerator _guidGenerator;
         public IGuidGenerator guidGenerator => this.LazyGetRequiredService(ref _guidGenerator);
+
+        private ICodesStore _codesStore;
+        public ICodesStore codesStore => this.LazyGetRequiredService(ref _codesStore);
 
         public async Task CreateListAsync(List<CodesCreateInput> input)
         {
@@ -38,24 +45,30 @@ namespace FS.Abp.CodingManagement.Coding
             
         }
 
-        public async Task<List<FS.Abp.CodingManagement.Coding.Dtos.CodesDto>> FindChildrenAsync(Guid? parentId, bool recursive = false)
+        public async Task<List<CodesDto>> PostFindChildrenAsync(Guid? parentId, bool recursive = false)
         {
             var codes = await this.TreeRepository.FindChildrenAsync(parentId, recursive);
 
             var result = codes.Select(x => this.MapToDto<CodesDto>(x)).ToList();
             return result;
         }
-
-        public async Task<FS.Abp.CodingManagement.Coding.Dtos.CodesWithDetailsDto> GetDefinitionAsync(string no)
+        public async Task<List<CodesWithSettingsDto>> GetDefinitionsAsync()
         {
-            var codes = await this.codesService.GetDefinitionAsync(no).ConfigureAwait(false);
-            var result = this.MapToDto<CodesWithDetailsDto>(codes);
+            var models = await this.codesStore.GetDefinitionsAsync().ConfigureAwait(false);
+            var result = ObjectMapper.Map<List<CodesWithSettings>, List<CodesWithSettingsDto>>(models);
             return result;
         }
-        public async Task DeleteClearDefinitionCacheAsync(string no)
+        public async Task<List<CodesWithSettingsDto>> PostFindAsync(string definitionNo)
         {
-            await this.codesService.ClearCacheAsync(no).ConfigureAwait(false);
+            var models= await this.codesStore.GetDefinitionAsync(definitionNo).ConfigureAwait(false);
+            var result = ObjectMapper.Map<List<CodesWithSettings>, List<CodesWithSettingsDto>>(models);
+            return result;
         }
+
+        //public async Task DeleteClearDefinitionCacheAsync(string no)
+        //{
+        //    await this.codesService.ClearCacheAsync(no).ConfigureAwait(false);
+        //}
     }
     
 }
