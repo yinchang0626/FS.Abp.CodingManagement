@@ -12,5 +12,6 @@ namespace FS.Abp.CodingManagement.Coding
     public partial interface ICodesTreeRepository
     {
         public Task<Codes> GetDefinitionAsync(string definitionNo);
+        public Task<List<Codes>> GetDefinitionsAsync();
     }
 }
