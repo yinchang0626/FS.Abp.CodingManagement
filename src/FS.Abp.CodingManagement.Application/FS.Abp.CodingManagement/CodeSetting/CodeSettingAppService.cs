@@ -41,7 +41,7 @@ namespace FS.Abp.CodingManagement.CodeSetting
 
             return codeSettingDtos;
         }
-        //todo: rename CodeSettingInput output dto,dont use 'Input' for a output param
+        
         public async Task<List<CodeSettingOutput>> PostLoadCodeSettingsBy(PostLoadCodeSettingsInputDto inputs)
         {
             List<CodeSettingOutput> codeSettingDtos = new List<CodeSettingOutput>();
@@ -98,12 +98,12 @@ namespace FS.Abp.CodingManagement.CodeSetting
             var codeSettingDtos = input.EditItems;
             for (var i = 0; i < codeSettingDtos.Count(); i++)
             {
-                FS.Abp.CodingManagement.Coding.Codes codes = new Abp.CodingManagement.Coding.Codes();
+                Codes codes = new Codes();
 
                 if (codeSettingDtos[i].Id != Guid.Empty)
                     codes = await this._codeRepository.GetAsync(codeSettingDtos[i].Id).ConfigureAwait(false);
 
-                codes = ObjectMapper.Map<CodeSettingInput, FS.Abp.CodingManagement.Coding.Codes>(codeSettingDtos[i], codes);
+                codes = ObjectMapper.Map(codeSettingDtos[i], codes);
 
                 await this._codeSettingDomainService.SetCodeSetting(codes, codeSettingDtos[i].Settings);
             }
