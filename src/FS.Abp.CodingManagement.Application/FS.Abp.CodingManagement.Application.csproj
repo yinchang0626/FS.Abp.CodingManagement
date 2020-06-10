@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\..\common.props" />
 
@@ -15,6 +15,7 @@
   <ItemGroup>
     <PackageReference Include="Volo.Abp.AutoMapper" Version="2.9.0" />
     <PackageReference Include="Volo.Abp.Ddd.Application" Version="2.9.0" />
+    <ProjectReference Include="..\..\..\..\framework\FS.Abp\src\FS.Abp.Application\FS.Abp.Application.csproj" />
     <ProjectReference Include="..\..\..\FS.Abp.SettingManagement\src\FS.Abp.SettingManagement.Application\FS.Abp.SettingManagement.Application.csproj" />
     <ProjectReference Include="..\..\..\FS.Abp.Trees\src\FS.Abp.Trees.Application\FS.Abp.Trees.Application.csproj" />
     <ProjectReference Include="..\FS.Abp.CodingManagement.Application.Contracts\FS.Abp.CodingManagement.Application.Contracts.csproj" />
@@ -26,6 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="FS.Abp.CodingManagement\Coding\Dtos\CodesWithSettingsDtoAutoMapperProfile.cs">
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="_Generated\FS.Abp.CodingManagement\Coding\CodesTreeAppService.Generated.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Coding</DependentUpon>
