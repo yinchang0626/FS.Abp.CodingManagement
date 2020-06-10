@@ -150,6 +150,43 @@
         }
       },
       "schematics": {}
+    },
+    "fs.theme-core": {
+      "projectType": "library",
+      "root": "themes/theme-core",
+      "sourceRoot": "themes/theme-core/src",
+      "prefix": "fs",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "themes/theme-core/tsconfig.lib.json",
+            "project": "themes/theme-core/ng-package.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "themes/theme-core/tsconfig.lib.json",
+              "themes/theme-core/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!themes/theme-core/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "themes/theme-core/jest.config.js",
+            "tsConfig": "themes/theme-core/tsconfig.spec.json",
+            "setupFile": "themes/theme-core/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {}
     }
   },
   "cli": {

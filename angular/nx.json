@@ -16,6 +16,9 @@
     },
     "fs.coding-management": {
       "tags": []
+    },
+    "fs.theme-core": {
+      "tags": []
     }
   }
 }
