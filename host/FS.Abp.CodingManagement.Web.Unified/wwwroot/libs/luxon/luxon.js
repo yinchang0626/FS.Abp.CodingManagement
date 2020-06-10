@@ -107,6 +107,21 @@ var luxon = (function (exports) {
     return _wrapNativeSuper(Class);
   }
 
+  function _objectWithoutPropertiesLoose(source, excluded) {
+    if (source == null) return {};
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i;
+
+    for (i = 0; i < sourceKeys.length; i++) {
+      key = sourceKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      target[key] = source[key];
+    }
+
+    return target;
+  }
+
   // these aren't really private, but nor are they really useful to document
 
   /**
@@ -266,13 +281,13 @@ var luxon = (function (exports) {
     minute: n,
     second: n
   };
-  var TIME_WITH_SHORT_OFFS.AbpET = {
+  var TIME_WITH_SHORT_OFFSET = {
     hour: n,
     minute: n,
     second: n,
     timeZoneName: s
   };
-  var TIME_WITH_LONG_OFFS.AbpET = {
+  var TIME_WITH_LONG_OFFSET = {
     hour: n,
     minute: n,
     second: n,
@@ -297,7 +312,7 @@ var luxon = (function (exports) {
    * {@link toLocaleString}; format like '09:30:23 EDT', always 24-hour.
    */
 
-  var TIME_24_WITH_SHORT_OFFS.AbpET = {
+  var TIME_24_WITH_SHORT_OFFSET = {
     hour: n,
     minute: n,
     second: n,
@@ -308,7 +323,7 @@ var luxon = (function (exports) {
    * {@link toLocaleString}; format like '09:30:23 Eastern Daylight Time', always 24-hour.
    */
 
-  var TIME_24_WITH_LONG_OFFS.AbpET = {
+  var TIME_24_WITH_LONG_OFFSET = {
     hour: n,
     minute: n,
     second: n,
@@ -808,10 +823,10 @@ var luxon = (function (exports) {
       case stringify(TIME_WITH_SECONDS):
         return "h:mm:ss a";
 
-      case stringify(TIME_WITH_SHORT_OFFS.AbpET):
+      case stringify(TIME_WITH_SHORT_OFFSET):
         return "h:mm a";
 
-      case stringify(TIME_WITH_LONG_OFFS.AbpET):
+      case stringify(TIME_WITH_LONG_OFFSET):
         return "h:mm a";
 
       case stringify(TIME_24_SIMPLE):
@@ -820,10 +835,10 @@ var luxon = (function (exports) {
       case stringify(TIME_24_WITH_SECONDS):
         return "HH:mm:ss";
 
-      case stringify(TIME_24_WITH_SHORT_OFFS.AbpET):
+      case stringify(TIME_24_WITH_SHORT_OFFSET):
         return "HH:mm";
 
-      case stringify(TIME_24_WITH_LONG_OFFS.AbpET):
+      case stringify(TIME_24_WITH_LONG_OFFSET):
         return "HH:mm";
 
       case stringify(DATETIME_SHORT):
@@ -892,12 +907,12 @@ var luxon = (function (exports) {
     DDDD: DATE_HUGE,
     t: TIME_SIMPLE,
     tt: TIME_WITH_SECONDS,
-    ttt: TIME_WITH_SHORT_OFFS.AbpET,
-    tttt: TIME_WITH_LONG_OFFS.AbpET,
+    ttt: TIME_WITH_SHORT_OFFSET,
+    tttt: TIME_WITH_LONG_OFFSET,
     T: TIME_24_SIMPLE,
     TT: TIME_24_WITH_SECONDS,
-    TTT: TIME_24_WITH_SHORT_OFFS.AbpET,
-    TTTT: TIME_24_WITH_LONG_OFFS.AbpET,
+    TTT: TIME_24_WITH_SHORT_OFFSET,
+    TTTT: TIME_24_WITH_LONG_OFFSET,
     f: DATETIME_SHORT,
     ff: DATETIME_MED,
     fff: DATETIME_FULL,
@@ -1816,8 +1831,9 @@ var luxon = (function (exports) {
         second: second,
         millisecond: 0
       });
-      var asTS = date.valueOf();
-      asTS -= asTS % 1000;
+      var asTS = +date;
+      var over = asTS % 1000;
+      asTS -= over >= 0 ? over : 1000 + over;
       return (asUTC - asTS) / (60 * 1000);
     }
     /** @override **/
@@ -2288,7 +2304,12 @@ var luxon = (function (exports) {
       opts = {};
     }
 
-    var key = JSON.stringify([locString, opts]);
+    var _opts = opts,
+        base = _opts.base,
+        cacheKeyOpts = _objectWithoutPropertiesLoose(_opts, ["base"]); // exclude `base` from the options
+
+
+    var key = JSON.stringify([locString, cacheKeyOpts]);
     var inf = intlRelCache[key];
 
     if (!inf) {
@@ -5647,6 +5668,10 @@ var luxon = (function (exports) {
           result = _ref6[0],
           zone = _ref6[1];
 
+      if (hasOwnProperty(matches, "a") && hasOwnProperty(matches, "H")) {
+        throw new ConflictingSpecificationError("Can't include meridiem when specifying 24-hour format");
+      }
+
       return {
         input: input,
         tokens: tokens,
@@ -6198,10 +6223,11 @@ var luxon = (function (exports) {
           c = _ref3[0];
           o = _ref3[1];
         } else {
-          c = tsToObj(this.ts, zone.offset(this.ts));
+          var ot = zone.offset(this.ts);
+          c = tsToObj(this.ts, ot);
           invalid = Number.isNaN(c.year) ? new Invalid("invalid input") : null;
           c = invalid ? null : c;
-          o = invalid ? null : zone.offset(this.ts);
+          o = invalid ? null : ot;
         }
       }
       /**
@@ -6857,7 +6883,7 @@ var luxon = (function (exports) {
         var newTS = this.ts;
 
         if (keepLocalTime || keepCalendarTime) {
-          var offsetGuess = this.o - zone.offset(this.ts);
+          var offsetGuess = zone.offset(this.ts);
           var asObj = this.toObject();
 
           var _objToTS3 = objToTS(asObj, offsetGuess, zone);
@@ -7110,13 +7136,13 @@ var luxon = (function (exports) {
      * Defaults to the system's locale if no locale has been specified
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat/formatToParts
      * @param opts {Object} - Intl.DateTimeFormat constructor options, same as `toLocaleString`.
-     * @example DateTime.local().toLocaleString(); //=> [
-     *                                    //=>   { type: 'day', value: '25' },
-     *                                    //=>   { type: 'literal', value: '/' },
-     *                                    //=>   { type: 'month', value: '05' },
-     *                                    //=>   { type: 'literal', value: '/' },
-     *                                    //=>   { type: 'year', value: '1982' }
-     *                                    //=> ]
+     * @example DateTime.local().toLocaleParts(); //=> [
+     *                                   //=>   { type: 'day', value: '25' },
+     *                                   //=>   { type: 'literal', value: '/' },
+     *                                   //=>   { type: 'month', value: '05' },
+     *                                   //=>   { type: 'literal', value: '/' },
+     *                                   //=>   { type: 'year', value: '1982' }
+     *                                   //=> ]
      */
     ;
 
@@ -8088,9 +8114,9 @@ var luxon = (function (exports) {
        */
 
     }, {
-      key: "TIME_WITH_SHORT_OFFS.AbpET",
+      key: "TIME_WITH_SHORT_OFFSET",
       get: function get() {
-        return TIME_WITH_SHORT_OFFS.AbpET;
+        return TIME_WITH_SHORT_OFFSET;
       }
       /**
        * {@link toLocaleString} format like '09:30:23 AM Eastern Daylight Time'. Only 12-hour if the locale is.
@@ -8098,9 +8124,9 @@ var luxon = (function (exports) {
        */
 
     }, {
-      key: "TIME_WITH_LONG_OFFS.AbpET",
+      key: "TIME_WITH_LONG_OFFSET",
       get: function get() {
-        return TIME_WITH_LONG_OFFS.AbpET;
+        return TIME_WITH_LONG_OFFSET;
       }
       /**
        * {@link toLocaleString} format like '09:30', always 24-hour.
@@ -8128,9 +8154,9 @@ var luxon = (function (exports) {
        */
 
     }, {
-      key: "TIME_24_WITH_SHORT_OFFS.AbpET",
+      key: "TIME_24_WITH_SHORT_OFFSET",
       get: function get() {
-        return TIME_24_WITH_SHORT_OFFS.AbpET;
+        return TIME_24_WITH_SHORT_OFFSET;
       }
       /**
        * {@link toLocaleString} format like '09:30:23 Eastern Daylight Time', always 24-hour.
@@ -8138,9 +8164,9 @@ var luxon = (function (exports) {
        */
 
     }, {
-      key: "TIME_24_WITH_LONG_OFFS.AbpET",
+      key: "TIME_24_WITH_LONG_OFFSET",
       get: function get() {
-        return TIME_24_WITH_LONG_OFFS.AbpET;
+        return TIME_24_WITH_LONG_OFFSET;
       }
       /**
        * {@link toLocaleString} format like '10/14/1983, 9:30 AM'. Only 12-hour if the locale is.

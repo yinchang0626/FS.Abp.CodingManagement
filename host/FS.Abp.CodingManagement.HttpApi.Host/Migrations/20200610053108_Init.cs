@@ -24,6 +24,7 @@ namespace FS.Abp.CodingManagement.Migrations
                     Code = table.Column<string>(nullable: false),
                     DefinitionId = table.Column<Guid>(nullable: true),
                     ParentId = table.Column<Guid>(nullable: true),
+                    Enable = table.Column<bool>(nullable: false, defaultValue: true),
                     TenantId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
@@ -43,6 +44,30 @@ namespace FS.Abp.CodingManagement.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CodingManagementVersions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ExtraProperties = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorId = table.Column<Guid>(nullable: true),
+                    LastModificationTime = table.Column<DateTime>(nullable: true),
+                    LastModifierId = table.Column<Guid>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(nullable: true),
+                    DeletionTime = table.Column<DateTime>(nullable: true),
+                    ProviderName = table.Column<string>(nullable: true),
+                    ProviderKey = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    TenantId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CodingManagementVersions", x => x.Id);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_CodingManagementCodes_DefinitionId",
                 table: "CodingManagementCodes",
@@ -58,6 +83,9 @@ namespace FS.Abp.CodingManagement.Migrations
         {
             migrationBuilder.DropTable(
                 name: "CodingManagementCodes");
+
+            migrationBuilder.DropTable(
+                name: "CodingManagementVersions");
         }
     }
 }
