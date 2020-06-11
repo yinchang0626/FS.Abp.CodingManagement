@@ -193,7 +193,7 @@ namespace FS.Abp.CodingManagement
             });
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
-            app.UseMvcWithDefaultRouteAndArea();
+            app.UseConfiguredEndpoints();
 
             SeedData(context);
         }
