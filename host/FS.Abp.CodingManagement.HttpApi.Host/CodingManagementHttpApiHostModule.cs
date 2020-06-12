@@ -7,13 +7,10 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using FS.Abp.CodingManagement.EntityFrameworkCore;
 using FS.Abp.CodingManagement.MultiTenancy;
 using StackExchange.Redis;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Swagger;
 using Volo.Abp;
-using Volo.Abp.AspNetCore.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
@@ -24,17 +21,8 @@ using Volo.Abp.EntityFrameworkCore.SqlServer;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
-using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.Security.Claims;
-using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.VirtualFileSystem;
-using Volo.Abp.AspNetCore.Mvc;
-using Volo.Abp.Identity.EntityFrameworkCore;
-using Volo.Abp.Identity;
-using Volo.Abp.IdentityServer.EntityFrameworkCore;
-using Volo.Abp.PermissionManagement;
-using Volo.Abp.PermissionManagement.HttpApi;
-using Volo.Abp.PermissionManagement.Identity;
 
 namespace FS.Abp.CodingManagement
 {
