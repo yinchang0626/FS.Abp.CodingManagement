@@ -8,7 +8,6 @@ namespace FS.Abp.CodingManagement.EntityFrameworkCore
         typeof(CodingManagementDomainModule),
         typeof(AbpEntityFrameworkCoreModule),
 
-        typeof(FS.Abp.Trees.EntityFrameworkCore.TreesEntityFrameworkCoreModule),
         typeof(FS.Abp.SettingManagement.EntityFrameworkCore.SettingManagementEntityFrameworkCoreModule)
     )]
     public class CodingManagementEntityFrameworkCoreModule : AbpModule

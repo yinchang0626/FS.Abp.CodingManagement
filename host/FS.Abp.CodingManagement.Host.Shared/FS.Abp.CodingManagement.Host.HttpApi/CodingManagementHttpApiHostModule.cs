@@ -9,7 +9,8 @@ namespace FS.Abp.CodingManagement.Host.HttpApi
     [DependsOn(
         typeof(FS.Abp.CodingManagement.CodingManagementApplicationModule),
         typeof(FS.Abp.CodingManagement.CodingManagementHttpApiModule),
-        typeof(FS.Abp.CodingManagement.EntityFrameworkCore.CodingManagementEntityFrameworkCoreModule)
+        typeof(FS.Abp.CodingManagement.EntityFrameworkCore.CodingManagementEntityFrameworkCoreModule),
+        typeof(FS.Abp.SettingManagement.Host.HttpApi.SettingManagementHttpApiHostModule)
         )]
     public class CodingManagementHttpApiHostModule : AbpModule
     {

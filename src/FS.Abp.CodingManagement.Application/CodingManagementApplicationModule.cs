@@ -11,7 +11,6 @@ namespace FS.Abp.CodingManagement
         typeof(FS.Abp.Application.AbpDddApplicationModule),//typeof(AbpDddApplicationModule),
         typeof(AbpAutoMapperModule),
 
-        typeof(FS.Abp.Trees.TreesApplicationModule),
         typeof(FS.Abp.SettingManagement.SettingManagementApplicationModule)
         )]
     public class CodingManagementApplicationModule : AbpModule

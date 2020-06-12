@@ -40,7 +40,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\FS.Abp.CodingManagement.Application\FS.Abp.CodingManagement.Application.csproj" />
     <ProjectReference Include="..\..\src\FS.Abp.CodingManagement.EntityFrameworkCore\FS.Abp.CodingManagement.EntityFrameworkCore.csproj" />
-    <ProjectReference Include="..\..\src\FS.Abp.CodingManagement.Web\FS.Abp.CodingManagement.Web.csproj" />
     <ProjectReference Include="..\FS.Abp.CodingManagement.Host.Shared\FS.Abp.CodingManagement.Host.Shared.csproj" />
   </ItemGroup>
 

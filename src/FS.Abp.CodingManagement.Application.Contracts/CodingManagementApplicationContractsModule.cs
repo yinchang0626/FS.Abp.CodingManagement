@@ -10,7 +10,6 @@ namespace FS.Abp.CodingManagement
         typeof(FS.Abp.Application.AbpDddApplicationContractsModule),//typeof(AbpDddApplicationContractsModule),
         typeof(AbpAuthorizationModule),
 
-        typeof(FS.Abp.Trees.TreesApplicationContractsModule),
         typeof(FS.Abp.SettingManagement.SettingManagementApplicationContractsModule)
         )]
     public class CodingManagementApplicationContractsModule : AbpModule

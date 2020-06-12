@@ -39,28 +39,14 @@ using Volo.Abp.PermissionManagement.Identity;
 namespace FS.Abp.CodingManagement
 {
     [DependsOn(
-        typeof(CodingManagementApplicationModule),
-        typeof(CodingManagementEntityFrameworkCoreModule),
-        typeof(CodingManagementHttpApiModule),
         typeof(AbpAspNetCoreMvcUiMultiTenancyModule),
         typeof(AbpAutofacModule),
         typeof(AbpEntityFrameworkCoreSqlServerModule),
         typeof(AbpAuditLoggingEntityFrameworkCoreModule),
-        typeof(AbpPermissionManagementDomainIdentityModule),
-        typeof(AbpPermissionManagementEntityFrameworkCoreModule),
-        typeof(AbpPermissionManagementApplicationModule),
-        typeof(AbpPermissionManagementHttpApiModule),
-        typeof(AbpSettingManagementEntityFrameworkCoreModule),
         typeof(AbpAspNetCoreSerilogModule),
 
-        typeof(AbpIdentityEntityFrameworkCoreModule),
-        typeof(AbpIdentityApplicationModule),
-        typeof(AbpIdentityHttpApiModule),
-        typeof(AbpIdentityServerEntityFrameworkCoreModule),
-
-        typeof(FS.Abp.SettingManagement.EntityFrameworkCore.SettingManagementEntityFrameworkCoreModule),
-        typeof(FS.Abp.SettingManagement.SettingManagementApplicationModule),
-        typeof(FS.Abp.SettingManagement.SettingManagementHttpApiModule)
+        typeof(FS.Abp.Host.HttpApi.AbpHttpApiHostModule),
+        typeof(FS.Abp.CodingManagement.Host.HttpApi.CodingManagementHttpApiHostModule)
         )]
     public class CodingManagementHttpApiHostModule : AbpModule
     {
@@ -70,12 +56,6 @@ namespace FS.Abp.CodingManagement
         {
             var hostingEnvironment = context.Services.GetHostingEnvironment();
             var configuration = context.Services.GetConfiguration();
-
-            Configure<AbpAspNetCoreMvcOptions>(options =>
-            {
-                options.ConventionalControllers.Create(typeof(CodingManagementApplicationModule).Assembly, action => action.RootPath = "CodingManagement");
-                options.ConventionalControllers.Create(typeof(FS.Abp.SettingManagement.SettingManagementApplicationModule).Assembly, action => action.RootPath = "SettingManagement");
-            });
 
             Configure<AbpDbContextOptions>(options =>
             {

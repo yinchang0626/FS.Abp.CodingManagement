@@ -10,7 +10,6 @@ namespace FS.Abp.CodingManagement
         typeof(Volo.Abp.Caching.AbpCachingModule),
 
         typeof(FS.Abp.Domain.AbpDddDomainModule),
-        typeof(FS.Abp.Trees.TreesDomainModule),
         typeof(FS.Abp.SettingManagement.SettingManagementDomainModule)
         )]
     public class CodingManagementDomainModule : AbpModule

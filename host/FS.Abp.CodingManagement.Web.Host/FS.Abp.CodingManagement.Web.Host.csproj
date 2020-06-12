@@ -32,8 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\FS.Abp.CodingManagement.Web\FS.Abp.CodingManagement.Web.csproj" />
-    <ProjectReference Include="..\..\src\FS.Abp.CodingManagement.HttpApi.Client\FS.Abp.CodingManagement.HttpApi.Client.csproj" />
     <ProjectReference Include="..\FS.Abp.CodingManagement.Host.Shared\FS.Abp.CodingManagement.Host.Shared.csproj" />
   </ItemGroup>
 

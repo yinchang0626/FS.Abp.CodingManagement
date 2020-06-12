@@ -17,7 +17,6 @@
     <PackageReference Include="Volo.Abp.Authorization" Version="2.9.0" />
     <ProjectReference Include="..\..\..\..\framework\FS.Abp\src\FS.Abp.Application.Contracts\FS.Abp.Application.Contracts.csproj" />
     <ProjectReference Include="..\..\..\FS.Abp.SettingManagement\src\FS.Abp.SettingManagement.Application.Contracts\FS.Abp.SettingManagement.Application.Contracts.csproj" />
-    <ProjectReference Include="..\..\..\FS.Abp.Trees\src\FS.Abp.Trees.Application.Contracts\FS.Abp.Trees.Application.Contracts.csproj" />
     <ProjectReference Include="..\FS.Abp.CodingManagement.Domain.Shared\FS.Abp.CodingManagement.Domain.Shared.csproj" />
   </ItemGroup>
 

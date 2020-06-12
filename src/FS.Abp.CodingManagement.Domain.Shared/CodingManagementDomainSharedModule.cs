@@ -11,7 +11,6 @@ namespace FS.Abp.CodingManagement
     [DependsOn(
         typeof(AbpValidationModule),
 
-        typeof(FS.Abp.Trees.TreesDomainSharedModule),
         typeof(FS.Abp.SettingManagement.SettingManagementDomainSharedModule)
     )]
     public class CodingManagementDomainSharedModule : AbpModule

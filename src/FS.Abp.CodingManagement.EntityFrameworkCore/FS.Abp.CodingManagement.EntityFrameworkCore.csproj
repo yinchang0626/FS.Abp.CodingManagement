@@ -14,8 +14,8 @@
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="2.9.0" />
+    <ProjectReference Include="..\..\..\..\framework\FS.Abp\src\FS.Abp.EntityFrameworkCore\FS.Abp.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\..\FS.Abp.SettingManagement\src\FS.Abp.SettingManagement.EntityFrameworkCore\FS.Abp.SettingManagement.EntityFrameworkCore.csproj" />
-    <ProjectReference Include="..\..\..\FS.Abp.Trees\src\FS.Abp.Trees.EntityFrameworkCore\FS.Abp.Trees.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\FS.Abp.CodingManagement.Domain\FS.Abp.CodingManagement.Domain.csproj" />
   </ItemGroup>
 

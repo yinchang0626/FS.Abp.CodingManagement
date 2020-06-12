@@ -37,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\framework\FS.Abp\src\FS.Abp.Host.Shared\FS.Abp.Host.Shared.csproj" />
     <ProjectReference Include="..\..\..\FS.Abp.SettingManagement\src\FS.Abp.SettingManagement.Application\FS.Abp.SettingManagement.Application.csproj" />
     <ProjectReference Include="..\..\..\FS.Abp.SettingManagement\src\FS.Abp.SettingManagement.EntityFrameworkCore\FS.Abp.SettingManagement.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\..\FS.Abp.SettingManagement\src\FS.Abp.SettingManagement.HttpApi\FS.Abp.SettingManagement.HttpApi.csproj" />
