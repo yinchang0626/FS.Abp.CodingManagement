@@ -1,6 +1,5 @@
 ﻿using FS.Abp.CodingManagement.CodeSetting.Dtos;
 using FS.Abp.CodingManagement.Coding;
-using FS.Abp.CodingManagement.Coding.Dtos;
 using FS.Abp.CodingManagement.Coding.Models;
 using System;
 using System.Collections.Generic;
@@ -12,13 +11,13 @@ namespace FS.Abp.CodingManagement.CodeSetting
 {
     public class CodeSettingAppService : CodingManagementAppService, ICodeSettingAppService
     {
-        private readonly FS.Abp.Trees.ITreeRepository<FS.Abp.CodingManagement.Coding.Codes> _codeRepository;
+        private readonly FS.Abp.Trees.ITreeRepository<Codes> _codeRepository;
         private readonly ICodesStore _codesStore;
         private readonly Volo.Abp.SettingManagement.ISettingManager _settingManager;
         private readonly ICodeSettingDomainService _codeSettingDomainService;
 
         public CodeSettingAppService(
-            FS.Abp.Trees.ITreeRepository<FS.Abp.CodingManagement.Coding.Codes> codeRepository,
+            FS.Abp.Trees.ITreeRepository<Codes> codeRepository,
             ICodesStore codesStore,
             Volo.Abp.SettingManagement.ISettingManager settingManager,
             ICodeSettingDomainService codeSettingDomainService)
