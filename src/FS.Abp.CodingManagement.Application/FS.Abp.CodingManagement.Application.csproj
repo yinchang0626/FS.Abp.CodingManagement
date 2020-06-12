@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\..\common.props" />
 
@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="FS.Abp.CodingManagement\Coding\Dtos\CodesWithSettingsDtoAutoMapperProfile.cs">
+    <Compile Update="FS.Abp.CodingManagement\CodeSetting\CodesWithSettingsDtoAutoMapperProfile.cs">
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="_Generated\FS.Abp.CodingManagement\Coding\CodesTreeAppService.Generated.cs">

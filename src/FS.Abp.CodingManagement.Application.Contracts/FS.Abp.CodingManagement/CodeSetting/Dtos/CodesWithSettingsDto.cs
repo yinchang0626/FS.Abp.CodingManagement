@@ -1,10 +1,11 @@
-﻿using FS.Abp.SettingManagement.Dto;
+﻿using FS.Abp.CodingManagement.Coding.Dtos;
+using FS.Abp.SettingManagement.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Volo.Abp.Settings;
 
-namespace FS.Abp.CodingManagement.Coding.Dtos
+namespace FS.Abp.CodingManagement.CodeSetting.Dtos
 {
     public class CodesWithSettingsDto
     {

@@ -1,5 +1,7 @@
 ﻿using FS.Abp.CodingManagement.CodeSetting.Dtos;
 using FS.Abp.CodingManagement.Coding;
+using FS.Abp.CodingManagement.Coding.Dtos;
+using FS.Abp.CodingManagement.Coding.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,20 +13,23 @@ namespace FS.Abp.CodingManagement.CodeSetting
     public class CodeSettingAppService : CodingManagementAppService, ICodeSettingAppService
     {
         private readonly FS.Abp.Trees.ITreeRepository<FS.Abp.CodingManagement.Coding.Codes> _codeRepository;
+        private readonly ICodesStore _codesStore;
         private readonly Volo.Abp.SettingManagement.ISettingManager _settingManager;
         private readonly ICodeSettingDomainService _codeSettingDomainService;
 
         public CodeSettingAppService(
             FS.Abp.Trees.ITreeRepository<FS.Abp.CodingManagement.Coding.Codes> codeRepository,
+            ICodesStore codesStore,
             Volo.Abp.SettingManagement.ISettingManager settingManager,
             ICodeSettingDomainService codeSettingDomainService)
         {
             this._codeRepository = codeRepository;
+            this._codesStore = codesStore;
             this._settingManager = settingManager;
             this._codeSettingDomainService = codeSettingDomainService;
         }
 
-        [Obsolete("replaced by PostLoadCodeSettingsBy")]
+        [Obsolete("replaced by GetFindByAsync")]
         public async Task<List<CodeSettingInput>> PostGetCodeSettingsByCodeId(List<Guid> codeIds)
         {
             List<CodeSettingInput> codeSettingDtos = new List<CodeSettingInput>();
@@ -41,7 +46,7 @@ namespace FS.Abp.CodingManagement.CodeSetting
 
             return codeSettingDtos;
         }
-        
+        [Obsolete("replaced by GetFindByAsync")]
         public async Task<List<CodeSettingOutput>> PostLoadCodeSettingsBy(PostLoadCodeSettingsInputDto inputs)
         {
             List<CodeSettingOutput> codeSettingDtos = new List<CodeSettingOutput>();
@@ -85,8 +90,13 @@ namespace FS.Abp.CodingManagement.CodeSetting
                 return settings;
             }
         }
-
+        [Obsolete("replaced by PostDispatch")]
         public async Task PostCreateOrUpdateCodeSettings(CreateOrUpdateCodeSettingsInput input)
+        {
+            await this.PostDispatch(input).ConfigureAwait(false);
+        }
+
+        public async Task PostDispatch(CreateOrUpdateCodeSettingsInput input)
         {
             var delCodes = input.DeleteItemIds;
             for (var i = 0; i < delCodes.Count(); i++)
@@ -108,5 +118,23 @@ namespace FS.Abp.CodingManagement.CodeSetting
                 await this._codeSettingDomainService.SetCodeSetting(codes, codeSettingDtos[i].Settings);
             }
         }
+
+        public async Task<List<CodesWithSettingsDto>> GetDefinitionsAsync()
+        {
+            var models = await this._codesStore.GetDefinitionsAsync().ConfigureAwait(false);
+            var result = ObjectMapper.Map<List<CodesWithSettings>, List<CodesWithSettingsDto>>(models);
+            return result;
+        }
+        public async Task<List<CodesWithSettingsDto>> PostFindByDefinitionNosAsync(FindByDefinitionNosInput input)
+        {
+            var result = new List<CodesWithSettingsDto>();
+            foreach (var no in input.DefinitionNos)
+            {
+                var model = await this._codesStore.GetDefinitionAsync(no).ConfigureAwait(false);
+                result = result.Concat(ObjectMapper.Map<List<CodesWithSettings>, List<CodesWithSettingsDto>>(model)).ToList();
+            }
+            return result;
+        }
+
     }
 }

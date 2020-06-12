@@ -19,4 +19,9 @@ namespace FS.Abp.CodingManagement.CodeSetting
         public List<CodeSettingInput> EditItems { get; set; }
         public List<Guid> DeleteItemIds { get; set; }
     }
+    public class FindByDefinitionNosInput
+    {
+        public List<string> DefinitionNos { get; set; }
+
+    }
 }

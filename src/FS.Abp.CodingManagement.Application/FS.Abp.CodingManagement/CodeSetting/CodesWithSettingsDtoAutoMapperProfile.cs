@@ -3,7 +3,7 @@ using AutoMapper;
 using FS.Abp.CodingManagement.Coding.Models;
 using Volo.Abp.AutoMapper;
 
-namespace FS.Abp.CodingManagement.Coding.Dtos
+namespace FS.Abp.CodingManagement.CodeSetting.Dtos
 {
     public partial class CodesWithSettingsDtoAutoMapperProfile : Profile
     {
