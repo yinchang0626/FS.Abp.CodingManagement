@@ -16,8 +16,8 @@ namespace FS.Abp.CodingManagement.CodeSetting
         [Obsolete("replaced by PostDispatch")]
         Task PostCreateOrUpdateCodeSettings(CreateOrUpdateCodeSettingsInput input);
 
-        Task PostDispatch(CreateOrUpdateCodeSettingsInput input);
+        Task PostPatch(CreateOrUpdateCodeSettingsInput input);
         Task<List<CodesWithSettingsDto>> GetDefinitionsAsync();
-        Task<List<CodesWithSettingsDto>> PostFindByDefinitionNosAsync(FindByDefinitionNosInput input);
+        Task<Dictionary<string, List<CodesWithSettingsDto>>> PostFindByDefinitionNosAsync(FindByDefinitionNosInput input);
     }
 }

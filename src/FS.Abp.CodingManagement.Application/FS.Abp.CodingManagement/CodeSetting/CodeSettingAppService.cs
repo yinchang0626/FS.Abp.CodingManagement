@@ -5,19 +5,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Settings;
 
 namespace FS.Abp.CodingManagement.CodeSetting
 {
     public class CodeSettingAppService : CodingManagementAppService, ICodeSettingAppService
     {
-        private readonly FS.Abp.Trees.ITreeRepository<Codes> _codeRepository;
+        private readonly ICodesTreeRepository _codeRepository;
         private readonly ICodesStore _codesStore;
         private readonly Volo.Abp.SettingManagement.ISettingManager _settingManager;
         private readonly ICodeSettingDomainService _codeSettingDomainService;
 
         public CodeSettingAppService(
-            FS.Abp.Trees.ITreeRepository<Codes> codeRepository,
+            ICodesTreeRepository codeRepository,
             ICodesStore codesStore,
             Volo.Abp.SettingManagement.ISettingManager settingManager,
             ICodeSettingDomainService codeSettingDomainService)
@@ -92,10 +93,10 @@ namespace FS.Abp.CodingManagement.CodeSetting
         [Obsolete("replaced by PostDispatch")]
         public async Task PostCreateOrUpdateCodeSettings(CreateOrUpdateCodeSettingsInput input)
         {
-            await this.PostDispatch(input).ConfigureAwait(false);
+            await this.PostPatch(input).ConfigureAwait(false);
         }
 
-        public async Task PostDispatch(CreateOrUpdateCodeSettingsInput input)
+        public async Task PostPatch(CreateOrUpdateCodeSettingsInput input)
         {
             var delCodes = input.DeleteItemIds;
             for (var i = 0; i < delCodes.Count(); i++)
@@ -124,15 +125,20 @@ namespace FS.Abp.CodingManagement.CodeSetting
             var result = ObjectMapper.Map<List<CodesWithSettings>, List<CodesWithSettingsDto>>(models);
             return result;
         }
-        public async Task<List<CodesWithSettingsDto>> PostFindByDefinitionNosAsync(FindByDefinitionNosInput input)
+        public async Task<Dictionary<string, List<CodesWithSettingsDto>>> PostFindByDefinitionNosAsync(FindByDefinitionNosInput input)
         {
-            var result = new List<CodesWithSettingsDto>();
+            var result = new Dictionary<string,List<CodesWithSettingsDto>>();
             foreach (var no in input.DefinitionNos)
             {
                 var model = await this._codesStore.GetDefinitionAsync(no).ConfigureAwait(false);
-                result = result.Concat(ObjectMapper.Map<List<CodesWithSettings>, List<CodesWithSettingsDto>>(model)).ToList();
+                var codelistResult = ObjectMapper.Map<List<CodesWithSettings>, List<CodesWithSettingsDto>>(model);
+
+                if (!result.ContainsKey(no))
+                {
+                    result.Add(no, codelistResult);
+                }
             }
-            return result;
+           return result;
         }
 
     }

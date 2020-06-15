@@ -27,11 +27,11 @@
       "@fs/coding-management/*": [
         "libs/coding-management/*/src/index.ts"
       ],
-      "@fs/theme-core": [
-        "libs/theme-core/src/index.ts"
+      "@fs/theme.core": [
+        "themes/theme-core/src/index.ts"
       ],
-      "@fs/theme-core/*": [
-        "libs/theme-core/*/src/index.ts"
+      "@fs/theme.core/*": [
+        "themes/theme-core/*/src/index.ts"
       ]
     }
   },

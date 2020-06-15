@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FS.Abp.CodingManagement.Coding;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,14 +13,14 @@ namespace FS.Abp.CodingManagement.CodeSetting
     public class CodeSettingDomainService : ICodeSettingDomainService
     {
         private readonly IGuidGenerator _guidGenerator;
-        private readonly FS.Abp.Trees.ITreeRepository<FS.Abp.CodingManagement.Coding.Codes> _codeRepository;
+        private readonly ICodesTreeRepository _codeRepository;
         private readonly ICurrentTenant _currentTenant;
         private readonly ISettingManager _settingManager;
 
         public CodeSettingDomainService(
             IGuidGenerator guidGenerator,
             ISettingManager settingManager,
-            FS.Abp.Trees.ITreeRepository<FS.Abp.CodingManagement.Coding.Codes> codeRepository,
+           ICodesTreeRepository codeRepository,
             ICurrentTenant currentTenant)
         {
             this._guidGenerator = guidGenerator;
