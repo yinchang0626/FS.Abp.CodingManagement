@@ -15,9 +15,19 @@ namespace FS.Abp.CodingManagement.Coding
     //todo:rename to CodesAppService
     //todo:definitionNo params change to url
     //todo:Cache
-    [RemoteService(false)]
+    //[RemoteService(false)]
+    [Obsolete("remove")]
     public partial class CodesTreeAppService
     {
+        private ICodesService _codesService;
+        public ICodesService codesService => this.LazyGetRequiredService(ref _codesService);
+        [Obsolete("remove")]
+        public async Task<FS.Abp.CodingManagement.Coding.Dtos.CodesWithDetailsDto> GetDefinitionAsync(string no)
+        {
+            var codes = await this.codesService.GetDefinitionAsync(no).ConfigureAwait(false);
+            var result = this.MapToDto<CodesWithDetailsDto>(codes);
+            return result;
+        }
         //private ICodesService _codesService;
         //public ICodesService codesService => this.LazyGetRequiredService(ref _codesService);
 
@@ -73,7 +83,7 @@ namespace FS.Abp.CodingManagement.Coding
         //    //var result = ObjectMapper.Map<List<CodesWithSettings>, List<CodesWithSettingsDto>>(models);
         //    //return result;
         //}
-        
+
 
         //public async Task DeleteClearDefinitionCacheAsync(string no)
         //{
