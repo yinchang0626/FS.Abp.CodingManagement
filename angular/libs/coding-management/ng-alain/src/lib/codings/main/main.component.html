@@ -1,69 +1,50 @@
-<nz-row nzGutter="16">
-    <nz-col [nzMd]="24" [nzLg]="9">
-        <nz-card [nzExtra]="extraAction">
-            <nz-list [nzDataSource]="codeList" nzBordered nzSize="small" [nzRenderItem]="item">
-                <ng-template #item let-item>
-                    <nz-list-item style="text-align: left;" [nzContent]="content" [nzActions]="[editAction]" class="items">
-                        <ng-template #content>
-                            <div style="text-align: left;">
-                                <nz-tag [nzColor]="'green'">{{item.no}}</nz-tag>
-                                {{ item.displayName }}
-                            </div>
-                        </ng-template>
-                        <ng-template #editAction>
-                            <button nz-button nzType="link" nz-dropdown [nzDropdownMenu]="menu" (click)="editManageAction(item.id)">
-                                管理代碼
-                            </button>
-                            <nz-dropdown-menu #menu="nzDropdownMenu">
-                                <ul nz-menu>
+<div *ngIf="codeList"> 
+    <nz-row nzGutter="16">
+        <nz-col [nzLg]="24" [nzXl]="9" style="padding-bottom: 10px;">
+            <nz-row  style="padding-bottom: 10px;">
+                <nz-col>
+                    <fs-edit-code></fs-edit-code>
+                </nz-col>
+            </nz-row>
+            <nz-row>
+                <nz-col>
+                    <ul nz-menu nzMode="inline">
+                        <ul>
+                            <li nz-menu-item nz-popover *ngFor="let item of codeList"
+                                [nzPopoverTitle]="titleTemplate"
+                                [nzPopoverContent]="contentTemplate"
+                                nzPopoverPlacement="bottom" (click)="editManageAction(item)"
+                            >
+                                <nz-tag [nzColor]="'green'">{{ item.codes.no }}</nz-tag>
+                                {{ item.codes.displayName }}
+                                <ng-template #titleTemplate>
                                     <nz-row style="text-align: center;">
                                         <nz-col>
-                                            <fs-edit-code [item]="item"></fs-edit-code>
+                                            <fs-edit-code [data]="item" [settingGroups]="settingGroups"></fs-edit-code>
                                         </nz-col>
-                                    </nz-row>
-                                    <nz-row style="text-align: center;">
                                         <nz-col>
-                                            <button nzType="link" nz-button (click)="setting(true, item.id)">設定管理</button>
+                                            <button nzType="link" nz-button (click)="setting(true, item.codes.id)">設定</button>
                                         </nz-col>
-                                    </nz-row>
-                                    <nz-row style="text-align: center;">
                                         <nz-col>
-                                            <button nzType="link" style="color: red;" nz-button (click)="deleteNode(item, 'node')">刪除節點</button>
+                                            <button nzType="link" style="color: red;" nz-button (click)="deleteNode(item, 'node')">刪除</button>
                                         </nz-col>
                                     </nz-row>
-                                </ul>
-                            </nz-dropdown-menu>
-                        </ng-template>
-                    </nz-list-item>
-                </ng-template>
-            </nz-list>
-        </nz-card>
-        <ng-template #extraAction>
-            <fs-edit-code [parentId]="null" [definitionId]="null"></fs-edit-code>
-            <!-- <button nz-button nz-dropdown [nzDropdownMenu]="menu">
-                匯入匯出
-            </button>
-            <nz-dropdown-menu #menu="nzDropdownMenu">
-                <ul nz-menu nzSelectable>
-                    <nz-row style="text-align: center;">
-                        <nz-col>
-                            <button nzType="link" nz-button>匯入代碼</button>
-                        </nz-col>
-                    </nz-row>
-                    <nz-row style="text-align: center;">
-                        <nz-col>
-                            <button nzType="link" nz-button>匯出代碼</button>
-                        </nz-col>
-                    </nz-row>
-                </ul>
-            </nz-dropdown-menu> -->
-        </ng-template>
-    </nz-col>
-    <nz-col [nzMd]="24" [nzLg]="15">
-        <nz-card>
-            <router-outlet></router-outlet>
-        </nz-card>
-    </nz-col>
-</nz-row>
+                                </ng-template>
+                                <ng-template #contentTemplate>
+                                    <nz-tag>{{ item.codes.id }}</nz-tag>
+                                </ng-template>
+                            </li>
+                        </ul>
+                    </ul>
+                </nz-col>
+            </nz-row>
+        </nz-col>
+        <nz-col [nzLg]="24" [nzXl]="15" *ngIf="selectItem">
+            <nz-card>
+                <fs-detail [detailData]="selectItem"></fs-detail>
+            </nz-card>
+        </nz-col>
+    </nz-row>
 
-<fs-ng-alain-setting-management [(parameters)]="parameters"></fs-ng-alain-setting-management>
+    <fs-ng-alain-setting-management [(parameters)]="parameters"></fs-ng-alain-setting-management>
+</div>

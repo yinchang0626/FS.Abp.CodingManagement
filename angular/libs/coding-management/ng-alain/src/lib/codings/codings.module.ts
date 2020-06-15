@@ -5,10 +5,10 @@ import { NgxsModule } from '@ngxs/store';
 import { CodingsRoutingModule } from './codings-routing.module';
 import { MainComponent } from './main/main.component';
 import { LayoutComponent } from './layout/layout.component';
-import { CodingsState } from './providers/codings.state';
 import { DetailComponent } from './detail/detail.component';
 import { EditCodeComponent } from './modal/edit-code.component';
 import { SettingManagementNgAlainModule } from '@fs/setting-management/ng-alain';
+import { ThemeCoreState } from '@fs/theme.core';
 
 @NgModule({
   declarations: [MainComponent, LayoutComponent, DetailComponent, EditCodeComponent],
@@ -16,7 +16,7 @@ import { SettingManagementNgAlainModule } from '@fs/setting-management/ng-alain'
     NgAlainBasicModule,
     SharedModule,
     CodingsRoutingModule,
-    NgxsModule.forFeature([CodingsState]),
+    NgxsModule.forFeature([ThemeCoreState]),
     SettingManagementNgAlainModule
   ],
   providers: [

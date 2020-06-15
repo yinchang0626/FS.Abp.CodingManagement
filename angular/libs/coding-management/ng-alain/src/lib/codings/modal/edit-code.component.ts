@@ -5,8 +5,7 @@ import { Store } from '@ngxs/store';
 import { finalize } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NotifyService } from '@fs/ng-alain/shared';
-import { CreateCoding, UpdateCoding } from '../providers/codings.actions';
-import { CodingManagementDtos } from '@fs/coding-management';
+import { PatchCodeSettingsByInputs } from '../providers/codings.actions';
 
 @Component({
     selector: 'fs-edit-code',
@@ -15,7 +14,10 @@ import { CodingManagementDtos } from '@fs/coding-management';
   })
   export class EditCodeComponent implements OnInit {
     @Input()
-    item = null;
+    data = null;
+
+    @Input()
+    settingGroups = null;
 
     @Input()
     parentId: string = null;
@@ -25,7 +27,6 @@ import { CodingManagementDtos } from '@fs/coding-management';
 
     tplModal: NzModalRef;
     form: FormGroup;
-    pageQuery: CodingManagementDtos.codingsPageQueryParams = { skipCount: 0, maxResultCount: 999 } as CodingManagementDtos.codingsPageQueryParams;
     loading: boolean = false;
     constructor(
         private modalService: NzModalService,
@@ -45,39 +46,44 @@ import { CodingManagementDtos } from '@fs/coding-management';
             nzContent: tplContent,
             nzFooter: tplFooter,
             nzMaskClosable: false,
-            nzClosable: false
+            nzClosable: false,
+            nzWidth: 920
         });
         this.buildForm();
     }
 
     buildForm() {
         this.form = this.fb.group({
-            no: [(this.item) ? this.item['no'] : '', [Validators.required]],
-            name: [(this.item) ? this.item['displayName'] : '', [Validators.required]],
-            enable: [(this.item) ? this.item['enable'] : true, [Validators.required]],
-            description: [(this.item) ? this.item['description'] : '', []]
+            no: [(this.data) ? this.data['codes']['no'] : '', [Validators.required]],
+            displayName: [(this.data) ? this.data['codes']['displayName'] : '', [Validators.required]],
+            enable: [(this.data) ? this.data['codes']['enable'] : true, [Validators.required]],
+            description: [(this.data) ? this.data['codes']['description'] : '', []]
         });
     }
 
     save() {
         let data = {
-            "id": (this.item) ? this.item['id'] : null,
-            "no": this.form.value.no,
-            "displayName": this.form.value.name,
-            "description": this.form.value.description,
-            "definitionId": (this.definitionId) ? this.definitionId : null,
-            "code": (this.item) ? this.item['code'] : null,
-            "parentId": (this.parentId) ? this.parentId : null,
-            "enable": this.form.value.enable
+            editItems: [
+                {
+                    "settings": [],
+                    "id": (this.data) ? this.data['codes']['id'] : null,
+                    "no": this.form.value.no,
+                    "displayName": this.form.value.name,
+                    "description": this.form.value.description,
+                    "definitionId": (this.definitionId) ? this.definitionId : null,
+                    "code": (this.data) ? this.data['codes']['code'] : null,
+                    "parentId": (this.parentId) ? this.parentId : null,
+                    "enable": this.form.value.enable
+                }
+            ],
+            deleteItemIds: []
         };
         this.store.dispatch(
-            (this.item) ? new UpdateCoding(data) : new CreateCoding(data)
+            new PatchCodeSettingsByInputs(data)
         )
         .pipe(finalize(() => this.loading = false))
         .subscribe((x) => {
             this.tplModal.destroy();
-            //TODO: erro when url become :/coding-management/codings/bfddfe13-f7d7-3e62-71f9-39f47580078a/bfddfe13-f7d7-3e62-71f9-39f47580078a
-            //(this.definitionId) ? this.router.navigate(['.', this.definitionId],{relativeTo: this.activatedRoute}) : this.router.navigate(['.'],{relativeTo: this.activatedRoute})
             this.router.navigate(['.'],{relativeTo: this.activatedRoute});
             this.notifyService.success("資料更新成功");
         }, (error) => {

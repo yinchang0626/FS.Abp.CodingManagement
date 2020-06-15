@@ -1,9 +1,9 @@
-<button nz-button *ngIf="!definitionId  && !item" (click)="createModal(tplTitle, tplContent, tplFooter)">{{ '新增節點'}}</button>
-<button nz-button *ngIf="definitionId && !item" nzType="link" (click)="createModal(tplTitle, tplContent, tplFooter)">{{ '新增節點'}}</button>
-<button nz-button *ngIf="item" nzType="link" (click)="createModal(tplTitle, tplContent, tplFooter)">{{ '編輯節點'}}</button>
+<button nz-button *ngIf="!definitionId  && !data" nzType="primary" (click)="createModal(tplTitle, tplContent, tplFooter)">{{ '新增'}}</button>
+<button nz-button *ngIf="definitionId && !data" nzType="link" (click)="createModal(tplTitle, tplContent, tplFooter)">{{ '新增'}}</button>
+<button nz-button *ngIf="data" nzType="link" (click)="createModal(tplTitle, tplContent, tplFooter)">{{ '編輯'}}</button>
 
 <ng-template #tplTitle>
-<span>{{ (item) ? '編輯節點' : '新增節點' }}</span>
+<span>{{ (data) ? '編輯' : '新增' }}</span>
 </ng-template>
 <ng-template #tplContent>
     <nz-spin [nzSpinning]="loading">
@@ -23,13 +23,21 @@
             <nz-form-item>
                 <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>名稱</nz-form-label>
                 <nz-form-control [nzSm]="14" [nzXs]="24">
-                    <input nz-input name="name" formControlName="name" type="text"/>
+                    <input nz-input name="displayName" formControlName="displayName" type="text"/>
                 </nz-form-control>
             </nz-form-item>
             <nz-form-item>
                 <nz-form-label [nzSm]="6" [nzXs]="24">說明</nz-form-label>
                 <nz-form-control [nzSm]="14" [nzXs]="24">
                     <textarea nz-input name="description" formControlName="description" [nzAutosize]="{ minRows: 4, maxRows: 6 }"></textarea>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24">設定</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                    <nz-select [nzSize]="'large'" nzMode="tags" nzPlaceHolder="選擇">
+                        <nz-option *ngFor="let item of settingGroups" [nzLabel]="item" [nzValue]="item"></nz-option>
+                    </nz-select>
                 </nz-form-control>
             </nz-form-item>
         </form>
