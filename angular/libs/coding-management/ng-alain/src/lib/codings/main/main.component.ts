@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, switchMap } from 'rxjs/operators';
 import { NotifyService } from '@fs/ng-alain/shared';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { Router, ActivatedRoute } from '@angular/router';
-import { GetCodings, DeleteCoding } from '../providers/codings.actions';
-import { CodingManagementDtos } from '@fs/coding-management';
-import { CodingsState } from '../providers/codings.state';
 import { SettingManagementParameters } from '@fs/setting-management';
 import * as _ from 'lodash';
+import { ThemeCoreState, CodeSettingsDto, GetAllDefinitions, GetSettingsGroups, GetChildrenByNo } from '@fs/theme.core';
+import { PatchCodeSettingsByInputs } from '../providers/codings.actions';
 
 @Component({
   selector: 'fs-main',
@@ -17,30 +15,46 @@ import * as _ from 'lodash';
   styleUrls: ['./main.component.less']
 })
 export class MainComponent implements OnInit {
-  @Select(CodingsState.getCodings)
-  data$: Observable<Array<CodingManagementDtos.coding>>;
-  
-  codeList: Array<CodingManagementDtos.coding>;
-  pageQuery: CodingManagementDtos.codingsPageQueryParams = { skipCount: 0, maxResultCount: 999 } as CodingManagementDtos.codingsPageQueryParams;
-  loading: boolean = false;
+  @Select(ThemeCoreState.getAllDefinitions())
+  data$: Observable<Array<CodeSettingsDto>>;
 
+  @Select(ThemeCoreState.getSettingsGroups())
+  settingdata$: Observable<Array<string>>;
+  
+  settingGroups: Array<string> = null;
+  codeList: Array<CodeSettingsDto> = null;
+  selectItem: Array<CodeSettingsDto> = null;
+  loading: boolean = false;
+  
   parameters = new SettingManagementParameters;
   constructor(
     private store: Store,
     private modalService: NzModalService,
-    private notifyService: NotifyService,
-    private router: Router,
-    private activatedRoute:ActivatedRoute
+    private notifyService: NotifyService
   ) {
+    this.loadData();
   }
 
   ngOnInit() {
-    this.loadData();
     this.data$.subscribe((x) => {
-      if(x.length > 0){
-        this.codeList = _.sortBy(x.filter(x => x.definitionId == null), 'no');
-      } else {
-        this.codeList = [];
+      this.codeList = null;
+      this.selectItem = null;
+      if(x){
+        this.codeList = x;
+        this.store.dispatch(new GetChildrenByNo(
+          {
+            "definitionNos": [
+              "Test","www"
+            ]
+          }
+        )).subscribe();
+      }
+    });
+
+    this.settingdata$.subscribe(x => {
+      this.settingGroups = null;
+      if(x){
+        this.settingGroups =x
       }
     });
   }
@@ -48,29 +62,37 @@ export class MainComponent implements OnInit {
   loadData() {
     this.loading = true;
     this.store
-      .dispatch(new GetCodings(this.pageQuery))
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(() => { },
+      .dispatch(new GetAllDefinitions())
+      .pipe(
+        finalize(() => this.loading = false),
+        switchMap(() => this.store.dispatch(new GetSettingsGroups()))
+      )
+      .subscribe((x) => {},
       (error) => {
         this.notifyService.error('查詢失敗');
       });
   }
 
   editManageAction(item?){
-    this.router.navigate(['.', item],{relativeTo: this.activatedRoute});
+    this.selectItem = item;
   }
 
-  deleteNode(data?, type?){
+  deleteNode(id?){
     this.modalService.confirm({
       nzTitle: 'Confirm',
       nzContent: '確定是否刪除？',
       nzOkText: '是',
       nzCancelText: '否',
       nzOnOk:()=>{
-        this.store.dispatch(new DeleteCoding(data))
+        let input = {
+          editItems: [],
+          deleteItemIds: [
+            id
+          ]
+        };
+        this.store.dispatch(new PatchCodeSettingsByInputs(input))
         .pipe(finalize(() => this.loading = false))
         .subscribe(() => {
-          this.router.navigate(['.'],{relativeTo: this.activatedRoute});
           this.notifyService.success("資料更新成功");
         }, (error) => {
           this.notifyService.error("資料更新失敗");

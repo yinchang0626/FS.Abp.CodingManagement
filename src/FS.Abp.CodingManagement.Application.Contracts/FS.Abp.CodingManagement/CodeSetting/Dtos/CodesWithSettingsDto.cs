@@ -13,6 +13,10 @@ namespace FS.Abp.CodingManagement.CodeSetting.Dtos
         public List<SettingValue> SettingValues { get; set; }
         //public List<string> AvailableSettingsGroups { get; set; }
         public List<SettingDefinitionDto> AvailableSettingsDefinitions { get; set; }
-
     }
+    //public class DefinitionWithCodesWithSettingsDto
+    //{
+    //    public CodesDto Codes { get; set; }
+    //    public List<CodesWithSettingsDto> CodesWithSettingsDtos { get; set; }
+    //}
 }
