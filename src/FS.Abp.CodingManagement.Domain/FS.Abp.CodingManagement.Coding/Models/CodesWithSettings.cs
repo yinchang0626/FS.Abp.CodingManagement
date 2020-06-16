@@ -26,7 +26,7 @@ namespace FS.Abp.CodingManagement.Coding.Models
                 var result = new List<string>();
                 if (Codes.Definition?.Config?.IncludeSettingsGroups != null)
                 {
-                    result.AddRange(result);
+                    result.AddRange(Codes.Definition.Config.IncludeSettingsGroups);
                 }
                 if (Codes.Config?.IncludeSettingsGroups != null)
                 {
