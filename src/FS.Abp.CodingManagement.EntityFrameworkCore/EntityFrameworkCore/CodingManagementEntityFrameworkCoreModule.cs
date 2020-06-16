@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FS.Abp.CodingManagement.Coding;
+using Microsoft.Extensions.DependencyInjection;
+using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.Modularity;
 
@@ -8,6 +10,7 @@ namespace FS.Abp.CodingManagement.EntityFrameworkCore
         typeof(CodingManagementDomainModule),
         typeof(AbpEntityFrameworkCoreModule),
 
+        typeof(FS.Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule),
         typeof(FS.Abp.SettingManagement.EntityFrameworkCore.SettingManagementEntityFrameworkCoreModule)
     )]
     public class CodingManagementEntityFrameworkCoreModule : AbpModule
@@ -16,12 +19,11 @@ namespace FS.Abp.CodingManagement.EntityFrameworkCore
         {
             context.Services.AddAbpDbContext<CodingManagementDbContext>(options =>
             {
-                /* Add custom repositories here. Example:
-                 * options.AddRepository<Question, EfCoreQuestionRepository>();
-                 */
+                options.AddDefaultRepositories();
             });
 
             context.Services.AddTreeRepository<CodingManagementDbContext>();
         }
+
     }
 }
