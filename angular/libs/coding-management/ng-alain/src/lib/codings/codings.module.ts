@@ -9,6 +9,7 @@ import { DetailComponent } from './detail/detail.component';
 import { EditCodeComponent } from './modal/edit-code.component';
 import { SettingManagementNgAlainModule } from '@fs/setting-management/ng-alain';
 import { ThemeCoreState } from '@fs/theme.core';
+import { CodingsState } from './providers';
 
 @NgModule({
   declarations: [MainComponent, LayoutComponent, DetailComponent, EditCodeComponent],
@@ -16,7 +17,7 @@ import { ThemeCoreState } from '@fs/theme.core';
     NgAlainBasicModule,
     SharedModule,
     CodingsRoutingModule,
-    NgxsModule.forFeature([ThemeCoreState]),
+    NgxsModule.forFeature([ThemeCoreState, CodingsState]),
     SettingManagementNgAlainModule
   ],
   providers: [

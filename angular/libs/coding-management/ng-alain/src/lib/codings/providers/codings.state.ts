@@ -17,7 +17,7 @@ export class CodingsState {
     patchCodeSettingsByInputs({ dispatch }: StateContext<Codings.State>, { payload }: PatchCodeSettingsByInputs) {
         return this.codingManagementService.postPatchCodeSettingsByInputs(payload)
                    .pipe(switchMap(() =>
-                    dispatch(new GetAllDefinitions())
+                        dispatch(new GetAllDefinitions())
                    ));
     }
 }

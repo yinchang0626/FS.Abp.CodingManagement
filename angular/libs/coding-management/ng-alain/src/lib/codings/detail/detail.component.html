@@ -1,15 +1,7 @@
-<!-- <div *ngIf="detailData">
+<div *ngIf="treeData">
   <nz-row style="padding-bottom: 10px;">
-    <ng-container *ngFor="let data of treeData; let index = index;">
-      <nz-col *ngIf="openSelect[index]">
-          <nz-select nzShowSearch nzAllowClear style="width: 30%;" nzPlaceHolder="Select Item" [(ngModel)]="treeValue[index]" (ngModelChange)="loadValue(index)">
-            <nz-option *ngFor="let item of data" [nzLabel]="item.displayName" [nzValue]="item"></nz-option>
-          </nz-select>
-      </nz-col>
-    </ng-container>
     <nz-col>
-      <button nz-button nzType="primary" (click)="search()"><i nz-icon nzType="search"></i>搜尋</button>
-      <fs-edit-code style="padding-left: 8px; padding-right: 8px" [parentId]="definitionId" [definitionId]="definitionId"></fs-edit-code>
+      <!-- <button nz-button nzType="primary" (click)="search()"><i nz-icon nzType="search"></i>搜尋</button> -->
       <button nz-button nzType="primary" (click)="save()">儲存變更</button>
       <button nzType="danger" nz-button (click)="loadData()">取消變更</button>
     </nz-col>
@@ -17,10 +9,9 @@
   <nz-row>
     <nz-col>
       <fs-ng-alain-tree
-        [tree]="data"
+        [tree]="treeData"
         [showCountType]="2"
         [nzDefaultExpandAll]="false"
-        (onNodeClick)="onNodeClick($event.node)"
         [nzCheckable]="false"
         [showCheckAll]="false"
         [leafNodes]="true"
@@ -28,64 +19,54 @@
         [nzShowLine]="true"
         [nzDefaultSearch]="false"
         [nzTreeTemplate]="nzTreeTemplate"
-        [defaultExpandedKeys]="expandedKeys"
       ></fs-ng-alain-tree>
     </nz-col>
   </nz-row>
 
   <ng-template #nzTreeTemplate let-node>
-    <span class="custom-node" [class.node-active]="isSeletedItem == node.key" [class.textColor]="isEdit[node.key]" (click)="clickItem(node)" (contextmenu)="contextMenu($event, menu, node)" [innerHtml]="searchColor(node)"></span><br />
-    <div *ngIf="isSeletedItem == node.key" >
+    <span class="custom-node" [class.node-active]="seletedNode == node.key" [class.textColor]="editedDta[node.key]" (click)="selectNode(node)" [innerHtml]="searchColor(node)"></span><br />
+    <div *ngIf="seletedNode == node.key" style="padding-left: 22px;" >
+      <div>
+        <nz-tag>{{ node.key }}</nz-tag>
+        <button nz-button nzType="primary">設定</button>
+        <button nz-button nzType="danger" (click)="deleteNode(node.key)">刪除</button>
+      </div>
       <form nz-form [formGroup]="form">
-        <div [formGroupName]="node.key">
-          <nz-form-item>
+        <div [formGroupName]="node.key" style="margin-left: -95px!important;">
+          <nz-form-item style="margin-bottom: 15px!important;">
             <nz-form-label [nzSm]="5" [nzXs]="24" nzRequired>啟用</nz-form-label>
-            <nz-form-control [nzSm]="12" [nzXs]="24">
+            <nz-form-control [nzSm]="18" [nzXs]="24">
               <label nz-checkbox name="enable" formControlName="enable"></label>
             </nz-form-control>
           </nz-form-item>
-          <nz-form-item>
+          <nz-form-item style="margin-bottom: 15px!important;">
             <nz-form-label [nzSm]="5" [nzXs]="24" nzRequired>代碼</nz-form-label>
-            <nz-form-control [nzSm]="12" [nzXs]="24">
+            <nz-form-control [nzSm]="18" [nzXs]="24">
               <input nz-input type="text" [name]="node.origin.no" formControlName="no"/>
             </nz-form-control>
           </nz-form-item>
-          <nz-form-item>
+          <nz-form-item style="margin-bottom: 15px!important;">
               <nz-form-label [nzSm]="5" [nzXs]="24" nzRequired>名稱</nz-form-label>
-              <nz-form-control [nzSm]="12" [nzXs]="24">
+              <nz-form-control [nzSm]="18" [nzXs]="24">
                 <input nz-input type="text" [name]="node.origin.displayName" formControlName="name"/>
               </nz-form-control>
           </nz-form-item>
-          <nz-form-item>
+          <nz-form-item style="margin-bottom: 15px!important;">
               <nz-form-label [nzSm]="5" [nzXs]="24">說明</nz-form-label>
-              <nz-form-control [nzSm]="12" [nzXs]="24">
+              <nz-form-control [nzSm]="18" [nzXs]="24">
                 <textarea nz-input [name]="node.origin.description" formControlName="description" [nzAutosize]="{ minRows: 4, maxRows: 6 }"></textarea>
               </nz-form-control>
           </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="5" [nzXs]="24">設定</nz-form-label>
+            <nz-form-control [nzSm]="18" [nzXs]="24">
+                <nz-select nzMode="multiple" name="configSetting" formControlName="configSetting" nzPlaceHolder="選擇">
+                    <nz-option *ngFor="let item of settingGroups" [nzLabel]="item" [nzValue]="item"></nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
         </div>
       </form>
     </div>
   </ng-template>
-
-  <nz-dropdown-menu #menu="nzDropdownMenu">
-      <ul nz-menu>
-        <nz-row>
-            <nz-col>
-              <fs-edit-code [parentId]="nodeData['key']" [definitionId]="definitionId"></fs-edit-code>
-            </nz-col>
-        </nz-row>
-        <nz-row>
-          <nz-col>
-              <button nz-button nzType="link" (click)="setting(true, nodeData['key'])">設定</button>
-          </nz-col>
-        </nz-row>
-        <nz-row>
-            <nz-col>
-                <button nz-button nzType="link" style="color: red;" (click)="deleteNode(nodeData['origin'])">刪除</button>
-            </nz-col>
-        </nz-row>
-      </ul>
-  </nz-dropdown-menu>
-
-  <fs-ng-alain-setting-management [(parameters)]="parameters"></fs-ng-alain-setting-management>
-</div> -->
+</div>
