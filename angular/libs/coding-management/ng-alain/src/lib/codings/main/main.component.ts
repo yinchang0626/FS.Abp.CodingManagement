@@ -6,7 +6,7 @@ import { NotifyService } from '@fs/ng-alain/shared';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { SettingManagementParameters } from '@fs/setting-management';
 import * as _ from 'lodash';
-import { ThemeCoreState, CodeSettingsDto, GetAllDefinitions, GetSettingsGroups, GetChildrenByNo } from '@fs/theme.core';
+import { ThemeCoreState, CodeSettingsDto, GetAllDefinitions, GetSettingsGroups } from '@fs/theme.core';
 import { PatchCodeSettingsByInputs } from '../providers/codings.actions';
 
 @Component({
@@ -23,7 +23,7 @@ export class MainComponent implements OnInit {
   
   settingGroups: Array<string> = null;
   codeList: Array<CodeSettingsDto> = null;
-  selectItem: Array<CodeSettingsDto> = null;
+  selectedDefinition: Array<CodeSettingsDto> = null;
   loading: boolean = false;
   
   parameters = new SettingManagementParameters;
@@ -38,23 +38,16 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.data$.subscribe((x) => {
       this.codeList = null;
-      this.selectItem = null;
+      this.selectedDefinition = null;
       if(x){
         this.codeList = x;
-        this.store.dispatch(new GetChildrenByNo(
-          {
-            "definitionNos": [
-              "Test","www"
-            ]
-          }
-        )).subscribe();
       }
     });
 
     this.settingdata$.subscribe(x => {
       this.settingGroups = null;
       if(x){
-        this.settingGroups =x
+        this.settingGroups = x;
       }
     });
   }
@@ -74,10 +67,11 @@ export class MainComponent implements OnInit {
   }
 
   editManageAction(item?){
-    this.selectItem = item;
+    this.selectedDefinition = item;
   }
 
   deleteNode(id?){
+    this.loading = true;
     this.modalService.confirm({
       nzTitle: 'Confirm',
       nzContent: '確定是否刪除？',

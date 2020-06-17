@@ -14,6 +14,9 @@ import { PatchCodeSettingsByInputs } from '../providers/codings.actions';
   })
   export class EditCodeComponent implements OnInit {
     @Input()
+    type: string = null;
+
+    @Input()
     data = null;
 
     @Input()
@@ -53,11 +56,23 @@ import { PatchCodeSettingsByInputs } from '../providers/codings.actions';
     }
 
     buildForm() {
+        if(this.type === 'EditDefinition') {
+        } else {
+            this.data = {};
+            this.data['codes'] = {};
+            this.data['codes']['config'] = {};
+            this.data['codes']['id'] = this.data['codes']['code'] = null;
+            this.data['codes']['displayName'] = this.data['codes']['no'] = this.data['codes']['description'] = '';
+            this.data['codes']['enable'] = true;
+            this.data['codes']['config']['includeSettingsGroups'] = [];
+        }
+
         this.form = this.fb.group({
-            no: [(this.data) ? this.data['codes']['no'] : '', [Validators.required]],
-            displayName: [(this.data) ? this.data['codes']['displayName'] : '', [Validators.required]],
-            enable: [(this.data) ? this.data['codes']['enable'] : true, [Validators.required]],
-            description: [(this.data) ? this.data['codes']['description'] : '', []]
+            no: [this.data['codes']['no'], [Validators.required]],
+            displayName: [this.data['codes']['displayName'], [Validators.required]],
+            enable: [this.data['codes']['enable'], [Validators.required]],
+            description: [this.data['codes']['description'], []],
+            configSetting: [this.data['codes']['config']['includeSettingsGroups'], []],
         });
     }
 
@@ -66,25 +81,32 @@ import { PatchCodeSettingsByInputs } from '../providers/codings.actions';
             editItems: [
                 {
                     "settings": [],
-                    "id": (this.data) ? this.data['codes']['id'] : null,
                     "no": this.form.value.no,
-                    "displayName": this.form.value.name,
+                    "displayName": this.form.value.displayName,
                     "description": this.form.value.description,
-                    "definitionId": (this.definitionId) ? this.definitionId : null,
-                    "code": (this.data) ? this.data['codes']['code'] : null,
-                    "parentId": (this.parentId) ? this.parentId : null,
-                    "enable": this.form.value.enable
+                    "definitionId": this.definitionId,
+                    "parentId": this.parentId,
+                    "enable": this.form.value.enable,
+                    "config": {
+                        "excludeSettingsGroups": [],
+                        "includeSettingsGroups": this.form.value.configSetting
+                    }
                 }
             ],
             deleteItemIds: []
         };
+
+        if(this.data['codes']['id']) {
+            data.editItems[0]['id'] =  this.data['codes']['id'];
+            data.editItems[0]['code'] =  this.data['codes']['code'];
+        }
+
         this.store.dispatch(
             new PatchCodeSettingsByInputs(data)
         )
         .pipe(finalize(() => this.loading = false))
         .subscribe((x) => {
             this.tplModal.destroy();
-            this.router.navigate(['.'],{relativeTo: this.activatedRoute});
             this.notifyService.success("資料更新成功");
         }, (error) => {
             this.notifyService.error("資料更新失敗");

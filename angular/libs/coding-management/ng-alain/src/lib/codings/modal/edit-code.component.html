@@ -1,9 +1,9 @@
-<button nz-button *ngIf="!definitionId  && !data" nzType="primary" (click)="createModal(tplTitle, tplContent, tplFooter)">{{ '新增'}}</button>
-<button nz-button *ngIf="definitionId && !data" nzType="link" (click)="createModal(tplTitle, tplContent, tplFooter)">{{ '新增'}}</button>
-<button nz-button *ngIf="data" nzType="link" (click)="createModal(tplTitle, tplContent, tplFooter)">{{ '編輯'}}</button>
+<button nz-button *ngIf="type === 'AddDefinition'" nzType="primary" (click)="createModal(tplTitle, tplContent, tplFooter)">{{ '新增'}}</button>
+<button nz-button *ngIf="type === 'AddChildren'" nzType="link" (click)="createModal(tplTitle, tplContent, tplFooter)">{{ '新增'}}</button>
+<button nz-button *ngIf="type === 'EditDefinition'" nzType="link" (click)="createModal(tplTitle, tplContent, tplFooter)">{{ '編輯'}}</button>
 
 <ng-template #tplTitle>
-<span>{{ (data) ? '編輯' : '新增' }}</span>
+    <span>{{ (type === 'EditDefinition') ? '編輯' : '新增' }}</span>
 </ng-template>
 <ng-template #tplContent>
     <nz-spin [nzSpinning]="loading">
@@ -35,7 +35,7 @@
             <nz-form-item>
                 <nz-form-label [nzSm]="6" [nzXs]="24">設定</nz-form-label>
                 <nz-form-control [nzSm]="14" [nzXs]="24">
-                    <nz-select [nzSize]="'large'" nzMode="tags" nzPlaceHolder="選擇">
+                    <nz-select nzMode="multiple" name="configSetting" formControlName="configSetting" nzPlaceHolder="選擇">
                         <nz-option *ngFor="let item of settingGroups" [nzLabel]="item" [nzValue]="item"></nz-option>
                     </nz-select>
                 </nz-form-control>

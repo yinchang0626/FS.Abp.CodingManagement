@@ -3,7 +3,7 @@
         <nz-col [nzLg]="24" [nzXl]="9" style="padding-bottom: 10px;">
             <nz-row  style="padding-bottom: 10px;">
                 <nz-col>
-                    <fs-edit-code></fs-edit-code>
+                    <fs-edit-code [type]="'AddDefinition'" [settingGroups]="settingGroups"></fs-edit-code>
                 </nz-col>
             </nz-row>
             <nz-row>
@@ -13,14 +13,14 @@
                             <li nz-menu-item nz-popover *ngFor="let item of codeList"
                                 [nzPopoverTitle]="titleTemplate"
                                 [nzPopoverContent]="contentTemplate"
-                                nzPopoverPlacement="bottom" (click)="editManageAction(item)"
+                                nzPopoverPlacement="bottomRight" (click)="editManageAction(item)"
                             >
                                 <nz-tag [nzColor]="'green'">{{ item.codes.no }}</nz-tag>
                                 {{ item.codes.displayName }}
                                 <ng-template #titleTemplate>
                                     <nz-row style="text-align: center;">
                                         <nz-col>
-                                            <fs-edit-code [data]="item" [settingGroups]="settingGroups"></fs-edit-code>
+                                            <fs-edit-code [type]="'EditDefinition'" [data]="item" [settingGroups]="settingGroups"></fs-edit-code>
                                         </nz-col>
                                         <nz-col>
                                             <button nzType="link" nz-button (click)="setting(true, item.codes.id)">設定</button>
@@ -39,9 +39,9 @@
                 </nz-col>
             </nz-row>
         </nz-col>
-        <nz-col [nzLg]="24" [nzXl]="15" *ngIf="selectItem">
+        <nz-col [nzLg]="24" [nzXl]="15" *ngIf="selectedDefinition">
             <nz-card>
-                <fs-detail [detailData]="selectItem"></fs-detail>
+                <fs-detail [settingGroups]="settingGroups" [selectedDefinition]="selectedDefinition"></fs-detail>
             </nz-card>
         </nz-col>
     </nz-row>
