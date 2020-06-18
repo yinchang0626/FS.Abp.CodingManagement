@@ -29,6 +29,11 @@ namespace FS.Abp.CodingManagement.CodeSetting
             this._currentTenant = currentTenant;
         }
 
+        public async Task TestUpdate(FS.Abp.CodingManagement.Coding.Codes codes)
+        {
+            codes = await this._codeRepository.UpdateAsync(codes).ConfigureAwait(false);
+        }
+
         public async Task SetCodeSetting(FS.Abp.CodingManagement.Coding.Codes codes, List<Volo.Abp.Settings.SettingValue> settingValues)
         {
             if (codes.Id == Guid.Empty)

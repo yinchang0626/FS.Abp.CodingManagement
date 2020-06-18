@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FS.Abp.CodingManagement.Coding;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,5 +10,6 @@ namespace FS.Abp.CodingManagement.CodeSetting
     {
         Task SetCodeSetting(FS.Abp.CodingManagement.Coding.Codes codes, List<Volo.Abp.Settings.SettingValue> settingValues);
         Task DeleteCodeSetting(Guid codeId);
+        Task TestUpdate(Codes codes);
     }
 }
