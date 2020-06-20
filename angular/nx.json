@@ -19,6 +19,9 @@
     },
     "fs.theme-core": {
       "tags": []
+    },
+    "fs.setting-management": {
+      "tags": []
     }
   }
 }
