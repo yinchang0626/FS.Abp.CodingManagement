@@ -3,7 +3,7 @@
         <nz-col [nzLg]="24" [nzXl]="9" style="padding-bottom: 10px;">
             <nz-row  style="padding-bottom: 10px;">
                 <nz-col>
-                    <fs-edit-code [type]="'AddDefinition'" [settingGroups]="settingGroups"></fs-edit-code>
+                    <fs-edit-code [type]="'Add'" [settingGroups]="settingGroups"></fs-edit-code>
                 </nz-col>
             </nz-row>
             <nz-row>
@@ -20,18 +20,18 @@
                                 <ng-template #titleTemplate>
                                     <nz-row style="text-align: center;">
                                         <nz-col>
-                                            <fs-edit-code [type]="'EditDefinition'" [data]="item" [settingGroups]="settingGroups"></fs-edit-code>
+                                            <fs-edit-code [type]="'Edit'" [data]="item" [settingGroups]="settingGroups"></fs-edit-code>
                                         </nz-col>
                                         <nz-col>
                                             <button nzType="link" nz-button (click)="setting(true, item.codes.id)">設定</button>
                                         </nz-col>
                                         <nz-col>
-                                            <button nzType="link" style="color: red;" nz-button (click)="deleteNode(item, 'node')">刪除</button>
+                                            <button nzType="link" style="color: red;" nz-button (click)="deleteNode(item.codes.id)">刪除</button>
                                         </nz-col>
                                     </nz-row>
                                 </ng-template>
                                 <ng-template #contentTemplate>
-                                    <nz-tag>{{ item.codes.id }}</nz-tag>
+                                    {{ item.codes.id }}
                                 </ng-template>
                             </li>
                         </ul>

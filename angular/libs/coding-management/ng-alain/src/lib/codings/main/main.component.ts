@@ -47,7 +47,10 @@ export class MainComponent implements OnInit {
     this.settingdata$.subscribe(x => {
       this.settingGroups = null;
       if(x){
-        this.settingGroups = x;
+        let settingGroup = _.uniq(x);
+        this.settingGroups = settingGroup.filter((x, i, arr) => {
+          return arr.filter((y, j) => i != j && _.startsWith(x, y + ".")).length == 0;
+      })
       }
     });
   }

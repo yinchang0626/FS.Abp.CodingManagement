@@ -1,7 +1,8 @@
 <div *ngIf="treeData">
   <nz-row style="padding-bottom: 10px;">
     <nz-col>
-      <!-- <button nz-button nzType="primary" (click)="search()"><i nz-icon nzType="search"></i>搜尋</button> -->
+      <button nzType="primary" nz-button (click)="treeStatusChange('isExpanded', !isExpanded)">{{ (isExpanded) ? '全部收合' : '全部展開' }}</button>
+      <fs-edit-code style="padding-left: 8px; padding-right: 8px;" [type]="'Add'" [parentId]="selectedDefinition.codes.id" [definitionId]="selectedDefinition.codes.id" [settingGroups]="settingGroups"></fs-edit-code>
       <button nz-button nzType="primary" (click)="save()">儲存變更</button>
       <button nzType="danger" nz-button (click)="loadData()">取消變更</button>
     </nz-col>
@@ -11,13 +12,13 @@
       <fs-ng-alain-tree
         [tree]="treeData"
         [showCountType]="2"
-        [nzDefaultExpandAll]="false"
+        [nzDefaultExpandAll]="isExpanded"
         [nzCheckable]="false"
         [showCheckAll]="false"
         [leafNodes]="true"
         [nzDraggable]="false"
         [nzShowLine]="true"
-        [nzDefaultSearch]="false"
+        [nzDefaultSearch]="true"
         [nzTreeTemplate]="nzTreeTemplate"
       ></fs-ng-alain-tree>
     </nz-col>
@@ -27,12 +28,18 @@
     <span class="custom-node" [class.node-active]="seletedNode == node.key" [class.textColor]="editedDta[node.key]" (click)="selectNode(node)" [innerHtml]="searchColor(node)"></span><br />
     <div *ngIf="seletedNode == node.key" style="padding-left: 22px;" >
       <div>
-        <nz-tag>{{ node.key }}</nz-tag>
-        <button nz-button nzType="primary">設定</button>
+        <fs-edit-code style="padding-right: 8px;" [type]="'Add'" [parentId]="node.key" [definitionId]="node.origin.definitionId" [settingGroups]="settingGroups"></fs-edit-code>
+        <button nz-button nzType="primary" (click)="setting(true, node.key)">設定</button>
         <button nz-button nzType="danger" (click)="deleteNode(node.key)">刪除</button>
       </div>
       <form nz-form [formGroup]="form">
         <div [formGroupName]="node.key" style="margin-left: -95px!important;">
+          <nz-form-item style="margin-bottom: 15px!important;">
+            <nz-form-label [nzSm]="5" [nzXs]="24" nzRequired>ID</nz-form-label>
+            <nz-form-control [nzSm]="18" [nzXs]="24">
+              {{ node.key }}
+            </nz-form-control>
+          </nz-form-item>
           <nz-form-item style="margin-bottom: 15px!important;">
             <nz-form-label [nzSm]="5" [nzXs]="24" nzRequired>啟用</nz-form-label>
             <nz-form-control [nzSm]="18" [nzXs]="24">
@@ -48,7 +55,7 @@
           <nz-form-item style="margin-bottom: 15px!important;">
               <nz-form-label [nzSm]="5" [nzXs]="24" nzRequired>名稱</nz-form-label>
               <nz-form-control [nzSm]="18" [nzXs]="24">
-                <input nz-input type="text" [name]="node.origin.displayName" formControlName="name"/>
+                <input nz-input type="text" [name]="node.origin.displayName" formControlName="displayName"/>
               </nz-form-control>
           </nz-form-item>
           <nz-form-item style="margin-bottom: 15px!important;">
@@ -69,4 +76,6 @@
       </form>
     </div>
   </ng-template>
+
+  <fs-ng-alain-setting-management [(parameters)]="parameters"></fs-ng-alain-setting-management>
 </div>

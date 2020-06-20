@@ -6,6 +6,7 @@ import { finalize } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NotifyService } from '@fs/ng-alain/shared';
 import { PatchCodeSettingsByInputs } from '../providers/codings.actions';
+import * as _ from 'lodash';
 
 @Component({
     selector: 'fs-edit-code',
@@ -56,7 +57,7 @@ import { PatchCodeSettingsByInputs } from '../providers/codings.actions';
     }
 
     buildForm() {
-        if(this.type === 'EditDefinition') {
+        if(this.type === 'Edit') {
         } else {
             this.data = {};
             this.data['codes'] = {};
@@ -77,6 +78,7 @@ import { PatchCodeSettingsByInputs } from '../providers/codings.actions';
     }
 
     save() {
+        if(this.form.value.no === '' || this.form.value.displayName === '') return false;
         let data = {
             editItems: [
                 {
