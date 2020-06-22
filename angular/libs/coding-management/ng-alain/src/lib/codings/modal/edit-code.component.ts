@@ -5,7 +5,8 @@ import { Store } from '@ngxs/store';
 import { finalize } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NotifyService } from '@fs/ng-alain/shared';
-import { PatchCodeSettingsByInputs } from '../providers/codings.actions';
+import { PatchCodeSettingsByInputs, PatchDefinitionByInputs } from '../providers/codings.actions';
+import * as _ from 'lodash';
 
 @Component({
     selector: 'fs-edit-code',
@@ -24,6 +25,9 @@ import { PatchCodeSettingsByInputs } from '../providers/codings.actions';
 
     @Input()
     parentId: string = null;
+
+    @Input()
+    definitionNos: string = null;
 
     @Input()
     definitionId: string = null;
@@ -56,7 +60,7 @@ import { PatchCodeSettingsByInputs } from '../providers/codings.actions';
     }
 
     buildForm() {
-        if(this.type === 'EditDefinition') {
+        if(this.type === 'Edit') {
         } else {
             this.data = {};
             this.data['codes'] = {};
@@ -77,6 +81,7 @@ import { PatchCodeSettingsByInputs } from '../providers/codings.actions';
     }
 
     save() {
+        if(this.form.value.no === '' || this.form.value.displayName === '') return false;
         let data = {
             editItems: [
                 {
@@ -100,9 +105,9 @@ import { PatchCodeSettingsByInputs } from '../providers/codings.actions';
             data.editItems[0]['id'] =  this.data['codes']['id'];
             data.editItems[0]['code'] =  this.data['codes']['code'];
         }
-
+        if(this.parentId) data['definitionNos'] = [this.definitionNos];
         this.store.dispatch(
-            new PatchCodeSettingsByInputs(data)
+            (this.parentId) ? new PatchCodeSettingsByInputs(data) : new PatchDefinitionByInputs(data)
         )
         .pipe(finalize(() => this.loading = false))
         .subscribe((x) => {

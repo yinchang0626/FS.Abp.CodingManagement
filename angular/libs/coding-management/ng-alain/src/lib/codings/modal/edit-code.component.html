@@ -1,9 +1,8 @@
-<button nz-button *ngIf="type === 'AddDefinition'" nzType="primary" (click)="createModal(tplTitle, tplContent, tplFooter)">{{ '新增'}}</button>
-<button nz-button *ngIf="type === 'AddChildren'" nzType="link" (click)="createModal(tplTitle, tplContent, tplFooter)">{{ '新增'}}</button>
-<button nz-button *ngIf="type === 'EditDefinition'" nzType="link" (click)="createModal(tplTitle, tplContent, tplFooter)">{{ '編輯'}}</button>
+<button nz-button *ngIf="type === 'Add'" nzType="primary" (click)="createModal(tplTitle, tplContent, tplFooter)">{{ '新增'}}</button>
+<button nz-button *ngIf="type === 'Edit'" nzType="link" (click)="createModal(tplTitle, tplContent, tplFooter)">{{ '編輯'}}</button>
 
 <ng-template #tplTitle>
-    <span>{{ (type === 'EditDefinition') ? '編輯' : '新增' }}</span>
+    <span>{{ (type === 'Edit') ? '編輯' : '新增' }}</span>
 </ng-template>
 <ng-template #tplContent>
     <nz-spin [nzSpinning]="loading">

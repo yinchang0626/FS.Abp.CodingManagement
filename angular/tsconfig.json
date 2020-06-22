@@ -32,6 +32,12 @@
       ],
       "@fs/theme.core/*": [
         "themes/theme-core/*/src/index.ts"
+      ],
+      "@fs/setting-management": [
+        "libs/setting-management/src/index.ts"
+      ],
+      "@fs/setting-management/*": [
+        "libs/setting-management/*/src/index.ts"
       ]
     }
   },

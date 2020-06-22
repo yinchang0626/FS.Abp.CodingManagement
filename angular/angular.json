@@ -187,6 +187,47 @@
         }
       },
       "schematics": {}
+    },
+    "fs.setting-management": {
+      "projectType": "library",
+      "root": "libs/setting-management",
+      "sourceRoot": "libs/setting-management/src",
+      "prefix": "fs",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/setting-management/tsconfig.lib.json",
+            "project": "libs/setting-management/ng-package.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/setting-management/tsconfig.lib.json",
+              "libs/setting-management/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/setting-management/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/setting-management/jest.config.js",
+            "tsConfig": "libs/setting-management/tsconfig.spec.json",
+            "setupFile": "libs/setting-management/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "less"
+        }
+      }
     }
   },
   "cli": {
