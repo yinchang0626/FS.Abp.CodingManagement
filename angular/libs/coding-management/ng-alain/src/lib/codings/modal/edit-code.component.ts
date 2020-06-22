@@ -5,7 +5,7 @@ import { Store } from '@ngxs/store';
 import { finalize } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NotifyService } from '@fs/ng-alain/shared';
-import { PatchCodeSettingsByInputs } from '../providers/codings.actions';
+import { PatchCodeSettingsByInputs, PatchDefinitionByInputs } from '../providers/codings.actions';
 import * as _ from 'lodash';
 
 @Component({
@@ -25,6 +25,9 @@ import * as _ from 'lodash';
 
     @Input()
     parentId: string = null;
+
+    @Input()
+    definitionNos: string = null;
 
     @Input()
     definitionId: string = null;
@@ -102,9 +105,9 @@ import * as _ from 'lodash';
             data.editItems[0]['id'] =  this.data['codes']['id'];
             data.editItems[0]['code'] =  this.data['codes']['code'];
         }
-
+        if(this.parentId) data['definitionNos'] = [this.definitionNos];
         this.store.dispatch(
-            new PatchCodeSettingsByInputs(data)
+            (this.parentId) ? new PatchCodeSettingsByInputs(data) : new PatchDefinitionByInputs(data)
         )
         .pipe(finalize(() => this.loading = false))
         .subscribe((x) => {

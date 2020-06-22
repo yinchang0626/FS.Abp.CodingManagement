@@ -4,10 +4,9 @@ import { Observable } from 'rxjs';
 import { finalize, switchMap } from 'rxjs/operators';
 import { NotifyService } from '@fs/ng-alain/shared';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { SettingManagementParameters } from '@fs/setting-management';
 import * as _ from 'lodash';
-import { ThemeCoreState, CodeSettingsDto, GetAllDefinitions, GetSettingsGroups } from '@fs/theme.core';
-import { PatchCodeSettingsByInputs } from '../providers/codings.actions';
+import { ThemeCoreState, CodingWithSettingsDto, GetAllDefinitions, GetSettingsGroups } from '@fs/theme.core';
+import { PatchCodeSettingsByInputs, PatchDefinitionByInputs } from '../providers/codings.actions';
 
 @Component({
   selector: 'fs-main',
@@ -16,17 +15,19 @@ import { PatchCodeSettingsByInputs } from '../providers/codings.actions';
 })
 export class MainComponent implements OnInit {
   @Select(ThemeCoreState.getAllDefinitions())
-  data$: Observable<Array<CodeSettingsDto>>;
+  data$: Observable<Array<CodingWithSettingsDto>>;
 
   @Select(ThemeCoreState.getSettingsGroups())
   settingdata$: Observable<Array<string>>;
   
   settingGroups: Array<string> = null;
-  codeList: Array<CodeSettingsDto> = null;
-  selectedDefinition: Array<CodeSettingsDto> = null;
+  codeList: Array<CodingWithSettingsDto> = null;
+  selectedDefinition: CodingWithSettingsDto = null;
+  selectedSetting: CodingWithSettingsDto = null;
   loading: boolean = false;
-  
-  parameters = new SettingManagementParameters;
+  visible: boolean = false;
+  providerName: string = null;
+  providerKey: string = null;
   constructor(
     private store: Store,
     private modalService: NzModalService,
@@ -87,7 +88,7 @@ export class MainComponent implements OnInit {
             id
           ]
         };
-        this.store.dispatch(new PatchCodeSettingsByInputs(input))
+        this.store.dispatch(new PatchDefinitionByInputs(input))
         .pipe(finalize(() => this.loading = false))
         .subscribe(() => {
           this.notifyService.success("資料更新成功");
@@ -98,12 +99,10 @@ export class MainComponent implements OnInit {
     });
   }
 
-  setting(visible, providerKey){
-    this.parameters = {
-      providerKey: providerKey,
-      providerName: 'Codes',
-      visible: visible,
-      routerName: null
-    };
+  setting(visible, data){
+    this.visible = visible;
+    this.providerName = "Codes";
+    this.providerKey = data.codes.id;
+    this.selectedSetting = data;
   }
 }

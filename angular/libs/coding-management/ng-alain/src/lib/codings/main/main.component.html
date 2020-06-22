@@ -23,7 +23,7 @@
                                             <fs-edit-code [type]="'Edit'" [data]="item" [settingGroups]="settingGroups"></fs-edit-code>
                                         </nz-col>
                                         <nz-col>
-                                            <button nzType="link" nz-button (click)="setting(true, item.codes.id)">設定</button>
+                                            <button nzType="link" nz-button (click)="setting(true, item)">設定</button>
                                         </nz-col>
                                         <nz-col>
                                             <button nzType="link" style="color: red;" nz-button (click)="deleteNode(item.codes.id)">刪除</button>
@@ -40,11 +40,9 @@
             </nz-row>
         </nz-col>
         <nz-col [nzLg]="24" [nzXl]="15" *ngIf="selectedDefinition">
-            <nz-card>
-                <fs-detail [settingGroups]="settingGroups" [selectedDefinition]="selectedDefinition"></fs-detail>
-            </nz-card>
+            <fs-detail [settingGroups]="settingGroups" [selectedDefinition]="selectedDefinition"></fs-detail>
         </nz-col>
     </nz-row>
 
-    <fs-ng-alain-setting-management [(parameters)]="parameters"></fs-ng-alain-setting-management>
+    <fs-ng-alain-setting-management [providerName]="providerName" [providerKey]="providerKey" [(visible)]="visible" [rawData]="selectedSetting"></fs-ng-alain-setting-management>
 </div>

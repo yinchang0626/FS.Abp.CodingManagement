@@ -7,8 +7,7 @@ import { NotifyService } from '@fs/ng-alain/shared';
 import { Observable } from 'rxjs';
 import * as _ from 'lodash';
 import { FsNgAlainTreeComponent } from '@fs/ng-alain/basic';
-import { SettingManagementParameters } from '@fs/setting-management';
-import { GetChildrenByNos, ThemeCoreState, CodingsByDefinitionModel } from '@fs/theme.core';
+import { GetChildrenByNos, ThemeCoreState, CodingsByDefinitionModel, CodingWithSettingsDto } from '@fs/theme.core';
 import { PatchCodeSettingsByInputs } from '../providers/codings.actions';
 
 @Component({
@@ -30,14 +29,16 @@ export class DetailComponent implements OnInit {
   @Input()
   settingGroups = null;
 
-  editedDta = {};
+  editedData = {};
   rawData = null;
   treeData = null;
   seletedNode: string = "";
+  selectedSetting: CodingWithSettingsDto = null;
   loading: boolean = false;
   isExpanded: boolean = true;
-
-  parameters = new SettingManagementParameters;
+  visible: boolean = false;
+  providerName: string = null;
+  providerKey: string = null;
   constructor(
     private store: Store,
     private fb: FormBuilder,
@@ -98,7 +99,7 @@ export class DetailComponent implements OnInit {
 
   buildForm() {
     let data = {};
-    this.editedDta = {};
+    this.editedData = {};
     this.rawData.forEach((x, i) => {
       data[x.codes.id] = this.fb.group({
         no: [x.codes.no, [Validators.required]],
@@ -123,7 +124,7 @@ export class DetailComponent implements OnInit {
                     rawData.codes.description !== description ||
                     rawData.codes.enable !== enable ||
                     this.compare(rawData.codes.config.includeSettingsGroups, configSetting));
-      if(isEdit) this.editedDta[key] = true; else delete this.editedDta[key];
+      if(isEdit) this.editedData[key] = true; else delete this.editedData[key];
       this.changeDetectorRef.detectChanges();
     });
   }
@@ -138,7 +139,7 @@ export class DetailComponent implements OnInit {
   save() {
     this.loading = true;
     let inputList = [];
-    for(let key in this.editedDta) {
+    for(let key in this.editedData) {
       if(this.form.value[key].no === '' || this.form.value[key].displayName === '') return false;
       let rawData = this.rawData.filter(x => x.codes.id === key)[0];
       let config = this.compareData(this.selectedDefinition.codes.config.includeSettingsGroups, this.form.value[key].configSetting)
@@ -162,6 +163,7 @@ export class DetailComponent implements OnInit {
       editItems: inputList,
       deleteItemIds: []
     };
+    data['definitionNos'] = [this.selectedDefinition.codes.no];
     this.store.dispatch(
       new PatchCodeSettingsByInputs(data)
     )
@@ -246,12 +248,11 @@ export class DetailComponent implements OnInit {
     this.fsNgAlainTreeComponent.treeStatusChange(type, status);
   }
 
-  setting(visible, providerKey){
-    this.parameters = {
-      providerKey: providerKey,
-      providerName: 'Codes',
-      visible: visible,
-      routerName: null
-    };
+  setting(visible, key){
+    let data = _.head(this.rawData.filter(x => x.codes.id === key));
+    this.visible = visible;
+    this.providerName = "Codes";
+    this.providerKey = data.codes.id;
+    this.selectedSetting = data;
   }
 }

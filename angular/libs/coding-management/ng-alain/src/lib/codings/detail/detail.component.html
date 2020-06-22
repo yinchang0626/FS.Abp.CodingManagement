@@ -2,7 +2,7 @@
   <nz-row style="padding-bottom: 10px;">
     <nz-col>
       <button nzType="primary" nz-button (click)="treeStatusChange('isExpanded', !isExpanded)">{{ (isExpanded) ? '全部收合' : '全部展開' }}</button>
-      <fs-edit-code style="padding-left: 8px; padding-right: 8px;" [type]="'Add'" [parentId]="selectedDefinition.codes.id" [definitionId]="selectedDefinition.codes.id" [settingGroups]="settingGroups"></fs-edit-code>
+      <fs-edit-code style="padding-left: 8px; padding-right: 8px;" [type]="'Add'" [parentId]="selectedDefinition.codes.id" [definitionNos]="selectedDefinition.codes.no" [definitionId]="selectedDefinition.codes.id" [settingGroups]="settingGroups"></fs-edit-code>
       <button nz-button nzType="primary" (click)="save()">儲存變更</button>
       <button nzType="danger" nz-button (click)="loadData()">取消變更</button>
     </nz-col>
@@ -25,10 +25,10 @@
   </nz-row>
 
   <ng-template #nzTreeTemplate let-node>
-    <span class="custom-node" [class.node-active]="seletedNode == node.key" [class.textColor]="editedDta[node.key]" (click)="selectNode(node)" [innerHtml]="searchColor(node)"></span><br />
+    <span class="custom-node" [class.node-active]="seletedNode == node.key" [class.textColor]="editedData[node.key]" (click)="selectNode(node)" [innerHtml]="searchColor(node)"></span><br />
     <div *ngIf="seletedNode == node.key" style="padding-left: 22px;" >
-      <div>
-        <fs-edit-code style="padding-right: 8px;" [type]="'Add'" [parentId]="node.key" [definitionId]="node.origin.definitionId" [settingGroups]="settingGroups"></fs-edit-code>
+      <div style="padding-top: 5px;">
+        <fs-edit-code style="padding-right: 8px;" [type]="'Add'" [parentId]="node.key" [definitionNos]="selectedDefinition.codes.no" [definitionId]="node.origin.definitionId" [settingGroups]="settingGroups"></fs-edit-code>
         <button nz-button nzType="primary" (click)="setting(true, node.key)">設定</button>
         <button nz-button nzType="danger" (click)="deleteNode(node.key)">刪除</button>
       </div>
@@ -77,5 +77,5 @@
     </div>
   </ng-template>
 
-  <fs-ng-alain-setting-management [(parameters)]="parameters"></fs-ng-alain-setting-management>
+  <fs-ng-alain-setting-management [providerName]="providerName" [providerKey]="providerKey" [(visible)]="visible" [rawData]="selectedSetting"></fs-ng-alain-setting-management>
 </div>
