@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RestService, Rest, ABP } from '@abp/ng.core';
 import { map } from 'rxjs/operators';
-import { PatchCodeSettingsInput } from '../dtos';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +9,7 @@ import { PatchCodeSettingsInput } from '../dtos';
 export class CodingManagementService {
   constructor(private restService: RestService) {}
 
-  postPatchCodeSettingsByInputs(body: PatchCodeSettingsInput): Observable<any[]> {
+  postPatchCodeSettingsByInputs(body: any): Observable<any[]> {
     return this.restService.request({ url: '/api/CodingManagement/codeSetting/patch', method: 'POST', body });
   }
 

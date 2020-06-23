@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import * as _ from 'lodash';
 import { FsNgAlainTreeComponent } from '@fs/ng-alain/basic';
 import { GetChildrenByNos, ThemeCoreState, CodingsByDefinitionModel, CodingWithSettingsDto } from '@fs/theme.core';
-import { PatchCodeSettingsByInputs } from '../providers/codings.actions';
+import { PatchCodeSettingsByInputs } from '@fs/coding-management';
 
 @Component({
   selector: 'fs-detail',
@@ -36,9 +36,24 @@ export class DetailComponent implements OnInit {
   selectedSetting: CodingWithSettingsDto = null;
   loading: boolean = false;
   isExpanded: boolean = true;
-  visible: boolean = false;
   providerName: string = null;
   providerKey: string = null;
+
+  protected _visible: boolean = false;
+
+  get visible(): boolean {
+    return this._visible;
+  }
+
+  set visible(value: boolean) {
+    if (value === this._visible) return;
+    this._visible = (value) ? true : false;
+    if (!value) {
+      this.ngOnChanges();
+      this._visible = false;
+    }
+  }
+  
   constructor(
     private store: Store,
     private fb: FormBuilder,
@@ -161,9 +176,9 @@ export class DetailComponent implements OnInit {
 
     let data = {
       editItems: inputList,
-      deleteItemIds: []
+      deleteItemIds: [],
+      definitionNos: [this.selectedDefinition.codes.no]
     };
-    data['definitionNos'] = [this.selectedDefinition.codes.no];
     this.store.dispatch(
       new PatchCodeSettingsByInputs(data)
     )
@@ -199,7 +214,8 @@ export class DetailComponent implements OnInit {
           editItems: [],
           deleteItemIds: [
             id
-          ]
+          ],
+          definitionNos: [this.selectedDefinition.codes.no]
         };
         this.store.dispatch(new PatchCodeSettingsByInputs(input))
         .pipe(finalize(() => this.loading = false))

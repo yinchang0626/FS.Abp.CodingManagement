@@ -1,6 +1,6 @@
 import { ABP } from '@abp/ng.core';
 
-export namespace Codings {
+export namespace CodingManagement {
     export interface State {
     }
 }
