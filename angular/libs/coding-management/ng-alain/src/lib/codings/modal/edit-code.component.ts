@@ -5,7 +5,7 @@ import { Store } from '@ngxs/store';
 import { finalize } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NotifyService } from '@fs/ng-alain/shared';
-import { PatchCodeSettingsByInputs, PatchDefinitionByInputs } from '../providers/codings.actions';
+import { PatchCodeSettingsByInputs } from '@fs/coding-management';
 import * as _ from 'lodash';
 
 @Component({
@@ -82,6 +82,7 @@ import * as _ from 'lodash';
 
     save() {
         if(this.form.value.no === '' || this.form.value.displayName === '') return false;
+        let definitionNos = (this.definitionNos) ? [this.definitionNos] : null;
         let data = {
             editItems: [
                 {
@@ -98,16 +99,16 @@ import * as _ from 'lodash';
                     }
                 }
             ],
-            deleteItemIds: []
+            deleteItemIds: [],
+            definitionNos: definitionNos
         };
 
         if(this.data['codes']['id']) {
             data.editItems[0]['id'] =  this.data['codes']['id'];
             data.editItems[0]['code'] =  this.data['codes']['code'];
         }
-        if(this.parentId) data['definitionNos'] = [this.definitionNos];
         this.store.dispatch(
-            (this.parentId) ? new PatchCodeSettingsByInputs(data) : new PatchDefinitionByInputs(data)
+            new PatchCodeSettingsByInputs(data)
         )
         .pipe(finalize(() => this.loading = false))
         .subscribe((x) => {

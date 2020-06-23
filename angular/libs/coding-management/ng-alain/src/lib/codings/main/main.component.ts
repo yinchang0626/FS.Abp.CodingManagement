@@ -6,7 +6,7 @@ import { NotifyService } from '@fs/ng-alain/shared';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import * as _ from 'lodash';
 import { ThemeCoreState, CodingWithSettingsDto, GetAllDefinitions, GetSettingsGroups } from '@fs/theme.core';
-import { PatchCodeSettingsByInputs, PatchDefinitionByInputs } from '../providers/codings.actions';
+import { PatchCodeSettingsByInputs } from '@fs/coding-management';
 
 @Component({
   selector: 'fs-main',
@@ -25,9 +25,24 @@ export class MainComponent implements OnInit {
   selectedDefinition: CodingWithSettingsDto = null;
   selectedSetting: CodingWithSettingsDto = null;
   loading: boolean = false;
-  visible: boolean = false;
   providerName: string = null;
   providerKey: string = null;
+
+  protected _visible: boolean = false;
+
+  get visible(): boolean {
+    return this._visible;
+  }
+
+  set visible(value: boolean) {
+    if (value === this._visible) return;
+    this._visible = (value) ? true : false;
+    if (!value) {
+      this.loadData();
+      this._visible = false;
+    }
+  }
+
   constructor(
     private store: Store,
     private modalService: NzModalService,
@@ -86,9 +101,10 @@ export class MainComponent implements OnInit {
           editItems: [],
           deleteItemIds: [
             id
-          ]
+          ],
+          definitionNos: null
         };
-        this.store.dispatch(new PatchDefinitionByInputs(input))
+        this.store.dispatch(new PatchCodeSettingsByInputs(input))
         .pipe(finalize(() => this.loading = false))
         .subscribe(() => {
           this.notifyService.success("資料更新成功");
