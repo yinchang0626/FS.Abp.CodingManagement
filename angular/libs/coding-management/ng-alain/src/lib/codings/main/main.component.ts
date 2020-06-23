@@ -4,10 +4,9 @@ import { Observable } from 'rxjs';
 import { finalize, switchMap } from 'rxjs/operators';
 import { NotifyService } from '@fs/ng-alain/shared';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { SettingManagementParameters } from '@fs/setting-management';
 import * as _ from 'lodash';
-import { ThemeCoreState, CodeSettingsDto, GetAllDefinitions, GetSettingsGroups } from '@fs/theme.core';
-import { PatchCodeSettingsByInputs } from '../providers/codings.actions';
+import { ThemeCoreState, CodingWithSettingsDto, GetAllDefinitions, GetSettingsGroups } from '@fs/theme.core';
+import { PatchCodeSettingsByInputs } from '@fs/coding-management';
 
 @Component({
   selector: 'fs-main',
@@ -16,17 +15,34 @@ import { PatchCodeSettingsByInputs } from '../providers/codings.actions';
 })
 export class MainComponent implements OnInit {
   @Select(ThemeCoreState.getAllDefinitions())
-  data$: Observable<Array<CodeSettingsDto>>;
+  data$: Observable<Array<CodingWithSettingsDto>>;
 
   @Select(ThemeCoreState.getSettingsGroups())
   settingdata$: Observable<Array<string>>;
   
   settingGroups: Array<string> = null;
-  codeList: Array<CodeSettingsDto> = null;
-  selectedDefinition: Array<CodeSettingsDto> = null;
+  codeList: Array<CodingWithSettingsDto> = null;
+  selectedDefinition: CodingWithSettingsDto = null;
+  selectedSetting: CodingWithSettingsDto = null;
   loading: boolean = false;
-  
-  parameters = new SettingManagementParameters;
+  providerName: string = null;
+  providerKey: string = null;
+
+  protected _visible: boolean = false;
+
+  get visible(): boolean {
+    return this._visible;
+  }
+
+  set visible(value: boolean) {
+    if (value === this._visible) return;
+    this._visible = (value) ? true : false;
+    if (!value) {
+      this.loadData();
+      this._visible = false;
+    }
+  }
+
   constructor(
     private store: Store,
     private modalService: NzModalService,
@@ -47,7 +63,10 @@ export class MainComponent implements OnInit {
     this.settingdata$.subscribe(x => {
       this.settingGroups = null;
       if(x){
-        this.settingGroups = x;
+        let settingGroup = _.uniq(x);
+        this.settingGroups = settingGroup.filter((x, i, arr) => {
+          return arr.filter((y, j) => i != j && _.startsWith(x, y + ".")).length == 0;
+      })
       }
     });
   }
@@ -82,7 +101,8 @@ export class MainComponent implements OnInit {
           editItems: [],
           deleteItemIds: [
             id
-          ]
+          ],
+          definitionNos: null
         };
         this.store.dispatch(new PatchCodeSettingsByInputs(input))
         .pipe(finalize(() => this.loading = false))
@@ -95,12 +115,10 @@ export class MainComponent implements OnInit {
     });
   }
 
-  setting(visible, providerKey){
-    this.parameters = {
-      providerKey: providerKey,
-      providerName: 'Codes',
-      visible: visible,
-      routerName: null
-    };
+  setting(visible, data){
+    this.visible = visible;
+    this.providerName = "Codes";
+    this.providerKey = data.codes.id;
+    this.selectedSetting = data;
   }
 }

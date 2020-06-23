@@ -1,4 +1,4 @@
-import { PatchCodeSettingsInput } from '@fs/coding-management';
+import { PatchCodeSettingsInput } from '../dtos';
 
 export class PatchCodeSettingsByInputs{
     static readonly type = '[CodingManagement] Patch CodeSettings By Inputs';
