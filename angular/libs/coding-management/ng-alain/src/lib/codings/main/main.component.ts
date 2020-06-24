@@ -38,6 +38,7 @@ export class MainComponent implements OnInit {
     if (value === this._visible) return;
     this._visible = (value) ? true : false;
     if (!value) {
+      this.selectedSetting = null;
       this.loadData();
       this._visible = false;
     }

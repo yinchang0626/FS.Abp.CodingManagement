@@ -49,6 +49,7 @@ export class DetailComponent implements OnInit {
     if (value === this._visible) return;
     this._visible = (value) ? true : false;
     if (!value) {
+      this.selectedSetting = null;
       this.ngOnChanges();
       this._visible = false;
     }
