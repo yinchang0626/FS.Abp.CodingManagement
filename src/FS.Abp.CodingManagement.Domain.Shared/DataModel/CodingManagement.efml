@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<efcore context-namespace="FS.Abp.CodingManagement.EntityFrameworkCore" namespace="FS.Abp.CodingManagement" p1:name="CodingManagementDbContext" p1:Guid="d52dfa8e-d088-4750-a077-95093c0a8637" p1:VersionTag="1.221.0.0" xmlns:p1="http://devart.com/schemas/EntityDeveloper/1.0">
+<efcore context-namespace="FS.Abp.CodingManagement.EntityFrameworkCore" namespace="FS.Abp.CodingManagement" p1:name="CodingManagementDbContext" p1:Guid="d52dfa8e-d088-4750-a077-95093c0a8637" p1:VersionTag="1.290.0.0" xmlns:p1="http://devart.com/schemas/EntityDeveloper/1.0">
   <class name="$ComplexTypes">
     <component class="FS.Abp.CodingManagement.CreationAuditedEntity" IsExternal="true" p1:Guid="66425b5e-9bab-4a12-bc48-aa568a1869a5" p1:GenerateDTO="False">
       <property name="CreationTime" type="DateTime" p1:ValidateRequired="true" p1:Guid="0c0a9c69-ac8a-4089-a1b0-e74a06d845e5">
@@ -461,7 +461,7 @@
       </property>
     </component>
   </class>
-  <class name="FS.Abp.CodingManagement.Coding.Codes" entity-set="Codes" p1:Guid="fa885f37-070e-48ec-89e2-b80a92cf56c7" p1:AbpEditor="YinChang" p1:EntityBase="&#xD;&#xA;        Volo.Abp.Domain.Entities.Auditing.AuditedAggregateRoot&lt;Guid&gt;,&#xD;&#xA;        Volo.Abp.MultiTenancy.IMultiTenant,&#xD;&#xA;        FS.Abp.Trees.ITree&lt;Codes&gt;">
+  <class name="FS.Abp.CodingManagement.Coding.Codes" entity-set="Codes" p1:Guid="fa885f37-070e-48ec-89e2-b80a92cf56c7" p1:AbpEditor="YinChang" p1:EntityBase="&#xD;&#xA;        Volo.Abp.Domain.Entities.Auditing.AuditedAggregateRoot&lt;Guid&gt;,&#xD;&#xA;        Volo.Abp.MultiTenancy.IMultiTenant,&#xD;&#xA;        EasyAbp.Abp.Trees.ITree&lt;Codes&gt;">
     <p1:Attributes>
       <p1:Attribute Name="FS.ED.Attributes.Entities.EntityAttribute" Assembly="FS.ED, Version=1.102.0.0, Culture=neutral, PublicKeyToken=null">
         <p1:AttributeConstructor />
@@ -519,6 +519,9 @@
       <column name="" />
     </property>
     <property name="Code" type="String" p1:ValidateRequired="false" p1:Guid="a51b5323-0704-4ce0-b561-9c52fdc7e610">
+      <column name="" />
+    </property>
+    <property name="Level" type="Int32" p1:ValidateRequired="true" p1:Guid="f5a7c9ff-1c50-4b8d-966d-19dabb69a05e">
       <column name="" />
     </property>
     <property name="DefinitionId" type="Guid" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="1b9ea567-f5ae-4f14-aeb5-0676b2304240">
@@ -641,7 +644,7 @@
       <end1 multiplicity="ZeroOrOne" name="Parent" class="Codes" relation-class="Codes" constrained="True" lazy="False" p1:Guid="ad28b9e9-4727-444f-9c28-37843b3e4ac5">
         <property name="Id" />
       </end1>
-      <end2 multiplicity="Many" name="Children" class="Codes" relation-class="Codes" lazy="False" p1:Guid="1b634808-7b33-4ecd-8d0b-1fc2ffe662b9">
+      <end2 multiplicity="Many" name="Children" class="Codes" relation-class="Codes" lazy="False" p1:Guid="1b634808-7b33-4ecd-8d0b-1fc2ffe662b9" p1:CollectionTypeName="ICollection&lt;Codes&gt;">
         <property name="ParentId" />
       </end2>
     </association>

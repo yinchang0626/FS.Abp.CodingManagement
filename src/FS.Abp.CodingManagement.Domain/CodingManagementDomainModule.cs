@@ -8,6 +8,7 @@ namespace FS.Abp.CodingManagement
     [DependsOn(
         typeof(CodingManagementDomainSharedModule),
         typeof(Volo.Abp.Caching.AbpCachingModule),
+        typeof(EasyAbp.Abp.Trees.AbpTreesDomainModule),
 
         typeof(FS.Abp.Domain.AbpDddDomainModule),
         typeof(FS.Abp.SettingManagement.SettingManagementDomainModule)

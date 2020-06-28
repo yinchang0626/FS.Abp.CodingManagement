@@ -1,5 +1,5 @@
 ﻿using FS.Abp.CodingManagement.Coding;
-using FS.Abp.Trees;
+using EasyAbp.Abp.Trees;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Volo.Abp.DependencyInjection;
@@ -12,6 +12,7 @@ namespace FS.Abp.CodingManagement.EntityFrameworkCore
     [DependsOn(
         typeof(CodingManagementDomainModule),
         typeof(AbpEntityFrameworkCoreModule),
+        typeof(EasyAbp.Abp.Trees.EntityFrameworkCore.AbpTreesEntityFrameworkCoreModule),
 
         typeof(FS.Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule),
         typeof(FS.Abp.SettingManagement.EntityFrameworkCore.SettingManagementEntityFrameworkCoreModule)
@@ -27,7 +28,7 @@ namespace FS.Abp.CodingManagement.EntityFrameworkCore
                 //options.AddRepository<FS.Abp.Trees.ITreeRepository<Codes>, EfCoreCodesTreeRepository>();
                 options.AddDefaultRepositories();
             });
-            context.Services.TryAddTransient<FS.Abp.Trees.ITreeRepository<Codes>, EfCoreCodesTreeRepository>();
+            context.Services.AddTreeRepository<CodingManagementDbContext>();
             //context.Services.AddTreeRepository<CodingManagementDbContext>();
         }
 

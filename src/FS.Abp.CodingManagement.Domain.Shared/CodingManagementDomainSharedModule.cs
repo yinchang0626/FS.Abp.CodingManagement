@@ -10,6 +10,7 @@ namespace FS.Abp.CodingManagement
 {
     [DependsOn(
         typeof(AbpValidationModule),
+        typeof(EasyAbp.Abp.Trees.AbpTreesDomainSharedModule),
 
         typeof(FS.Abp.SettingManagement.SettingManagementDomainSharedModule)
     )]
